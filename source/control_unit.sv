@@ -22,7 +22,7 @@ module control_unit
 	dREN = 0;
 	dWEN = 0;
 	aluSource = 0;
-	memToReg = 0;
+	memToReg = 1'bX;
 	extendType = 0;
 	aluOP = 0;
 	regWrite = 0;
@@ -286,7 +286,7 @@ module control_unit
 	       extendType = 0;
 	       aluOP = 0;
 	       regWrite = 1;
-	       nextPC = 2;
+	       nextPC = 3;
 	       regDest = 2;
 	       branch_flag = 0;
 	    end

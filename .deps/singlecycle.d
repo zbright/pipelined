@@ -1,0 +1,1 @@
+singlecycle: control_unit.svo alu.svo reg_dest_mux.svo branch_mux.svo mem_to_reg_mux.svo next_pc_mux.svo program_counter.svo request_unit.svo shift_left_16.svo branch_check.svo shift_left_with_pc.svo add_32.svo alu_source_mux.svo register_file.svo add_4.svo shift_left_2.svo extender.svo caches.svo datapath.svo memory_control.svo singlecycle.svo

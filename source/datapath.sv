@@ -22,8 +22,7 @@ module datapath (
 
   // pc init
    parameter PC_INIT = 0;
-   word_t nextPC, currentPC, pcPlus4, branchPC, jRPC, 
-     jPC, branchAddPC, shiftLeft2Out;
+   word_t nextPC, currentPC, pcPlus4, branchPC, jPC, branchAddPC, shiftLeft2Out;
    word_t extendOut, shift16Out, aluSourceMuxOut, aluOut;
    logic dREN, dWEN, extendType, regWrite, branchFlag, 
 		   branchSelect, cuHalt;
@@ -54,10 +53,10 @@ module datapath (
    
    extender extender(dpif.imemload[15:0], extendType, extendOut);
    
-   mem_to_reg_mux memToRegMux(rfif.rdat1, aluOut, dpif.dmemload, shift16Out, 
+   mem_to_reg_mux memToRegMux(pcPlus4, aluOut, dpif.dmemload, shift16Out, 
 			      memToReg, rfif.wdat);
    
-   next_pc_mux nextPCMux(pcPlus4, branchPC, jRPC, jPC, nextPCSelect, nextPC);
+   next_pc_mux nextPCMux(pcPlus4, branchPC, rfif.rdat1, jPC, nextPCSelect, nextPC);
    
    reg_dest_mux regDestMux(dpif.imemload[20:16], dpif.imemload[15:11], regDest, rfif.wsel);
    
