@@ -7,7 +7,6 @@
 
 // mapped needs this
 `include "register_file_if.vh"
-`include "cpu_types_pkg.vh"
 
 // mapped timing needs this. 1ns is too fast
 `timescale 1 ns / 1 ns
@@ -22,6 +21,8 @@ module register_file_tb;
   int v1 = 1;
   int v2 = 4721;
   int v3 = 25119;
+  int k;
+  
 
   // clock
   always #(PERIOD/2) CLK++;
@@ -29,10 +30,7 @@ module register_file_tb;
   // interface
   register_file_if rfif ();
   // test program
-  test #(.PERIOD (PERIOD)) PROG(
-				.CLK,
-				.nRST
-);
+  test PROG ();
   // DUT
 `ifndef MAPPED
   register_file DUT(CLK, nRST, rfif);
@@ -50,39 +48,51 @@ module register_file_tb;
   );
 `endif
 
+
+ initial begin
+
+	nRST = 1; 
+ 	#10
+  	nRST = 0;
+	#10
+	nRST = 1;
+	rfif.WEN = 0;
+	#10
+	rfif.WEN = 1;
+	#5
+
+	//enabling the write enable
+	for (k=0; k<=31;k=k+1) begin
+		#10
+		rfif.wdat = k + 1;
+		rfif.wsel = k;
+		rfif.rsel2 = k;
+		rfif.rsel1 = k;
+		//tests every single write function to the register and shows that the 0 register is still the same
+	end
+
+	#10
+	nRST = 0;
+	#10
+	nRST = 1;
+	rfif.WEN = 0;
+		
+	for (k=0; k<=31;k=k+1) begin
+		#10
+		rfif.wdat = k + 1;
+		rfif.wsel = k;
+		rfif.rsel2 = k;
+		rfif.rsel1 = k;
+		//tests every single write function to the register and shows that all registers are 0
+	end
+
+ end
+
 endmodule
 
-program test (
-	      input logic CLK,
-	      output logic nRST
-);
-   parameter PERIOD = 10;
-   // test vars
-   int v1 = 1;
-   int v2 = 4721;
-   int v3 = 25119;
-   initial begin
-     $monitor("@%00g CLK = %b nRST = %b",
-     $time, CLK, nRST);
-      nRST = 0;
-      #(PERIOD)
-      nRST = 1;
-      rfif.WEN = 1;
-      #(PERIOD)
-      rfif.wsel = 0;
-      rfif.wdat = v1;
-      #(PERIOD)
-      rfif.wsel = 1;
-      rfif.wdat = v2; 
-      #(PERIOD)
-      rfif.wsel = 31;
-      rfif.wdat = v3; 
-      #(PERIOD)
-      rfif.rsel1 = 1;
-      rfif.rsel2 = 31;
-      #(PERIOD)
-      nRST = 0;
-      #(PERIOD)
-      $finish;
-   end
+<<<<<<< HEAD
+
+=======
+>>>>>>> aa81c8bad88fc3c4584bef66e53c9444c32a8d72
+program test;
 endprogram

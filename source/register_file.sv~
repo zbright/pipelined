@@ -1,34 +1,42 @@
 `include "register_file_if.vh"
 `include "cpu_types_pkg.vh"
 
-module register_file 
-(
+module register_file (
 	input logic CLK,
-	input logic nrst,
-	register_file_if.rf rfif	
-);
-
-   logic [31:0] [31:0] registers;
-   
-   always_ff @(posedge CLK, negedge nrst)
-     begin
-	if(!nrst)
-          begin
-	     registers[31:0] <= '0;
-	  end
-	else
-	  begin
-	     if(rfif.WEN)
-	       begin
-		  if(rfif.wsel)
-		  begin
-		     registers[rfif.wsel] <= rfif.wdat;		  
-	          end
-	       end
-
-	     rfif.rdat1 <= registers[rfif.rsel1];
-	     rfif.rdat2 <= registers[rfif.rsel2];     
-	  end
-     end
-endmodule
+	input logic nRST,
+	register_file_if.rf registerval
+	);
 	
+	logic [31:0] [31:0] storeregister; 
+	logic [2:0] k;	
+
+	always_ff @(posedge CLK, negedge nRST)
+		begin: WRITE
+			if (nRST == 0) begin
+				//for (k = 0; k <31; k++) begin
+				//storeregister <= {default : 0};
+				storeregister <= '0;
+				//end
+
+			end else if (registerval.WEN) begin
+				if (registerval.wsel) begin
+					storeregister[registerval.wsel] <= registerval.wdat;
+				end else if (registerval.wsel == 0) begin
+					storeregister[0] <= 0;
+				end
+			end
+		end
+
+	always_comb
+		begin
+			registerval.rdat1 = storeregister[registerval.rsel1];
+			registerval.rdat2 = storeregister[registerval.rsel2];
+		end
+		
+endmodule	
+	
+
+
+	
+	
+

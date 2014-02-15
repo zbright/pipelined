@@ -1,5 +1,5 @@
 # vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run 1000000; exit;} -c -wlf system_tb.wlf work.system_tb 
-# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.el6.x86_64
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.3.1.el6.x86_64
 # //
 # //  Copyright 1991-2013 Mentor Graphics Corporation
 # //  All Rights Reserved.
@@ -19,29 +19,12 @@
 # Loading work.datapath_cache_if
 # Loading work.cache_control_if
 # Loading work.datapath
-# Loading work.program_counter_sv_unit
-# Loading work.program_counter
 # Loading work.register_file_if
-# Loading work.add_4_sv_unit
-# Loading work.add_4
-# Loading work.add_32_sv_unit
-# Loading work.add_32
-# Loading work.alu_sv_unit
-# Loading work.alu
-# Loading work.alu_source_mux
-# Loading work.branch_check
-# Loading work.branch_mux
-# Loading work.control_unit_sv_unit
-# Loading work.control_unit
-# Loading work.extender
-# Loading work.mem_to_reg_mux
-# Loading work.next_pc_mux
-# Loading work.reg_dest_mux
 # Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
 # Loading work.request_unit
-# Loading work.shift_left_2
-# Loading work.shift_left_16
-# Loading work.shift_left_with_pc
 # Loading work.caches
 # Loading work.memory_control
 # Loading work.ram
@@ -50,6 +33,6 @@
 # Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
 # run 1000000 
 # Starting Processor.
-# Halted at 1500 time and ran for         74 cycles.
+# Halted at 740 time and ran for         36 cycles.
 # Starting memory dump.
 # Finished memory dump.

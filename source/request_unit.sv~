@@ -1,27 +1,34 @@
-module request_unit 
-(
-	input logic  dWEN_in,
-	input logic  dREN_in,
-	input logic  dhit,
-	input logic  CLK,
-	output logic dWEN_out,
-        output logic dREN_out 
-);
+`include "datapath_cache_if.vh"
+`include "cpu_types_pkg.vh"
 
-always_ff @(posedge CLK)
-  begin
-     if(dhit)
-       begin
-	  dWEN_out <= 0;
-	  dREN_out <= 0;
-       end
-     else
-       begin
-	  dWEN_out <= dWEN_in;
-	  dREN_out <= dREN_in;
-       end
-  end
+module request_unit (
+	input logic CLK,
+	input logic dhit,
+	input logic request_dmemREN,
+	input logic request_dmemWEN,
+	output logic request_dmemREN_output,
+	output logic request_dmemWEN_output	
+	);
 
+	import cpu_types_pkg::*;
 
-   
+	//assign request_dmemREN_output = dhit ? 0 : request_dmemREN;
+	//assign request_dmemWEN_output = dhit ? 0 : request_dmemWEN;
+
+	
+	always_ff@(posedge CLK)
+	begin
+		//not sure where to put it
+		request_dmemREN_output = request_dmemREN;
+		request_dmemWEN_output = request_dmemWEN;
+		if (dpif.dhit == 1) begin
+			request_dmemREN_output = 0;
+			request_dmemWEN_output = 0;
+		end else begin
+			request_dmemREN_output = request_dmemREN;
+			request_dmemWEN_output = request_dmemWEN;
+		end
+	end
+
 endmodule
+		

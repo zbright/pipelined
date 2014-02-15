@@ -1,25 +1,36 @@
-ORG 	0x0000
-ORI 	$sp,$zero,0xFFFC
-ORI 	$s4,$zero,0x000A
-ORI 	$s5,$zero,0x0004
+#---------------------------------------
+# sample asm file for tutorial
+#---------------------------------------
 
-PUSH 	$s4
-PUSH 	$s5
+# set the address where you want this
+# code segment
+  org 0x0000
+#initialize the mask
+  addi $T0, $0, 0x1
+  addi $T1, $0, 0xFFFFFFFE
+#initialize the initial values to the stack	
+  addi $S0, $0, 0x6
+  addi $S1, $0, 0x4
+#initialize stack pointer
+  addi $29, $0, 0xFFFC
+  PUSH $S0
+  PUSH $S1
+  POP $S2
+  POP $S3
+#compares the number to see if it is odd
+  SLL $S4, $S2, $S3
+#retrieve the values from the stack
+Loop: beq $S0, $S3 EXIT	 
+  add $S4, $S3, $T1      	
+  halt
+ # ori   $1, $0, mydata 
+ # or   $2, $0, 0x0080
+ # addu  $3, $1, $2
+ # sw    $3, 4($1)
+ # halt
+EXIT:	Halt
+#mydata:
+#  org 0x0080
+#  cfw 0x10
 
-mult:
-	POP 	$s0 			#multiplier
-	POP 	$s1 			#multiplicand
-	ORI 	$s2,$zero,0x0000 	#counter
-	ORI 	$s3,$zero,0x0000 	#output
 	
-loop:
-	BEQ 	$s1,$s2,end 		#if counter == multiplicand, then end
-	ADDU 	$s3,$s3,$s0 		#Add the multiplier to the output
-	ADDIU 	$s2,$s2,0x0001 		#increment counter
-	J 	loop	
-end:	
-	PUSH 	$s3
-	HALT
-
-	
-		

@@ -1,300 +1,248 @@
+`include "datapath_cache_if.vh"
 `include "cpu_types_pkg.vh"
-import cpu_types_pkg::*;
 
-module control_unit
-(
- input 		    word_t iload,
- output logic 	    dREN,
- output logic 	    dWEN,
- output logic [1:0] aluSource,
- output logic [3:0] aluOP,
- output logic 	    extendType,
- output logic [1:0] memToReg,
- output logic [1:0] nextPC,
- output logic [1:0] regDest,
- output logic 	    regWrite,
- output logic 	    branch_flag,
- output logic	    halt 	   
-);
+module control_unit(
+	output logic [1:0] ALUsrc,
+	output logic [1:0] memtoreg,
+	output logic shift,
+	output logic signzero,
+	output logic [3:0] ALUop,	
+	output logic JAL,
+	output logic regwrite,
+	output logic [2:0] pcselect,
+	output logic [1:0] regdst,
+	output logic branch,
+	output logic request_dmemREN,
+	output logic request_dmemWEN,
+	output logic halt_out,
+	input logic [31:0] imemload
+	//datapath_cache_if.dp dpif
+	);
 
-   always_comb
-     begin
-	dREN = 0;
-	dWEN = 0;
-	aluSource = 0;
-	memToReg = 0;
-	extendType = 0;
-	aluOP = 0;
-	regWrite = 0;
-	nextPC = 0;
-	regDest = 0;
-	branch_flag = 0;
-	halt = 0;
+
+	import cpu_types_pkg::*;
 	
-	casez (iload[31:26])
-	  RTYPE: 
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       memToReg = 1;
-	       extendType = 0;
-	       branch_flag = 0;
-	       regDest = 1;
+	logic [5:0] opcode;
+	logic [4:0] shiftcode;
+	logic [5:0] functioncode;
+	logic flag;
+	
+	assign opcode = imemload[31:26];
+	assign shiftcode = imemload[25:21];
+	assign functioncode = imemload[5:0];
 
-	       casez(iload[5:0])
-		 SLL:
-		   begin
-		      aluSource = 2;
-		      aluOP = ALU_SLL;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 SRL:
-		   begin
-		      aluSource = 2;
-		      aluOP = ALU_SRL;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 JR:
-		   begin
-		      aluSource = 0;
-		      aluOP = 0;
-		      nextPC = 2;
-		      regWrite = 0;
-		   end
-		 ADDU:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_ADD;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 SUBU:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_SUB;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 AND:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_AND;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 OR:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_OR;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 XOR:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_XOR;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 NOR:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_NOR;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 SLT:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_SLT;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-		 SLTU:
-		   begin
-		      aluSource = 0;
-		      aluOP = ALU_SLTU;
-		      nextPC = 0;
-		      regWrite = 1;
-		   end
-	       endcase // casez (iload[5:0]) 
-	    end
-	  ADDIU: 
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       memToReg = 1;
-	       extendType = 1;
-	       branch_flag = 0;
-	       regDest = 0;
-	       aluSource = 1;
-	       aluOP = ALU_ADD;
-	       nextPC = 0;
-	       regWrite = 1;
-	    end
-	  ANDI:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 1;
-	       memToReg = 1;
-	       extendType = 0;
-	       aluOP = ALU_AND;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  BEQ:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 0;
-	       memToReg = 0;
-	       extendType = 1;
-	       aluOP = ALU_SUB;
-	       regWrite = 0;
-	       nextPC = 1;
-	       regDest = 0;
-	       branch_flag = 1;
-	    end
-	  BNE:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 0;
-	       memToReg = 0;
-	       extendType = 1;
-	       aluOP = ALU_SUB;
-	       regWrite = 0;
-	       nextPC = 1;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  LUI:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 0;
-	       memToReg = 3;
-	       extendType = 1;
-	       aluOP = 0;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end 
-	  LW:
-	    begin
-	       dREN = 1;
-	       dWEN = 0;
-	       aluSource = 1;
-	       memToReg = 2;
-	       extendType = 1;
-	       aluOP = ALU_ADD;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  ORI:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 1;
-	       memToReg = 1;
-	       extendType = 0;
-	       aluOP = ALU_OR;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  SLTI:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 1;
-	       memToReg = 1;
-	       extendType = 1;
-	       aluOP = ALU_SLT;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  SLTIU:
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 1;
-	       memToReg = 1;
-	       extendType = 1;
-	       aluOP = ALU_SLTU;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  SW:
-	    begin
-	       dREN = 0;
-	       dWEN = 1;
-	       aluSource = 1;
-	       memToReg = 0;
-	       extendType = 1;
-	       aluOP = ALU_ADD;
-	       regWrite = 0;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  XORI: 
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 1;
-	       memToReg = 1;
-	       extendType = 0;
-	       aluOP = ALU_XOR;
-	       regWrite = 1;
-	       nextPC = 0;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  J: 
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 0;
-	       memToReg = 0;
-	       extendType = 0;
-	       aluOP = 0;
-	       regWrite = 0;
-	       nextPC = 3;
-	       regDest = 0;
-	       branch_flag = 0;
-	    end
-	  JAL: 
-	    begin
-	       dREN = 0;
-	       dWEN = 0;
-	       aluSource = 0;
-	       memToReg = 0;
-	       extendType = 0;
-	       aluOP = 0;
-	       regWrite = 1;
-	       nextPC = 2;
-	       regDest = 2;
-	       branch_flag = 0;
-	    end
-	  HALT:
-            begin
-	       halt = 1;
-            end
-	endcase // casez (iload[31:26])	  
-     end
-endmodule
+	always_comb
+	begin
+		halt_out = 0;		
+		if (opcode == 6'b111111) begin
+			halt_out = 1;
+		end
+	end
 
+	always_comb
+	begin
+
+		ALUsrc = 0;
+		memtoreg = 0;
+		shift = 0;
+		signzero = 0;
+		ALUop = 0;
+		JAL = 0;
+		regwrite = 0;
+		pcselect = 0;
+		regdst = 0;
+		branch = 0;
+		request_dmemWEN = 0;
+		request_dmemREN = 0;
+
+		if (opcode == 6'b000000) begin
+
+			casez(functioncode)
+				6'b100001 :begin
+					//ADDU
+					ALUop = 4'b0110;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b100100 :begin
+					//AND
+					ALUop = 4'b0010;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b001000 :begin
+					//JR
+					pcselect = 1;
+				end
+				6'b100111 :begin
+					//NOR
+					ALUop = 4'b0101;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b100101 :begin
+					//OR
+					ALUop = 4'b0011;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b101010 :begin
+					//SLT
+					ALUop = 4'b1000;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b101011 :begin
+					//SLTU
+					ALUop = 4'b1001;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b000000 :begin
+					//SLL
+					ALUsrc = 2;
+					//shift = 1;
+					ALUop = 4'b0000;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b000010 :begin
+					//SRL
+					ALUsrc = 2;
+					//shift = 1;
+					ALUop = 4'b0001;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b100011 :begin
+					//SUBU
+					ALUop = 4'b0111;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+				6'b100110 :begin
+					//XOR
+					ALUop = 4'b0100;
+					regwrite = 1;
+					pcselect = 0;
+					regdst = 1;
+				end
+			endcase	
+
+		end else begin
+		//I instruction and J instruction format
+			casez(opcode)
+				6'b001001 :begin
+					//ADDIU
+					ALUsrc = 1;
+					signzero = 1;
+					ALUop = 4'b0110;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b001100 :begin
+					//ANDI
+					ALUsrc = 1;
+					ALUop = 4'b0010;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b000100 :begin
+					//BEQ
+					ALUop = 4'b0111;
+					//not entirely sure
+					branch = 1;
+					signzero = 1;
+					pcselect = 2;
+				end
+				6'b000101 :begin
+					//BNE
+					ALUop = 4'b0111;	
+					branch = 0;	
+					//not entirely sure
+					signzero = 1;
+					pcselect = 2;			
+				end
+				6'b001111 :begin
+					//LUI
+					memtoreg = 2;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b100011 :begin
+					//LW
+					request_dmemREN = 1;
+					ALUsrc = 1;
+					memtoreg = 1;
+					signzero = 1;
+					ALUop = 4'b0110;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b001101 :begin
+					//ORI
+					ALUsrc = 1;
+					signzero = 0;
+					ALUop = 4'b0011;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b001010 :begin
+					//SLTI
+					ALUsrc = 1;
+					signzero = 1;
+					ALUop = 4'b1000;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b001011 :begin
+					//SLTU
+					ALUsrc = 1;
+					signzero = 1;
+					ALUop = 4'b1001;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b101011 :begin
+					//SW
+					request_dmemWEN = 1;
+					ALUsrc = 1;
+					signzero = 1;
+					ALUop = 4'b0110;
+					pcselect = 0;
+				end
+				6'b001110 :begin
+					//XORI
+					ALUsrc = 1;
+					ALUop = 4'b0100;
+					regwrite = 1;
+					pcselect = 0;
+				end
+				6'b000010 :begin
+					//J
+					pcselect = 3;
+				end
+				6'b000011 :begin
+					//JAL
+					JAL = 1;
+					regwrite = 1;
+					pcselect = 3;
+					regdst = 2;
+				end
+			endcase	
+		end
+	end
+		
+
+
+endmodule 
+	
