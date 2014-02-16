@@ -7,7 +7,7 @@ module control_unit(
 	output logic signzero,
 	output logic [3:0] ALUop,	
 	output logic regwrite,
-	output logic [2:0] pcselect,
+	output logic [1:0] pcselect,
 	output logic [1:0] regdst,
 	output logic branch,
 	output logic request_dmemREN,
