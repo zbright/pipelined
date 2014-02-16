@@ -34,7 +34,7 @@ module control_unit(
 	always_comb
 	begin
 		halt_out = 0;		
-		if (opcode == 6'b111111) begin
+		if ((opcode == 6'b111111)&&(functioncode == 6'b111111)) begin
 			halt_out = 1;
 		end
 	end

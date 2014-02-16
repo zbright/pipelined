@@ -4,10 +4,8 @@
 module control_unit(
 	output logic [1:0] ALUsrc,
 	output logic [1:0] memtoreg,
-	output logic shift,
 	output logic signzero,
 	output logic [3:0] ALUop,	
-	output logic JAL,
 	output logic regwrite,
 	output logic [2:0] pcselect,
 	output logic [1:0] regdst,
@@ -44,10 +42,9 @@ module control_unit(
 
 		ALUsrc = 0;
 		memtoreg = 0;
-		shift = 0;
 		signzero = 0;
 		ALUop = 0;
-		JAL = 0;
+		//JAL = 0;
 		regwrite = 0;
 		pcselect = 0;
 		regdst = 0;
@@ -107,7 +104,6 @@ module control_unit(
 				6'b000000 :begin
 					//SLL
 					ALUsrc = 2;
-					//shift = 1;
 					ALUop = 4'b0000;
 					regwrite = 1;
 					pcselect = 0;
@@ -116,7 +112,6 @@ module control_unit(
 				6'b000010 :begin
 					//SRL
 					ALUsrc = 2;
-					//shift = 1;
 					ALUop = 4'b0001;
 					regwrite = 1;
 					pcselect = 0;
@@ -233,7 +228,7 @@ module control_unit(
 				end
 				6'b000011 :begin
 					//JAL
-					JAL = 1;
+					memtoreg = 3;
 					regwrite = 1;
 					pcselect = 3;
 					regdst = 2;
