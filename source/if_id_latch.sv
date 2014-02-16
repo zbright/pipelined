@@ -7,8 +7,8 @@ module if_id_latch (
 	input logic nRST,
 	input [31:0] NPC,
 	input [31:0] imemload,
-	output [31:0] NPC_output,
-	output [31:0] imemload_output
+	output [31:0] NPC_if_id_output,
+	output [31:0] imemload_if_id_output
 
 	);
 	
@@ -17,8 +17,8 @@ module if_id_latch (
 	logic [31:0] temp_NPC_output;
 	logic [31:0] temp_imemload_output;	
 
-	assign NPC_output = temp_NPC_output;
-	assign imemload_output = temp_imemload_output;
+	assign NPC_if_id_output = temp_NPC_output;
+	assign imemload_if_id_output = temp_imemload_output;
 
 	always_ff @(posedge CLK, negedge nRST)
 		begin: IFIDLATCH
