@@ -1,4 +1,4 @@
-module next_pc_mux
+module npc_mux
 (
  input logic [31:0]  pcPlus4,
  input logic [31:0]  jumpRegPC,

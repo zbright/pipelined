@@ -65,7 +65,7 @@ module ex_mem_latch (
 			   temp_branchSelect <= '0;
 			   temp_dmemREN <= '0;
 			   temp_dmemWEN <= '0;
-			   temp_halt_in <= '0;
+			   temp_halt_out <= '0;
 			   temp_rdat1 <= '0;
 			   temp_rdat2 <= '0;
 			   temp_npc <= '0;
@@ -107,10 +107,12 @@ module ex_mem_latch (
    assign npc = temp_npc;
    assign zeroFlag = temp_zeroFlag;
    assign aluResult = temp_aluResult;
-   assign brachDest = temp_branchDest;
+   assign branchDest = temp_branchDest;
    assign upper16 = temp_upper16;
    assign signZero = temp_signZero;
    assign iMemLoad = temp_iMemLoad;
+
+endmodule
    
    
 	

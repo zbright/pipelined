@@ -19,7 +19,7 @@ module mem_wb_latch (
 		     output logic [31:0] aluResult,
 		     output logic [4:0]  branchDest,
 		     output logic [31:0] upper16,
-		     output logic [31:0] dMemLoad
+		     output logic [25:0] dMemLoad
 );
 
    logic [1:0] 				 temp_memtoreg;

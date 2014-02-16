@@ -40,7 +40,7 @@ module ex_mem_latch (
 
    logic [1:0] 				 temp_memtoreg;
    logic 				 temp_regwrite;
-   logic [2:0] 				 temp_pcselect;
+   logic [1:0] 				 temp_pcselect;
    logic 				 temp_branchSelect;
    logic 				 temp_dmemREN;
    logic 				 temp_dmemWEN;
@@ -65,7 +65,7 @@ module ex_mem_latch (
 			   temp_branchSelect <= '0;
 			   temp_dmemREN <= '0;
 			   temp_dmemWEN <= '0;
-			   temp_halt_in <= '0;
+			   temp_halt_out <= '0;
 			   temp_rdat1 <= '0;
 			   temp_rdat2 <= '0;
 			   temp_npc <= '0;

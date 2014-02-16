@@ -1,14 +1,14 @@
 `include "register_file_if.vh"
 `include "cpu_types_pkg.vh"
 
-module if_ex_latch (
-
+module id_ex_latch (
+	input CLK,
+	input nRST,
 	input logic [1:0] ALUsrc,
 	input logic [1:0] memtoreg,
-	input logic signzero,
 	input logic [3:0] ALUop,	
 	input logic regwrite,
-	input logic [2:0] pcselect,
+	input logic [1:0] pcselect,
 	input logic [1:0] regdst,
 	input logic branch,
 	input logic request_dmemREN,
@@ -20,29 +20,27 @@ module if_ex_latch (
 	input logic [31:0] imemload,
 	input logic [31:0] uppersixteen,
 	input logic [31:0] signzerovalue,
-	output logic [1:0] ALUsrc_if_ex_output,
-	output logic [1:0] memtoreg_if_ex_output,
-	output logic signzero_if_ex_output,
-	output logic [3:0] ALUop_if_ex_output,	
-	output logic regwrite_if_ex_output,
-	output logic [2:0] pcselect_if_ex_output,
-	output logic [1:0] regdst_if_ex_output,
-	output logic branch_if_ex_output,
-	output logic request_dmemREN_if_ex_output,
-	output logic request_dmemWEN_if_ex_output,
-	output logic halt_out_if_ex_output,
-	output logic [31:0] NPC_if_ex_output,
-	output logic [31:0] rdat_one_if_ex_output,
-	output logic [31:0] rdat_two_if_ex_output,
-	output logic [31:0] imemload_if_ex_output,
-	output logic [31:0] uppersixteen_if_ex_output,
-	output logic [31:0] signzerovalue_if_ex_output
+	output logic [1:0] ALUsrc_id_ex_output,
+	output logic [1:0] memtoreg_id_ex_output,
+	output logic [3:0] ALUop_id_ex_output,	
+	output logic regwrite_id_ex_output,
+	output logic [1:0] pcselect_id_ex_output,
+	output logic [1:0] regdst_id_ex_output,
+	output logic branch_id_ex_output,
+	output logic request_dmemREN_id_ex_output,
+	output logic request_dmemWEN_id_ex_output,
+	output logic halt_out_id_ex_output,
+	output logic [31:0] NPC_id_ex_output,
+	output logic [31:0] rdat_one_id_ex_output,
+	output logic [31:0] rdat_two_id_ex_output,
+	output logic [31:0] imemload_id_ex_output,
+	output logic [31:0] uppersixteen_id_ex_output,
+	output logic [31:0] signzerovalue_id_ex_output
 
 	);
 	
 	logic [1:0] temp_ALUsrc_output;
 	logic [1:0] temp_memtoreg_output;
-	logic temp_signzero_output;
 	logic [3:0] temp_ALUop_output;
 	logic temp_regwrite_output;
  	logic [2:0] temp_pcselect_output;
@@ -59,23 +57,22 @@ module if_ex_latch (
 	logic [31:0] temp_signzerovalue_output;
 
 
-	assign ALUsrc_if_ex_output = temp_ALUsrc_output;
-	assign memtoreg_if_ex_output = temp_memtoreg_output;
-	assign signzero_if_ex_output = temp_signzero_output;
-	assign ALUop_if_ex_output = temp_ALUop_output;
-	assign regwrite_if_ex_output = temp_regwrite_output;
-	assign pcselect_if_ex_output = temp_pcselect_output;
-	assign regdst_if_ex_output = temp_regdst_output;
-	assign branch_if_ex_output = temp_branch_output;
-	assign request_dmemREN_if_ex_output = temp_request_dmemREN_output;
-	assign request_dmemWEN_if_ex_output = temp_request_dmemWEN_output;
-	assign halt_out_if_ex_output = temp_halt_out_output;
-	assign NPC_if_ex_output = temp_NPC_output;
-	assign rdat_one_if_ex_output = temp_rdat_one_output;
-	assign rdat_two_if_ex_output = temp_rdat_two_output;
-	assign imemload_if_ex_output = temp_imemload_output;
-	assign uppersixteen_if_ex_output = temp_uppersixteen_output;
-	assign signzerovalue_if_ex_output = temp_signzerovalue_output;
+	assign ALUsrc_id_ex_output = temp_ALUsrc_output;
+	assign memtoreg_id_ex_output = temp_memtoreg_output;
+	assign ALUop_id_ex_output = temp_ALUop_output;
+	assign regwrite_id_ex_output = temp_regwrite_output;
+	assign pcselect_id_ex_output = temp_pcselect_output;
+	assign regdst_id_ex_output = temp_regdst_output;
+	assign branch_id_ex_output = temp_branch_output;
+	assign request_dmemREN_id_ex_output = temp_request_dmemREN_output;
+	assign request_dmemWEN_id_ex_output = temp_request_dmemWEN_output;
+	assign halt_out_id_ex_output = temp_halt_out_output;
+	assign NPC_id_ex_output = temp_NPC_output;
+	assign rdat_one_id_ex_output = temp_rdat_one_output;
+	assign rdat_two_id_ex_output = temp_rdat_two_output;
+	assign imemload_id_ex_output = temp_imemload_output;
+	assign uppersixteen_id_ex_output = temp_uppersixteen_output;
+	assign signzerovalue_id_ex_output = temp_signzerovalue_output;
 	
 
 	always_ff @(posedge CLK, negedge nRST)
@@ -83,7 +80,6 @@ module if_ex_latch (
 			if (nRST == 0) begin
 				temp_ALUsrc_output <= 0;
 				temp_memtoreg_output <= 0;
-				temp_signzero_output <= 0;
 				temp_ALUop_output <= 0;
 				temp_regwrite_output <= 0;
  				temp_pcselect_output <= 0;
@@ -101,7 +97,6 @@ module if_ex_latch (
 			end else begin
 				temp_ALUsrc_output <= ALUsrc;
 				temp_memtoreg_output <= memtoreg;
-				temp_signzero_output <= signzero;
 				temp_ALUop_output <= ALUop;
 				temp_regwrite_output <= regwrite;
  				temp_pcselect_output <= pcselect;

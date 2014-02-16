@@ -41,7 +41,7 @@ module datapath (
 	logic [3:0] ALUop;	
 	logic JAL;
 	logic regwrite;
-	logic [2:0] pcselect;
+	logic [1:0] pcselect;
 	logic [1:0] regdst;
 	logic branch;
 	logic request_dmemREN;
@@ -68,7 +68,59 @@ module datapath (
 	logic branch_xnor_output;
 	//branch mux
 	logic [31:0] branch_mux_output;
-
+	//ifid
+	logic [31:0] NPC_if_id_output;
+	logic [31:0] imemload_if_id_output;
+	//idex signals
+	logic [1:0] ALUsrc_id_ex_output;
+	logic [1:0] memtoreg_id_ex_output;
+	logic signzero_id_ex_output;
+	logic [3:0] ALUop_id_ex_output;	
+	logic regwrite_id_ex_output;
+	logic [1:0] pcselect_id_ex_output;
+	logic [1:0] regdst_id_ex_output;
+	logic branch_id_ex_output;
+	logic request_dmemREN_id_ex_output;
+	logic request_dmemWEN_id_ex_output;
+	logic halt_out_id_ex_output;
+	logic [31:0] NPC_id_ex_output;
+	logic [31:0] rdat_one_id_ex_output;
+	logic [31:0] rdat_two_id_ex_output;
+	logic [31:0] imemload_id_ex_output;
+	logic [31:0] uppersixteen_id_ex_output;
+	logic [31:0] signzerovalue_id_ex_output;
+	//exmem signals
+	logic [1:0]  	memtoreg_ex_mem_output;
+	logic 	 	regwrite_ex_mem_output;
+	logic [1:0]  	pcselect_ex_mem_output;
+	logic 	 	branchSelect_ex_mem_output;
+	logic 	 	dmemREN_ex_mem_output;
+	logic 	 	dmemWEN_ex_mem_output;
+	logic 	 	halt_out_ex_mem_output;
+	logic [31:0] 	rdat1_ex_mem_output;
+	logic [31:0] 	rdat2_ex_mem_output;
+	logic [31:0] 	npc_ex_mem_output;
+	logic 	 	zeroFlag_ex_mem_output;
+	logic [31:0] 	aluResult_ex_mem_output;
+	logic [4:0]  	branchDest_ex_mem_output;
+	logic [31:0] 	upper16_ex_mem_output;
+	logic [31:0] 	signZero_ex_mem_output;
+	logic [25:0] 	iMemLoad_ex_mem_output;
+	//memwb signals
+	logic [1:0]  	memtoreg_mem_wb_output;
+	logic 	 	regwrite_mem_wb_output;
+	logic [1:0]  	pcselect_mem_wb_output;
+	logic [31:0] 	npc_mem_wb_output;
+	logic [31:0] 	aluResult_mem_wb_output;
+	logic [4:0]  	branchDest_mem_wb_output;
+	logic [31:0] 	upper16_mem_wb_output;
+	logic [31:0] 	dMemLoad_mem_wb_output;
+	
+	//misc
+	logic [31:0] uppersixteen;
+	logic [4:0] branchDest_input;
+	logic [31:0] branchPC;
+	logic [31:0] jumpPC;
 
 	// pc init
   parameter PC_INIT = 0;
@@ -85,17 +137,19 @@ module datapath (
 	//setting IO
 	assign read_data_one_output = registerval.rdat1;
 	assign read_data_two_output = registerval.rdat2;
-	assign registerval.rsel1 = dpif.imemload[25:21];
-	assign registerval.rsel2 = dpif.imemload[20:16];
-	assign registerval.WEN = regwrite;
+	assign registerval.rsel1 = imemload_if_id_output[25:21];
+	assign registerval.rsel2 = imemload_if_id_output[20:16];
+	assign registerval.WEN = regwrite_mem_wb_output;
+	assign registerval.wsel = branchDest_mem_wb_output;
+	assign registerval.wdat = writedata_output;
 	assign dpif.imemREN = 1;
-	assign dpif.dmemstore = registerval.rdat2;
+	assign dpif.dmemstore = rdat2_ex_mem_output;
 	//assign dpif.halt = 0;
 
 	//instantiation
 	program_count PC(
 			.ihit(dpif.ihit),
-			.halt(dpif.halt),
+			.halt(halt_out_ex_mem_output),
 			.CLK(CLK),
 			.nRST(nRST),
 			.next_pc_count(next_pc_count),
@@ -111,17 +165,15 @@ module datapath (
 	control_unit REQUEST(
 				.ALUsrc(ALUsrc),
 				.memtoreg(memtoreg),
-				.shift(shift),
 				.signzero(signzero),
 				.ALUop(ALUop),
-				.JAL(JAL),
 				.regwrite(regwrite),
 				.pcselect(pcselect),
 				.regdst(regdst),
 				.branch(branch),
 				.request_dmemREN(request_dmemREN),
 				.request_dmemWEN(request_dmemWEN),
-				.imemload(dpif.imemload),
+				.imemload(imemload_if_id_output),
 				.halt_out(dpif.halt)
 				);
 
@@ -130,9 +182,9 @@ module datapath (
 	
 	//instantiation of ALU
 	alu ALU(
-		.A(alu_input_one),
+		.A(rdat_one_id_ex_output),
 		.B(alu_input_two),
-		.OPCODE(ALU_OPCODE),
+		.OPCODE(ALUop_id_ex_output),
 		.OUTPUT(ALU_OUTPUT),
 		.NEGATIVE(ALU_NEGATIVE),
 		.OVERFLOW(ALU_OVERFLOW),
@@ -142,14 +194,14 @@ module datapath (
 	//setting IO
 	
 	assign ALU_OPCODE = ALUop;					
-	assign dpif.dmemaddr = ALU_OUTPUT;
+	assign dpif.dmemaddr = aluResult_ex_mem_output;
 
 	//instantiation of REQUEST BLOCK
 	request_unit RB(
 		.CLK(CLK),
 		.dhit(dpif.dhit),
-		.request_dmemREN(request_dmemREN),
-		.request_dmemWEN(request_dmemWEN),
+		.request_dmemREN(dmemREN_ex_mem_output),
+		.request_dmemWEN(dmemWEN_ex_mem_output),
 		.request_dmemREN_output(request_dmemREN_output),
 		.request_dmemWEN_output(request_dmemWEN_output)
 		);
@@ -158,137 +210,176 @@ module datapath (
 	
 	assign dpif.dmemWEN = request_dmemWEN_output;
 	assign dpif.dmemREN = request_dmemREN_output;
+
+	//instantiation of IF ID LATCH
+	if_id_latch IFID(
+			.CLK(CLK),
+			.nRST(nRST),
+			.NPC(next_pc_count),
+			.imemload(dpif.imemload),
+			.NPC_if_id_output(NPC_if_id_output),
+			.imemload_if_id_output(imemload_if_id_output)
+			);
 	
+	//instantiation of ID EX LATCH
+	id_ex_latch IDEX(
+			.CLK(CLK),
+			.nRST(nRST),
+			.ALUsrc(ALUsrc),
+			.memtoreg(memtoreg),
+			.ALUop(ALUop),	
+			.regwrite(regwrite),
+			.pcselect(pcselect),
+			.regdst(regdst),
+			.branch(branch),
+			.request_dmemREN(request_dmemREN),
+			.request_dmemWEN(request_dmemWEN),
+			.halt_out(dpif.halt),
+			.NPC(NPC_if_id_output),
+			.rdat_one(read_data_one_output),
+			.rdat_two(read_data_two_output),
+			.imemload(imemload_if_id_output),
+			.uppersixteen(uppersixteen),
+			.signzerovalue(signzero_output),
+			.ALUsrc_id_ex_output(ALUsrc_id_ex_output),
+			.memtoreg_id_ex_output(memtoreg_id_ex_output),
+			.ALUop_id_ex_output(ALUop_id_ex_output),	
+			.regwrite_id_ex_output(regwrite_id_ex_output),
+			.pcselect_id_ex_output(pcselect_id_ex_output),
+			.regdst_id_ex_output(regdst_id_ex_output),
+			.branch_id_ex_output(branch_id_ex_output),
+			.request_dmemREN_id_ex_output(request_dmemREN_id_ex_output),
+			.request_dmemWEN_id_ex_output(request_dmemWEN_id_ex_output),
+			.halt_out_id_ex_output(halt_out_id_ex_output),
+			.NPC_id_ex_output(NPC_id_ex_output),
+			.rdat_one_id_ex_output(rdat_one_id_ex_output),
+			.rdat_two_id_ex_output(rdat_two_id_ex_output),
+			.imemload_id_ex_output(imemload_id_ex_output),
+			.uppersixteen_id_ex_output(uppersixteen_id_ex_output),
+			.signzerovalue_id_ex_output(signzerovalue_id_ex_output)
+			);		
 
-	//MUX
-	always_comb
-	begin: SHIFT
-		if (shift == 0) begin
-			alu_input_one = read_data_one_output;
-		end else begin
-			alu_input_one = read_data_two_output;
-		end
-	end
+	//instantiation of EX MEM
+	ex_mem_latch EXMEM(
+			.CLK(CLK),
+			.nRST(nRST),
+			.memtoreg_in(memtoreg_id_ex_output),
+			.regwrite_in(regwrite_id_ex_output),
+			.pcselect_in(pcselect_id_ex_output),
+			.branchSelect_in(branch_id_ex_output),
+			.dmemREN_in(request_dmemREN_id_ex_output),
+			.dmemWEN_in(request_dmemWEN_id_ex_output),
+			.halt_in(halt_out_id_ex_output),
+			.rdat1_in(rdat_one_id_ex_output),
+			.rdat2_in(rdat_two_id_ex_output),
+			.npc_in(NPC_id_ex_output),
+			.zeroFlag_in(ALU_ZERO),
+			.aluResult_in(ALU_OUTPUT),
+			.branchDest_in(branchDest_input),
+			.upper16_in(uppersixteen_id_ex_output),
+			.signZero_in(signzerovalue_id_ex_output),
+			.iMemLoad_in(imemload_id_ex_output[25:0]),
+			.memtoreg(memtoreg_ex_mem_output),
+			.regwrite(regwrite_ex_mem_output),
+			.pcselect(pcselect_ex_mem_output),
+			.branchSelect(branchSelect_ex_mem_output),
+			.dmemREN(dmemREN_ex_mem_output),
+			.dmemWEN(dmemWEN_ex_mem_output),
+			.halt_out(halt_out_ex_mem_output),
+			.rdat1(rdat1_ex_mem_output),
+			.rdat2(rdat2_ex_mem_output),
+			.npc(npc_ex_mem_output),
+			.zeroFlag(zeroFlag_ex_mem_output),
+			.aluResult(aluResult_ex_mem_output),
+			.branchDest(branchDest_ex_mem_output),
+			.upper16(upper16_ex_mem_output),
+			.signZero(signZero_ex_mem_output),
+			.iMemLoad(iMemLoad_ex_mem_output)
+			);
 
-	//MUX
-	always_comb
-	begin: SIGNZERO
-		if ((signzero == 0) || (dpif.imemload[15] == 0)) begin
-			signzero_output = {{16{1'b0}}, dpif.imemload[15:0]};
-		end else begin
-			signzero_output = {{16{1'b1}}, dpif.imemload[15:0]};
-		end
-	end
-				
+	//instantiation of MEM WB
+	mem_wb_latch MEMWB(
+			.CLK(CLK),
+			.nRST(nRST),
+			.memtoreg_in(memtoreg_ex_mem_output),
+			.regwrite_in(regwrite_ex_mem_output),
+			.pcselect_in(pcselect_ex_mem_output),
+			.npc_in(npc_ex_mem_output),
+			.aluResult_in(aluResult_ex_mem_output),
+			.branchDest_in(branchDest_ex_mem_output),
+			.upper16_in(upper16_ex_mem_output),
+			.dMemLoad_in(dpif.dmemload),
+			.memtoreg(memtoreg_mem_wb_output),
+			.regwrite(regwrite_mem_wb_output),
+			.pcselect(pcselect_mem_wb_output),
+			.npc(npc_mem_wb_output),
+			.aluResult(aluResult_mem_wb_output),
+			.branchDest(branchDest_mem_wb_output),
+			.upper16(upper16_mem_wb_output),
+			.dMemLoad(dMemLoad_mem_wb_output)
+			);
+
+	//instantiate branch mux
+	branch_mux BRANCHMUX(
+			.nextPC(pc_count_four_output),
+			.branchPC(branch_count_output),
+			.branchSelect(branch_xnor_output),
+			.out(branch_mux_output)
+			);
+
+
+	//instantiate NPC mux
+	npc_mux NPCMUX(
+			.pcPlus4(pc_count_four_output),
+			.jumpRegPC(rdat1_ex_mem_output),
+			.branchPC(branch_mux_output),
+			.jumpPC(jumpPC),
+			.nextPCSelect(pcselect_ex_mem_output),
+			.out(next_pc_count)
+			);
+
+	//instantiate extender mux
+	extender EXTENDER(
+			.immediate(imemload_id_ex_output[15:0]),
+			.extend_code(signzero),
+			.extended_imm(signzero_output)
+			);
+
+	//instantiate alu source mux
+	alu_source_mux ALUSRCMUX(
+			.readReg2(read_data_two_output),
+			.extendedImmediate(signzerovalue_id_ex_output),
+			.shiftAmount(imemload_id_ex_output[10:6]),
+			.aluSource(ALUsrc_id_ex_output),
+			.out(alu_input_two)
+			);
+
+	//instantiate reg dest mux
+	reg_dest_mux REGDESTMUX(
+			.rt(imemload_id_ex_output[20:16]),
+			.rd(imemload_id_ex_output[15:11]),
+			.regDest(regdst_id_ex_output),
+			.out(branchDest_input)
+			);
 	
-	//MUX
-	always_comb
-	begin: ALUSRC
-		if (ALUsrc == 0) begin
-			alu_input_two = read_data_two_output;
-		end else if (ALUsrc == 1) begin
-			alu_input_two = signzero_output;
-		end else if (ALUsrc == 2) begin
-			alu_input_two = {{27{1'b0}},dpif.imemload[10:6]};		
-		end else begin
-			alu_input_two = 0;
-		end
-	end
-
-	//MUX
-	always_comb
-	begin: MEMTOREG
-		if (memtoreg == 0) begin
-			writedata_output = ALU_OUTPUT;
-		end else if (memtoreg == 1) begin
-			writedata_output = dpif.dmemload;
-		end else if (memtoreg == 2) begin
-			writedata_output = {dpif.imemload[15:0], 16'b0};		
-		end else begin
-			writedata_output = 0;
-		end
-	end
-				
-
-	//MUX
-	always_comb
-	begin: REGDST
-		if (regdst == 0) begin
-			registerval.wsel = dpif.imemload[20:16];
-		end else if (regdst == 1) begin
-			registerval.wsel = dpif.imemload[15:11];
-		end else if (regdst == 2) begin
-			registerval.wsel = 31;		
-		end else begin
-			registerval.wsel = 0;
-		end
-	end
-
-	//MUX
-	always_comb
-	begin: JUMPANDLINK
-		if (JAL == 0) begin
-			registerval.wdat = writedata_output;
-		end else if (JAL == 1) begin
-			registerval.wdat = pc_count_four_output;	
-		end else begin
-			registerval.wdat = 0;
-		end
-	end
-
-	//should this be sequential or combinational
-	//MUX
-	//always_ff @(posedge CLK, negedge nRST)
-	//begin: PCADDBLOCK
-	//begin
+	//instantiate mem to mex
+	mem_to_reg_mux MEMTOREG(
+			.aluOut(aluResult_ex_mem_output),
+			.dload(dMemLoad_mem_wb_output),
+			.shiftedImmediate(upper16_ex_mem_output),
+			.npc(npc_mem_wb_output),
+			.memToReg(memtoreg_mem_wb_output),
+			.out(writedata_output)
+			);	
+	
 		assign pc_count_four_output = current_pc_count + 4;
-	//end
-
+		assign branch_count_output = (signZero_ex_mem_output << 2) + npc_ex_mem_output;
+		assign branch_xnor_output = ~(branchSelect_ex_mem_output ^ zeroFlag_ex_mem_output);
+		assign jumpPC = {pc_count_four_output[31:28], (iMemLoad_ex_mem_output << 2)};
+		assign uppersixteen = imemload_id_ex_output[15:0] << 16;
 	
-	//MUX
-	always_comb
-	begin: BRANCHADD
-		branch_count_output = (signzero_output << 2) + pc_count_four_output;
-	end
-
-	//BRANCH XNOR
-	always_comb
-	begin: BRANCHXNOR
-		branch_xnor_output = ~(branch ^ ALU_ZERO);
-	end
 	
-	//BRANCH MUX
-	always_comb
-	begin: BRANCHMUX
-		if (branch_xnor_output == 0) begin
-			branch_mux_output = pc_count_four_output;
-		end else if (branch_xnor_output == 1) begin
-			branch_mux_output = branch_count_output;	
-		end else begin
-			branch_mux_output = 0;
-		end
-	end
-
-	//MUX
-	always_comb
-	begin: NEXTPCSELECT
-		if (pcselect == 0) begin
-			next_pc_count = pc_count_four_output;
-			//next_pc_count = branch_mux_output;
-		end else if (pcselect == 1) begin
-			next_pc_count = registerval.rdat1;
-		end else if (pcselect == 2) begin
-			//next_pc_count = 99;
-			//next_pc_count = pc_count_four_output;
-			next_pc_count = branch_mux_output;
-		end else if (pcselect == 3) begin
-			//double check to see if this a valid operation
-			next_pc_count = {pc_count_four_output[31:28], (dpif.imemload[25:0] << 2)};	
-		end else begin
-			next_pc_count = 0;
-		end
-	end
-
+	
 	
 
 endmodule
