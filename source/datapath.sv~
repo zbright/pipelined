@@ -163,7 +163,7 @@ module datapath (
 
 
 	//instantiation of CONTROL_UNIT
-	control_unit REQUEST(
+	control_unit CONTROLUNIT(
 				.ALUsrc(ALUsrc),
 				.memtoreg(memtoreg),
 				.signzero(signzero),
@@ -209,11 +209,11 @@ module datapath (
 
 	//setting IO
 	
-	assign dpif.dmemWEN = request_dmemWEN_output;
-	assign dpif.dmemREN = request_dmemREN_output;
+	//assign dpif.dmemWEN = request_dmemWEN_output;
+	//assign dpif.dmemREN = request_dmemREN_output;
 
-	//assign dpif.dmemWEN = dmemWEN_ex_mem_output;
-	//assign dpif.dmemREN = dmemREN_ex_mem_output;
+	assign dpif.dmemWEN = dmemWEN_ex_mem_output;
+	assign dpif.dmemREN = dmemREN_ex_mem_output;
 
 
 	//instantiation of IF ID LATCH
@@ -222,6 +222,7 @@ module datapath (
 			.nRST(nRST),
 			.NPC(next_pc_count),
 			.imemload(dpif.imemload),
+			.dhit(dpif.dhit),
 			.NPC_if_id_output(NPC_if_id_output),
 			.imemload_if_id_output(imemload_if_id_output)
 			);
@@ -246,6 +247,7 @@ module datapath (
 			.imemload(imemload_if_id_output),
 			.uppersixteen(uppersixteen),
 			.signzerovalue(signzero_output),
+			.dhit(dpif.dhit),
 			.ALUsrc_id_ex_output(ALUsrc_id_ex_output),
 			.memtoreg_id_ex_output(memtoreg_id_ex_output),
 			.ALUop_id_ex_output(ALUop_id_ex_output),	
@@ -278,12 +280,14 @@ module datapath (
 			.rdat1_in(rdat_one_id_ex_output),
 			.rdat2_in(rdat_two_id_ex_output),
 			.npc_in(NPC_id_ex_output),
+			.dhit(dpif.dhit).
 			.zeroFlag_in(ALU_ZERO),
 			.aluResult_in(ALU_OUTPUT),
 			.branchDest_in(branchDest_input),
 			.upper16_in(uppersixteen_id_ex_output),
 			.signZero_in(signzerovalue_id_ex_output),
 			.iMemLoad_in(imemload_id_ex_output[25:0]),
+			.dhit(dpif.dhit),
 			.memtoreg(memtoreg_ex_mem_output),
 			.regwrite(regwrite_ex_mem_output),
 			.pcselect(pcselect_ex_mem_output),
@@ -302,8 +306,8 @@ module datapath (
 			.iMemLoad(iMemLoad_ex_mem_output)
 			);
 
-	//assign dpif.halt = halt_out_ex_mem_output;
-        assign dpif.halt = 0;
+	assign dpif.halt = halt_out_ex_mem_output;
+        //assign dpif.halt = 0;
 	//instantiation of MEM WB
 	mem_wb_latch MEMWB(
 			.CLK(CLK),

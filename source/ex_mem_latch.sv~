@@ -20,7 +20,7 @@ module ex_mem_latch (
 		     input logic [31:0]  upper16_in,
 		     input logic [31:0]  signZero_in,
 		     input logic [25:0]  iMemLoad_in,
-			input logic dhit,
+		     input logic 	 dhit,
 		     output logic [1:0]  memtoreg,
 		     output logic 	 regwrite,
 		     output logic [1:0]  pcselect,
@@ -76,7 +76,7 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
-			end else begin // if (nRST == 0)
+			end else if(!dhit) begin // if (nRST == 0)
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
@@ -105,17 +105,18 @@ module ex_mem_latch (
 			dmemREN = 0;
 			dmemWEN = 0;
 		end else begin
-		dmemREN = dmemREN_in;
-		dmemWEN = dmemWEN_in;
+			dmemREN = dmemREN_in;
+			dmemWEN = dmemWEN_in;
 		end
 	end
+
 
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
    assign pcselect = temp_pcselect;
    assign branchSelect = temp_branchSelect;
-   //assign dmemREN = temp_dmemREN;
-   //assign dmemWEN = temp_dmemWEN;
+   assign dmemREN = temp_dmemREN;
+   assign dmemWEN = temp_dmemWEN;
    assign halt_out = temp_halt_out;
    assign rdat1 = temp_rdat1;
    assign rdat2 = temp_rdat2;

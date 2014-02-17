@@ -198,22 +198,22 @@ module datapath (
 	assign dpif.dmemaddr = aluResult_ex_mem_output;
 
 	//instantiation of REQUEST BLOCK
-	request_unit RB(
+	/*request_unit RB(
 		.CLK(CLK),
 		.dhit(dpif.dhit),
 		.request_dmemREN(dmemREN_ex_mem_output),
 		.request_dmemWEN(dmemWEN_ex_mem_output),
 		.request_dmemREN_output(request_dmemREN_output),
 		.request_dmemWEN_output(request_dmemWEN_output)
-		); 
+		); */
 
 	//setting IO
 	
-	assign dpif.dmemWEN = request_dmemWEN_output;
-	assign dpif.dmemREN = request_dmemREN_output;
+	//assign dpif.dmemWEN = request_dmemWEN_output;
+	//assign dpif.dmemREN = request_dmemREN_output;
 
-	//assign dpif.dmemWEN = dmemWEN_ex_mem_output;
-	//assign dpif.dmemREN = dmemREN_ex_mem_output;
+	assign dpif.dmemWEN = dmemWEN_ex_mem_output;
+	assign dpif.dmemREN = dmemREN_ex_mem_output;
 
 
 	//instantiation of IF ID LATCH

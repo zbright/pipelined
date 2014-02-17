@@ -64,8 +64,8 @@ module ex_mem_latch (
 			   temp_regwrite <= '0;
 			   temp_pcselect <= '0;
 			   temp_branchSelect <= '0;
-			   temp_dmemREN <= '0;
-			   temp_dmemWEN <= '0;
+			   //temp_dmemREN <= '0;
+			   //temp_dmemWEN <= '0;
 			   temp_halt_out <= '0;
 			   temp_rdat1 <= '0;
 			   temp_rdat2 <= '0;
@@ -81,8 +81,8 @@ module ex_mem_latch (
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
 			   temp_branchSelect <= branchSelect_in;
-			   temp_dmemREN <= dmemREN_in;
-			   temp_dmemWEN <= dmemWEN_in;
+			   //temp_dmemREN <= dmemREN_in;
+			   //temp_dmemWEN <= dmemWEN_in;
 			   temp_halt_out <= halt_in;
 			   temp_rdat1 <= rdat1_in;
 			   temp_rdat2 <= rdat2_in;
@@ -95,6 +95,21 @@ module ex_mem_latch (
 			   temp_iMemLoad <= iMemLoad_in;
 			end
 		end
+
+	always_ff@(posedge CLK)
+	begin
+		//not sure where to put it
+		temp_dmemREN = dmemREN_in;
+		temp_dmemWEN = dmemWEN_in;
+		if (dhit == 1) begin
+			temp_dmemREN = 0;
+			temp_dmemWEN = 0;
+		end else begin
+			temp_dmemREN = dmemREN_in;
+			temp_dmemWEN = dmemWEN_in;
+		end
+	end
+
 
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
