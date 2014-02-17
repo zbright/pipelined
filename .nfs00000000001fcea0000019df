@@ -1,0 +1,205 @@
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {view objects; do scripts/system.do; run 1000;} -onfinish stop -wlf system_tb.wlf work.system_tb 
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# view objects 
+# .main_pane.objects.interior.cs.body.tree
+#  do scripts/system.do 
+# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/REQUEST/request_dmemREN'.
+# Executing ONERROR command at macro ./scripts/system.do line 13
+# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/REQUEST/request_dmemWEN'.
+# Executing ONERROR command at macro ./scripts/system.do line 14
+# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/RB/request_dmemREN_output'.
+# Executing ONERROR command at macro ./scripts/system.do line 22
+# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/RB/request_dmemWEN_output'.
+# Executing ONERROR command at macro ./scripts/system.do line 23
+#  run 1000 
+# Starting Processor.
+# Halted at 920 time and ran for         45 cycles.
+# Starting memory dump.
+#  
+add wave -position end  sim:/system_tb/DUT/CPU/dcif/dmemload
+
+
+ls
+# asmFiles
+# ex mem
+# ex mem~
+# fpga
+# include
+# Makefile
+# mapped
+# memcpu.hex
+# meminit.hex
+# meminit.ver
+# memsim.hex
+# mem wb
+# mem wb~
+# modelsim.ini
+# scripts
+# source
+# system_tb.wlf
+# testbench
+# transcript
+# wlft6Os6xI
+# wlftAMhBW6
+# wlftgUEXv5
+# wlftiFdsyD
+# wlftkLzJIh
+# wlftNJCm9E
+# wlftojcmOp
+# wlftp319eQ
+# wlftqXBmf4
+# work
+restart -f
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+run 1000
+# Starting Processor.
+# Halted at 920 time and ran for         45 cycles.
+# Starting memory dump.
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/WEN
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/wsel
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/rsel1
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/rsel2
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/wdat
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/rdat1
+add wave -position end  sim:/system_tb/DUT/CPU/DP/registerval/rdat2
+
+
+rsetart -f
+# invalid command name "rsetart"
+restart -f
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+run 1000
+# Starting Processor.
+# Halted at 920 time and ran for         45 cycles.
+# Starting memory dump.
+add wave -position end  sim:/system_tb/DUT/CPU/DP/REGISTER/storeregister
+restart -f
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+run 1000
+# Starting Processor.
+# Halted at 920 time and ran for         45 cycles.
+# Starting memory dump.

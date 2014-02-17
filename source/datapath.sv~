@@ -280,7 +280,6 @@ module datapath (
 			.rdat1_in(rdat_one_id_ex_output),
 			.rdat2_in(rdat_two_id_ex_output),
 			.npc_in(NPC_id_ex_output),
-			.dhit(dpif.dhit).
 			.zeroFlag_in(ALU_ZERO),
 			.aluResult_in(ALU_OUTPUT),
 			.branchDest_in(branchDest_input),

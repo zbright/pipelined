@@ -386,7 +386,7 @@ module datapath (
 		assign branch_count_output = (signZero_ex_mem_output << 2) + npc_ex_mem_output;
 		assign branch_xnor_output = ~(branchSelect_ex_mem_output ^ zeroFlag_ex_mem_output);
 		assign jumpPC = {pc_count_four_output[31:28], (iMemLoad_ex_mem_output << 2)};
-		assign uppersixteen = imemload_id_ex_output[15:0] << 16;
+		assign uppersixteen = imemload_if_id_output[15:0] << 16;
 	
 	
 	

@@ -13,11 +13,7 @@ module register_file (
 	always_ff @(posedge CLK, negedge nRST)
 		begin: WRITE
 			if (nRST == 0) begin
-				//for (k = 0; k <31; k++) begin
-				//storeregister <= {default : 0};
 				storeregister <= '0;
-				//end
-
 			end else if (registerval.WEN) begin
 				if (registerval.wsel) begin
 					storeregister[registerval.wsel] <= registerval.wdat;

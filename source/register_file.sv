@@ -10,7 +10,7 @@ module register_file (
 	logic [31:0] [31:0] storeregister; 
 	logic [2:0] k;	
 
-	always_ff @(posedge CLK, negedge nRST)
+	always_ff @(negedge CLK, negedge nRST)
 		begin: WRITE
 			if (nRST == 0) begin
 				storeregister <= '0;
