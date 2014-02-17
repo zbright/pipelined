@@ -3,12 +3,13 @@
 
 module if_id_latch (
 
-	input logic CLK,
-	input logic nRST,
-	input [31:0] NPC,
-	input [31:0] imemload,
-	output [31:0] NPC_if_id_output,
-	output [31:0] imemload_if_id_output
+	input logic 	   CLK,
+	input logic 	   nRST,
+	input logic [31:0] NPC,
+	input logic [31:0] imemload,
+	input logic 	   dhit,
+	output [31:0] 	   NPC_if_id_output,
+	output [31:0] 	   imemload_if_id_output
 
 	);
 	
@@ -23,7 +24,7 @@ module if_id_latch (
 			if (nRST == 0) begin
 				temp_NPC_output <= '0;
 				temp_imemload_output <= '0;
-			end else begin
+			end else if(!dhit) begin
 				temp_NPC_output <= NPC;
 				temp_imemload_output <= imemload;
 			end

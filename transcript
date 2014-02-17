@@ -1,4 +1,5 @@
-# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.el6.x86_64
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run 1000000; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
 # //
 # //  Copyright 1991-2013 Mentor Graphics Corporation
 # //  All Rights Reserved.
@@ -7,7 +8,6 @@
 # //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {view objects; do scripts/system.do; run 1000;} -onfinish stop -wlf system_tb.wlf work.system_tb 
 # Loading sv_std.std
 # Loading work.system_tb
 # Loading work.cpu_types_pkg
@@ -41,63 +41,8 @@
 # Loading altera_mf_ver.altsyncram
 # Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
 # Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
-# view objects 
-# .main_pane.objects.interior.cs.body.tree
-#  do scripts/system.do 
-# ** Error: Unable to lock WLF file "system_tb.wlf". Retrying 1 times, errno 11
-# ** Error: Unable to lock WLF file "system_tb.wlf". Retrying 2 times, errno 11
-# ** Error: Unable to lock WLF file "system_tb.wlf". Retrying 3 times, errno 11
-# ** Error: Cannot lock WLF file: "system_tb.wlf"
-#           errno 11: Resource temporarily unavailable.
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: system_tb.wlf
-#           File in use by: mg200  Hostname: ecegrid-thin1.ecn.purdue.edu  ProcessID: 7535
-#           Attempting to use alternate WLF file "./wlftkLzJIh".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: system_tb.wlf
-#           Using alternate file: ./wlftkLzJIh
-# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/REQUEST/request_dmemREN'.
-# Executing ONERROR command at macro ./scripts/system.do line 13
-# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/REQUEST/request_dmemWEN'.
-# Executing ONERROR command at macro ./scripts/system.do line 14
-#  run 1000 
+# run 1000000 
 # Starting Processor.
-#  
-add wave -position end  sim:/system_tb/DUT/RAM/ramif/memREN
-add wave -position end  sim:/system_tb/DUT/RAM/ramif/memWEN
-add wave -position end  sim:/system_tb/DUT/RAM/ramif/memaddr
-add wave -position end  sim:/system_tb/DUT/RAM/ramif/memstore
-add wave -position end  sim:/system_tb/DUT/syif/load
-
-
-restart -f
-# Loading sv_std.std
-# Loading work.system_tb
-# Loading work.cpu_types_pkg
-# Loading work.system_if
-# Loading work.test
-# Loading work.system
-# Loading work.cpu_ram_if
-# Loading work.pipeline
-# Loading work.datapath_cache_if
-# Loading work.cache_control_if
-# Loading work.datapath
-# Loading work.register_file_if
-# Loading work.register_file
-# Loading work.program_count
-# Loading work.control_unit
-# Loading work.alu
-# Loading work.request_unit
-# Loading work.if_id_latch
-# Loading work.id_ex_latch
-# Loading work.ex_mem_latch
-# Loading work.mem_wb_latch
-# Loading work.branch_mux
-# Loading work.npc_mux
-# Loading work.extender
-# Loading work.alu_source_mux
-# Loading work.reg_dest_mux
-# Loading work.mem_to_reg_mux
-# Loading work.caches
-# Loading work.memory_control
-# Loading work.ram
-run 1000
-# Starting Processor.
+# Halted at 840 time and ran for         41 cycles.
+# Starting memory dump.
+# Finished memory dump.

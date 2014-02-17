@@ -5,7 +5,7 @@ module mem_wb_latch (
 		     input logic 	 CLK,
 		     input logic 	 nRST,
 		     input logic [1:0] 	 memtoreg_in,
-		     input logic [1:0]   pcselect_in, 	 
+		     input logic [1:0] 	 pcselect_in, 
 		     input logic 	 regwrite_in,
 		     input logic [31:0]  npc_in,
 		     input logic [31:0]  aluResult_in,

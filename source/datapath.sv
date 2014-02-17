@@ -222,6 +222,7 @@ module datapath (
 			.nRST(nRST),
 			.NPC(next_pc_count),
 			.imemload(dpif.imemload),
+			.dhit(dpif.dhit),
 			.NPC_if_id_output(NPC_if_id_output),
 			.imemload_if_id_output(imemload_if_id_output)
 			);
@@ -246,6 +247,7 @@ module datapath (
 			.imemload(imemload_if_id_output),
 			.uppersixteen(uppersixteen),
 			.signzerovalue(signzero_output),
+			.dhit(dpif.dhit),
 			.ALUsrc_id_ex_output(ALUsrc_id_ex_output),
 			.memtoreg_id_ex_output(memtoreg_id_ex_output),
 			.ALUop_id_ex_output(ALUop_id_ex_output),	
@@ -284,6 +286,7 @@ module datapath (
 			.upper16_in(uppersixteen_id_ex_output),
 			.signZero_in(signzerovalue_id_ex_output),
 			.iMemLoad_in(imemload_id_ex_output[25:0]),
+			.dhit(dpif.dhit),
 			.memtoreg(memtoreg_ex_mem_output),
 			.regwrite(regwrite_ex_mem_output),
 			.pcselect(pcselect_ex_mem_output),
@@ -302,8 +305,8 @@ module datapath (
 			.iMemLoad(iMemLoad_ex_mem_output)
 			);
 
-	//assign dpif.halt = halt_out_ex_mem_output;
-        assign dpif.halt = 0;
+	assign dpif.halt = halt_out_ex_mem_output;
+        //assign dpif.halt = 0;
 	//instantiation of MEM WB
 	mem_wb_latch MEMWB(
 			.CLK(CLK),

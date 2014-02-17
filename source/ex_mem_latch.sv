@@ -20,6 +20,7 @@ module ex_mem_latch (
 		     input logic [31:0]  upper16_in,
 		     input logic [31:0]  signZero_in,
 		     input logic [25:0]  iMemLoad_in,
+		     input logic 	 dhit,
 		     output logic [1:0]  memtoreg,
 		     output logic 	 regwrite,
 		     output logic [1:0]  pcselect,
@@ -75,7 +76,7 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
-			end else begin // if (nRST == 0)
+			end else if(!dhit) begin // if (nRST == 0)
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
