@@ -7,7 +7,7 @@ module control_unit(
 	output logic signzero,
 	output logic [3:0] ALUop,	
 	output logic regwrite,
-	output logic [2:0] pcselect,
+	output logic [1:0] pcselect,
 	output logic [1:0] regdst,
 	output logic branch,
 	output logic request_dmemREN,
@@ -52,7 +52,7 @@ module control_unit(
 		request_dmemWEN = 0;
 		request_dmemREN = 0;
 
-		if (opcode == 6'b000000) begin
+		if ((opcode == 6'b000000) && (imemload != 0)) begin
 
 			casez(functioncode)
 				6'b100001 :begin
@@ -133,7 +133,7 @@ module control_unit(
 				end
 			endcase	
 
-		end else begin
+		end else if (imemload != 0) begin
 		//I instruction and J instruction format
 			casez(opcode)
 				6'b001001 :begin

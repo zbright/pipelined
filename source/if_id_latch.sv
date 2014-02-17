@@ -12,8 +12,6 @@ module if_id_latch (
 
 	);
 	
-	logic [31:0] temp_NPC;
-	logic [31:0] temp_imemload;
 	logic [31:0] temp_NPC_output;
 	logic [31:0] temp_imemload_output;	
 

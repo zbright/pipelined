@@ -121,6 +121,7 @@ module datapath (
 	logic [4:0] branchDest_input;
 	logic [31:0] branchPC;
 	logic [31:0] jumpPC;
+	logic halt_id_ex_input;
 
 	// pc init
   parameter PC_INIT = 0;
@@ -162,7 +163,7 @@ module datapath (
 
 
 	//instantiation of CONTROL_UNIT
-	control_unit REQUEST(
+	control_unit CONTROLUNIT(
 				.ALUsrc(ALUsrc),
 				.memtoreg(memtoreg),
 				.signzero(signzero),
@@ -174,7 +175,7 @@ module datapath (
 				.request_dmemREN(request_dmemREN),
 				.request_dmemWEN(request_dmemWEN),
 				.imemload(imemload_if_id_output),
-				.halt_out(dpif.halt)
+				.halt_out(halt_id_ex_input)
 				);
 
 	//setting IO
@@ -204,12 +205,16 @@ module datapath (
 		.request_dmemWEN(dmemWEN_ex_mem_output),
 		.request_dmemREN_output(request_dmemREN_output),
 		.request_dmemWEN_output(request_dmemWEN_output)
-		);
+		); 
 
 	//setting IO
 	
 	assign dpif.dmemWEN = request_dmemWEN_output;
 	assign dpif.dmemREN = request_dmemREN_output;
+
+	//assign dpif.dmemWEN = dmemWEN_ex_mem_output;
+	//assign dpif.dmemREN = dmemREN_ex_mem_output;
+
 
 	//instantiation of IF ID LATCH
 	if_id_latch IFID(
@@ -234,7 +239,7 @@ module datapath (
 			.branch(branch),
 			.request_dmemREN(request_dmemREN),
 			.request_dmemWEN(request_dmemWEN),
-			.halt_out(dpif.halt),
+			.halt_out(halt_id_ex_input),
 			.NPC(NPC_if_id_output),
 			.rdat_one(read_data_one_output),
 			.rdat_two(read_data_two_output),
@@ -297,6 +302,8 @@ module datapath (
 			.iMemLoad(iMemLoad_ex_mem_output)
 			);
 
+	//assign dpif.halt = halt_out_ex_mem_output;
+        assign dpif.halt = 0;
 	//instantiation of MEM WB
 	mem_wb_latch MEMWB(
 			.CLK(CLK),
@@ -340,7 +347,7 @@ module datapath (
 
 	//instantiate extender mux
 	extender EXTENDER(
-			.immediate(imemload_id_ex_output[15:0]),
+			.immediate(imemload_if_id_output[15:0]),
 			.extend_code(signzero),
 			.extended_imm(signzero_output)
 			);
@@ -364,9 +371,9 @@ module datapath (
 	
 	//instantiate mem to mex
 	mem_to_reg_mux MEMTOREG(
-			.aluOut(aluResult_ex_mem_output),
+			.aluOut(aluResult_mem_wb_output),
 			.dload(dMemLoad_mem_wb_output),
-			.shiftedImmediate(upper16_ex_mem_output),
+			.shiftedImmediate(upper16_mem_wb_output),
 			.npc(npc_mem_wb_output),
 			.memToReg(memtoreg_mem_wb_output),
 			.out(writedata_output)

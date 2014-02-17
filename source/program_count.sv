@@ -16,15 +16,6 @@ module program_count(
 	import cpu_types_pkg::*;
 
 
-	 /*always_ff @(posedge CLK, negedge nRST)
-		begin: PC
-			if (nRST == 0) begin
-				pccount <= '0;
-			end else begin
-				pccount <= next_pc_count;
-			end
-		end */
-
 	 always_ff @(posedge CLK, negedge nRST)
 		begin: PC
 			if (nRST == 0) begin

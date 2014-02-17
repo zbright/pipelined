@@ -12,23 +12,23 @@ module request_unit (
 
 	import cpu_types_pkg::*;
 
-	//assign request_dmemREN_output = dhit ? 0 : request_dmemREN;
-	//assign request_dmemWEN_output = dhit ? 0 : request_dmemWEN;
+	assign request_dmemREN_output = dhit ? 0 : request_dmemREN;
+	assign request_dmemWEN_output = dhit ? 0 : request_dmemWEN;
 
 	
-	always_ff@(posedge CLK)
+	/*always_ff@(posedge CLK)
 	begin
 		//not sure where to put it
 		request_dmemREN_output = request_dmemREN;
 		request_dmemWEN_output = request_dmemWEN;
-		if (dpif.dhit == 1) begin
+		if (dhit == 1) begin
 			request_dmemREN_output = 0;
 			request_dmemWEN_output = 0;
 		end else begin
 			request_dmemREN_output = request_dmemREN;
 			request_dmemWEN_output = request_dmemWEN;
 		end
-	end
+	end*/
 
 endmodule
 		

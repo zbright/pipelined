@@ -52,7 +52,7 @@ module control_unit(
 		request_dmemWEN = 0;
 		request_dmemREN = 0;
 
-		if (opcode == 6'b000000) begin
+		if ((opcode == 6'b000000) && (imemload != 0)) begin
 
 			casez(functioncode)
 				6'b100001 :begin
@@ -133,7 +133,7 @@ module control_unit(
 				end
 			endcase	
 
-		end else begin
+		end else if (imemload != 0) begin
 		//I instruction and J instruction format
 			casez(opcode)
 				6'b001001 :begin
