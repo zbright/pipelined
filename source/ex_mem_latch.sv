@@ -59,23 +59,11 @@ module ex_mem_latch (
 
 	always_ff @(posedge CLK, negedge nRST)
 	  begin: WRITE
-	     if(!dhit)
-	       begin
-		  temp_dmemREN <= dmemREN_in;
-		  temp_dmemWEN <= dmemWEN_in;
-	       end
-	     else
-	       begin
-		  temp_dmemREN <= 0;
-		  temp_dmemWEN <= 0;
-	       end
 			if (nRST == 0) begin
 			   temp_memtoreg <= '0;
 			   temp_regwrite <= '0;
 			   temp_pcselect <= '0;
 			   temp_branchSelect <= '0;
-			   temp_dmemREN <= '0;
-			   temp_dmemWEN <= '0;
 			   temp_halt_out <= '0;
 			   temp_rdat1 <= '0;
 			   temp_rdat2 <= '0;
@@ -86,7 +74,9 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
-			end else  begin // if (nRST == 0)
+			end else  begin 
+			   temp_dmemREN <= !dhit ? dmemREN_in : 0;
+			   temp_dmemWEN <= !dhit ? dmemWEN_in : 0;
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
@@ -103,22 +93,6 @@ module ex_mem_latch (
 			   temp_iMemLoad <= iMemLoad_in;
 			end
 		end
-/* -----\/----- EXCLUDED -----\/-----
-
-	always_ff@(posedge CLK)
-	begin
-		//not sure where to put it
-		temp_dmemREN = dmemREN_in;
-		temp_dmemWEN = dmemWEN_in;
-		if (dhit == 1) begin
-			temp_dmemREN = 0;
-			temp_dmemWEN = 0;
-		end else begin
-			temp_dmemREN = dmemREN_in;
-			temp_dmemWEN = dmemWEN_in;
-		end
-	end
- -----/\----- EXCLUDED -----/\----- */
 
 
    assign memtoreg = temp_memtoreg;
