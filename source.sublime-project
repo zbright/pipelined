@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "source"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "asmFiles"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "testbench"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "include"
+		}
+	]
+}

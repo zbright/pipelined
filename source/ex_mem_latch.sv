@@ -2,60 +2,60 @@
 `include "cpu_types_pkg.vh"
 
 module ex_mem_latch (
-		     input logic 	 CLK,
-		     input logic 	 nRST,
-		     input logic [1:0] 	 memtoreg_in,
-		     input logic 	 regwrite_in,
-		     input logic [1:0] 	 pcselect_in,
-		     input logic 	 branchSelect_in,
-		     input logic 	 dmemREN_in,
-		     input logic 	 dmemWEN_in,
-		     input logic 	 halt_in,
-		     input logic [31:0]  rdat1_in,
-		     input logic [31:0]  rdat2_in,
-		     input logic [31:0]  npc_in,
-		     input logic 	 zeroFlag_in,
-		     input logic [31:0]  aluResult_in,
-		     input logic [4:0] 	 branchDest_in,
-		     input logic [31:0]  upper16_in,
-		     input logic [31:0]  signZero_in,
-		     input logic [25:0]  iMemLoad_in,
-		     input logic 	 dhit,
-		     output logic [1:0]  memtoreg,
-		     output logic 	 regwrite,
-		     output logic [1:0]  pcselect,
-		     output logic 	 branchSelect,
-		     output logic 	 dmemREN,
-		     output logic 	 dmemWEN,
-		     output logic 	 halt_out,
-		     output logic [31:0] rdat1,
-		     output logic [31:0] rdat2,
-		     output logic [31:0] npc,
-		     output logic 	 zeroFlag,
-		     output logic [31:0] aluResult,
-		     output logic [4:0]  branchDest,
-		     output logic [31:0] upper16,
-		     output logic [31:0] signZero,
-		     output logic [25:0] iMemLoad
+		     input logic 	          CLK,
+		     input logic 	          nRST,
+		     input logic [1:0] 	      memtoreg_in,
+		     input logic 	          regwrite_in,
+		     input logic [1:0] 	      pcselect_in,
+		     input logic 	          branchSelect_in,
+		     input logic 	          dmemREN_in,
+		     input logic 	          dmemWEN_in,
+		     input logic 	          halt_in,
+		     input logic [31:0]       rdat1_in,
+		     input logic [31:0]       rdat2_in,
+		     input logic [31:0]       npc_in,
+		     input logic 	          zeroFlag_in,
+		     input logic [31:0]       aluResult_in,
+		     input logic [4:0] 	      branchDest_in,
+		     input logic [31:0]       upper16_in,
+		     input logic [31:0]       signZero_in,
+		     input logic [25:0]       iMemLoad_in,
+		     input logic 	          dhit,
+		     output logic [1:0]       memtoreg,
+		     output logic 	          regwrite,
+		     output logic [1:0]       pcselect,
+		     output logic 	          branchSelect,
+		     output logic 	          dmemREN,
+		     output logic 	          dmemWEN,
+		     output logic 	          halt_out,
+		     output logic [31:0]      rdat1,
+		     output logic [31:0]      rdat2,
+		     output logic [31:0]      npc,
+		     output logic 	          zeroFlag,
+		     output logic [31:0]      aluResult,
+		     output logic [4:0]       branchDest,
+		     output logic [31:0]      upper16,
+		     output logic [31:0]      signZero,
+		     output logic [25:0]      iMemLoad
 );
 
-   logic [1:0] 				 temp_memtoreg;
-   logic 				 temp_regwrite;
-   logic [1:0] 				 temp_pcselect;
-   logic 				 temp_branchSelect;
-   logic 				 temp_dmemREN;
-   logic 				 temp_dmemWEN;
-   logic 				 temp_halt_out;
-   logic [31:0] 			 temp_rdat1;
-   logic [31:0] 			 temp_rdat2;
-   logic [31:0] 			 temp_npc;
-   logic 				 temp_zeroFlag;
-   logic [31:0] 			 temp_aluResult;
-   logic [4:0] 				 temp_branchDest;
-   logic [31:0] 			 temp_upper16;
-   logic [31:0] 			 temp_signZero;
-   logic [25:0] 			 temp_iMemLoad;
-   
+    logic [1:0] 			temp_memtoreg;
+    logic 				    temp_regwrite;
+    logic [1:0] 			temp_pcselect;
+    logic 				    temp_branchSelect;
+    logic 				    temp_dmemREN;
+    logic 				    temp_dmemWEN;
+    logic 				    temp_halt_out;
+    logic [31:0] 			temp_rdat1;
+    logic [31:0] 			temp_rdat2;
+    logic [31:0] 			temp_npc;
+    logic 				    temp_zeroFlag;
+    logic [31:0] 			temp_aluResult;
+    logic [4:0] 			temp_branchDest;
+    logic [31:0] 			temp_upper16;
+    logic [31:0] 			temp_signZero;
+    logic [25:0]            temp_iMemLoad;
+
 
 	always_ff @(posedge CLK, negedge nRST)
 	  begin: WRITE
@@ -74,7 +74,7 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
-			end else  begin 
+			end else  begin
 			   temp_dmemREN <= !dhit ? dmemREN_in : 0;
 			   temp_dmemWEN <= !dhit ? dmemWEN_in : 0;
 			   temp_memtoreg <= memtoreg_in;
@@ -113,6 +113,6 @@ module ex_mem_latch (
    assign iMemLoad = temp_iMemLoad;
 
 endmodule
-   
-   
-	
+
+
+

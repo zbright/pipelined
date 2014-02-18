@@ -6,9 +6,8 @@ module register_file (
 	input logic nRST,
 	register_file_if.rf registerval
 	);
-	
-	logic [31:0] [31:0] storeregister; 
-	logic [2:0] k;	
+
+	logic [31:0] [31:0] storeregister;
 
 	always_ff @(negedge CLK, negedge nRST)
 		begin: WRITE
@@ -28,11 +27,11 @@ module register_file (
 			registerval.rdat1 = storeregister[registerval.rsel1];
 			registerval.rdat2 = storeregister[registerval.rsel2];
 		end
-		
-endmodule	
-	
+
+endmodule
 
 
-	
-	
+
+
+
 

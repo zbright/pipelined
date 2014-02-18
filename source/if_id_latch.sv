@@ -8,13 +8,13 @@ module if_id_latch (
 	input logic [31:0] NPC,
 	input logic [31:0] imemload,
 	input logic 	   dhit,
-	output [31:0] 	   NPC_if_id_output,
+	output [31:0] 	   npc_if_id_output,
 	output [31:0] 	   imemload_if_id_output
 
 	);
-	
+
 	logic [31:0] temp_NPC_output;
-	logic [31:0] temp_imemload_output;	
+	logic [31:0] temp_imemload_output;
 
 	assign NPC_if_id_output = temp_NPC_output;
 	assign imemload_if_id_output = temp_imemload_output;
@@ -30,11 +30,11 @@ module if_id_latch (
 			end
 		end
 
-		
-endmodule	
-	
+
+endmodule
 
 
-	
-	
+
+
+
 
