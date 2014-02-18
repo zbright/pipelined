@@ -6,7 +6,7 @@ module id_ex_latch (
 	input 		    nRST,
 	input logic [1:0]   ALUsrc,
 	input logic [1:0]   memtoreg,
-	input logic [3:0]   ALUop, 
+	input logic [3:0]   ALUop,
 	input logic 	    regwrite,
 	input logic [1:0]   pcselect,
 	input logic [1:0]   regdst,
@@ -20,10 +20,10 @@ module id_ex_latch (
 	input logic [31:0]  imemload,
 	input logic [31:0]  uppersixteen,
 	input logic [31:0]  signzerovalue,
-	input logic 	    dhit,
+	input logic 	    stall,
 	output logic [1:0]  ALUsrc_id_ex_output,
 	output logic [1:0]  memtoreg_id_ex_output,
-	output logic [3:0]  ALUop_id_ex_output, 
+	output logic [3:0]  ALUop_id_ex_output,
 	output logic 	    regwrite_id_ex_output,
 	output logic [1:0]  pcselect_id_ex_output,
 	output logic [1:0]  regdst_id_ex_output,
@@ -39,7 +39,7 @@ module id_ex_latch (
 	output logic [31:0] signzerovalue_id_ex_output
 
 	);
-	
+
 	logic [1:0] temp_ALUsrc_output;
 	logic [1:0] temp_memtoreg_output;
 	logic [3:0] temp_ALUop_output;
@@ -74,7 +74,7 @@ module id_ex_latch (
 	assign imemload_id_ex_output = temp_imemload_output;
 	assign uppersixteen_id_ex_output = temp_uppersixteen_output;
 	assign signzerovalue_id_ex_output = temp_signzerovalue_output;
-	
+
 
 	always_ff @(posedge CLK, negedge nRST)
 		begin: IFexLATCH
@@ -95,7 +95,7 @@ module id_ex_latch (
 				temp_imemload_output <= 0;
 				temp_uppersixteen_output <= 0;
 				temp_signzerovalue_output <= 0;
-			end else if(!dhit) begin
+			end else if(!stall) begin
 				temp_ALUsrc_output <= ALUsrc;
 				temp_memtoreg_output <= memtoreg;
 				temp_ALUop_output <= ALUop;
@@ -115,11 +115,11 @@ module id_ex_latch (
 			end
 		end
 
-		
-endmodule	
-	
+
+endmodule
 
 
-	
-	
+
+
+
 

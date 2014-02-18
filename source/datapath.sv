@@ -119,6 +119,7 @@ module datapath (
 	logic [4:0] 	branchdest_input;
 	logic [31:0] 	jump_pc;
 	logic 			halt_id_ex_input;
+	logic 	        stall;
 
 	//assign statements
 
@@ -158,6 +159,7 @@ module datapath (
 		.CLK(CLK),
 		.nRST(nRST),
 		.next_pc_count(next_pc_count),
+		.stall(stall),
 		.current_pc_count(current_pc_count)
 		);
 
@@ -194,7 +196,8 @@ module datapath (
 		.nRST(nRST),
 		.NPC(next_pc_count),
 		.imemload(dpif.imemload),
-		.dhit(dpif.dhit),
+		.ihit(dpif.ihit),
+		.stall(stall),
 		.npc_if_id_output(npc_if_id_output),
 		.imemload_if_id_output(imemload_if_id_output)
 		);
@@ -219,7 +222,7 @@ module datapath (
 		.imemload(imemload_if_id_output),
 		.uppersixteen(uppersixteen),
 		.signzerovalue(signzero_output),
-		.dhit(dpif.dhit),
+		.stall(stall),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
 		.ALUop_id_ex_output(aluop_id_ex_output),
@@ -274,7 +277,8 @@ module datapath (
 		.branchDest(branchdest_ex_mem_output),
 		.upper16(upper16_ex_mem_output),
 		.signZero(signzero_ex_mem_output),
-		.iMemLoad(imemload_ex_mem_output)
+		.iMemLoad(imemload_ex_mem_output),
+		.stall(stall)
 		);
 
 	//instantiation of MEM WB

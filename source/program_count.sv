@@ -6,6 +6,7 @@ module program_count(
 	input logic ihit,
 	input logic halt,
 	input logic [31:0] next_pc_count,
+	input logic stall,
 	output logic [31:0] current_pc_count
 	);
 
@@ -20,7 +21,7 @@ module program_count(
 		begin: PC
 			if (nRST == 0) begin
 				pccount <= '0;
-			end else if ((ihit == 1) && (halt != 1)) begin
+			end else if ((ihit == 1) && (halt != 1) && !stall) begin
 				pccount <= next_pc_count;
 			end else begin
 				pccount <= pccount;
