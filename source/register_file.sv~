@@ -10,7 +10,7 @@ module register_file (
 	logic [31:0] [31:0] storeregister; 
 	logic [2:0] k;	
 
-	always_ff @(posedge CLK, negedge nRST)
+	always_ff @(negedge CLK, negedge nRST)
 		begin: WRITE
 			if (nRST == 0) begin
 				storeregister <= '0;
@@ -23,10 +23,15 @@ module register_file (
 			end
 		end
 
-	always_comb
-		begin
-			registerval.rdat1 = storeregister[registerval.rsel1];
-			registerval.rdat2 = storeregister[registerval.rsel2];
+	always_ff @(posedge CLK, negedge nRST)
+		begin: READ
+			if (nRST == 0) begin
+				registerval.rdat1 <= '0;
+				registerval.rdat2 <= '0;
+			end else begin
+				registerval.rdat1 <= storeregister[registerval.rsel1];
+				registerval.rdat2 <= storeregister[registerval.rsel2];
+			end
 		end
 		
 endmodule	

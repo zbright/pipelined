@@ -28,8 +28,8 @@ module datapath (
 	//signals for register file
 	logic [31:0] read_data_one_output;
 	logic [31:0] read_data_two_output;
-	logic [31:0] write_register_location;
-	logic [31:0] write_register_value;
+	//logic [31:0] write_register_location;
+	//logic [31:0] write_register_value;
 	//signals for PC
   	logic [31:0] next_pc_count;
   	logic [31:0] current_pc_count;
@@ -49,7 +49,7 @@ module datapath (
 	logic request_dmemREN_output;
 	logic request_dmemWEN_output;
 	//signals for ALU
-	logic [31:0] alu_input_one;
+	//logic [31:0] alu_input_one;
 	logic [31:0] alu_input_two;
 	logic [3:0] ALU_OPCODE;
 	logic [31:0] ALU_OUTPUT;
@@ -119,23 +119,20 @@ module datapath (
 	//misc
 	logic [31:0] uppersixteen;
 	logic [4:0] branchDest_input;
-	logic [31:0] branchPC;
+	//logic [31:0] branchPC;
 	logic [31:0] jumpPC;
 	logic halt_id_ex_input;
 
 	// pc init
-  parameter PC_INIT = 0;
+ 	parameter PC_INIT = 0;
 
-	//instantiation of REGISTER
-	register_file REGISTER(
-				.CLK(CLK),
-				.nRST(nRST),
-				.registerval(registerval)
-				);
+	//assign statements
 
-	
-
-	//setting IO
+	assign pc_count_four_output = current_pc_count + 4;
+	assign branch_count_output = (signZero_ex_mem_output << 2) + npc_ex_mem_output;
+	assign branch_xnor_output = ~(branchSelect_ex_mem_output ^ zeroFlag_ex_mem_output);
+	assign jumpPC = {pc_count_four_output[31:28], (iMemLoad_ex_mem_output << 2)};
+	assign uppersixteen = imemload_if_id_output[15:0] << 16;
 	assign read_data_one_output = registerval.rdat1;
 	assign read_data_two_output = registerval.rdat2;
 	assign registerval.rsel1 = imemload_if_id_output[25:21];
@@ -145,7 +142,20 @@ module datapath (
 	assign registerval.wdat = writedata_output;
 	assign dpif.imemREN = 1;
 	assign dpif.dmemstore = rdat2_ex_mem_output;
-	//assign dpif.halt = 0;
+	assign ALU_OPCODE = ALUop;					
+	assign dpif.dmemaddr = aluResult_ex_mem_output;
+	assign dpif.dmemWEN = dmemWEN_ex_mem_output;
+	assign dpif.dmemREN = dmemREN_ex_mem_output;
+	assign dpif.halt = halt_out_ex_mem_output;
+	assign dpif.imemaddr = current_pc_count;
+
+
+	//instantiation of REGISTER
+	register_file REGISTER(
+				.CLK(CLK),
+				.nRST(nRST),
+				.registerval(registerval)
+				);
 
 	//instantiation
 	program_count PC(
@@ -156,11 +166,6 @@ module datapath (
 			.next_pc_count(next_pc_count),
 			.current_pc_count(current_pc_count)
 			);
-	
-	//setting IO
-
-	assign dpif.imemaddr = current_pc_count;
-
 
 	//instantiation of CONTROL_UNIT
 	control_unit CONTROLUNIT(
@@ -177,9 +182,6 @@ module datapath (
 				.imemload(imemload_if_id_output),
 				.halt_out(halt_id_ex_input)
 				);
-
-	//setting IO
-	
 	
 	//instantiation of ALU
 	alu ALU(
@@ -191,30 +193,6 @@ module datapath (
 		.OVERFLOW(ALU_OVERFLOW),
 		.ZERO(ALU_ZERO)
 		);
-
-	//setting IO
-	
-	assign ALU_OPCODE = ALUop;					
-	assign dpif.dmemaddr = aluResult_ex_mem_output;
-
-	//instantiation of REQUEST BLOCK
-	/*request_unit RB(
-		.CLK(CLK),
-		.dhit(dpif.dhit),
-		.request_dmemREN(dmemREN_ex_mem_output),
-		.request_dmemWEN(dmemWEN_ex_mem_output),
-		.request_dmemREN_output(request_dmemREN_output),
-		.request_dmemWEN_output(request_dmemWEN_output)
-		); */
-
-	//setting IO
-	
-	//assign dpif.dmemWEN = request_dmemWEN_output;
-	//assign dpif.dmemREN = request_dmemREN_output;
-
-	assign dpif.dmemWEN = dmemWEN_ex_mem_output;
-	assign dpif.dmemREN = dmemREN_ex_mem_output;
-
 
 	//instantiation of IF ID LATCH
 	if_id_latch IFID(
@@ -305,8 +283,6 @@ module datapath (
 			.iMemLoad(iMemLoad_ex_mem_output)
 			);
 
-	assign dpif.halt = halt_out_ex_mem_output;
-        //assign dpif.halt = 0;
 	//instantiation of MEM WB
 	mem_wb_latch MEMWB(
 			.CLK(CLK),
@@ -381,15 +357,6 @@ module datapath (
 			.memToReg(memtoreg_mem_wb_output),
 			.out(writedata_output)
 			);	
-	
-		assign pc_count_four_output = current_pc_count + 4;
-		assign branch_count_output = (signZero_ex_mem_output << 2) + npc_ex_mem_output;
-		assign branch_xnor_output = ~(branchSelect_ex_mem_output ^ zeroFlag_ex_mem_output);
-		assign jumpPC = {pc_count_four_output[31:28], (iMemLoad_ex_mem_output << 2)};
-		assign uppersixteen = imemload_id_ex_output[15:0] << 16;
-	
-	
-	
-	
+		
 
 endmodule
