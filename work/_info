@@ -9,7 +9,7 @@ Z0 d/home/ecegrid/a/mg201/ece437/pipelined
 !i10f 100
 valu
 Z1 DXx6 sv_std 3 std 0 22 `a<MJET1=lN@jzbA7kHm;1
-Z2 !s110 1392762731
+Z2 !s110 1392841059
 Z3 Ihd7hWC;E5jcHRN<QlBO?c3
 Z4 V`JN@9S9cnhjKRR_L]QIcM3
 S1
@@ -21,7 +21,7 @@ L0 3
 Z9 OL;L;10.2b;57
 r1
 31
-Z10 !s108 1392762730.969963
+Z10 !s108 1392841059.693620
 Z11 !s107 include/cpu_types_pkg.vh|source/alu.sv|
 Z12 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/alu.sv|
 Z13 o+acc -sv12compat -mfcu -lint -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
@@ -34,7 +34,7 @@ Z17 !s105 alu_sv_unit
 !i111 1
 valu_source_mux
 R1
-Z18 !s110 1392762732
+Z18 !s110 1392841061
 Z19 IEXmcPb^7j08CJfdzze_kN1
 R4
 S1
@@ -51,7 +51,7 @@ R14
 R15
 Z23 !s100 ^SEe>8Hd3JGNaRGkm>`^>1
 Z24 !s105 alu_source_mux_sv_unit
-Z25 !s108 1392762732.410867
+Z25 !s108 1392841061.103453
 Z26 !s107 source/alu_source_mux.sv|
 Z27 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/alu_source_mux.sv|
 !i10b 1
@@ -59,7 +59,6 @@ Z27 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/alu_source_mux.sv|
 !i111 1
 vbranch_mux
 R1
-R2
 Z28 II=m1L<N2LeBT>FQmh^nSm0
 R4
 S1
@@ -74,18 +73,19 @@ r1
 R13
 R14
 R15
-Z31 !s100 0jfNN>ma8RPWdl3CDN0Bn1
-Z32 !s105 branch_mux_sv_unit
-Z33 !s108 1392762731.252004
-Z34 !s107 source/branch_mux.sv|
-Z35 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/branch_mux.sv|
+Z31 !s110 1392841060
+Z32 !s100 0jfNN>ma8RPWdl3CDN0Bn1
+Z33 !s105 branch_mux_sv_unit
+Z34 !s108 1392841059.955106
+Z35 !s107 source/branch_mux.sv|
+Z36 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/branch_mux.sv|
 !i10b 1
 !s85 0
 !i111 1
 Ycache_control_if
 R1
-Z36 DXx4 work 13 cpu_types_pkg 0 22 eeN54E[D9>RDQn3I:31UN2
-Z37 !s110 1392762733
+Z37 DXx4 work 13 cpu_types_pkg 0 22 eeN54E[D9>RDQn3I:31UN2
+R18
 Z38 !s100 P]XZ?V1j_:4]dWcgTl@on1
 Z39 IbN7SB?T;M<4n7L]CcLFdY1
 R4
@@ -100,7 +100,7 @@ L0 16
 R9
 r1
 31
-Z45 !s108 1392762733.209982
+Z45 !s108 1392841061.865727
 Z46 !s107 include/cpu_types_pkg.vh|include/cache_control_if.vh|source/memory_control.sv|
 Z47 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/memory_control.sv|
 R13
@@ -111,7 +111,7 @@ R15
 !i111 1
 vcaches
 R1
-R36
+R37
 R18
 Z48 IE8oKaK^3d6TNbghW[`]FJ3
 R4
@@ -125,7 +125,7 @@ L0 16
 R9
 r1
 31
-Z53 !s108 1392762732.883843
+Z53 !s108 1392841061.524299
 Z54 !s107 include/cache_control_if.vh|include/cpu_types_pkg.vh|include/datapath_cache_if.vh|source/caches.sv|
 Z55 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/caches.sv|
 R13
@@ -137,34 +137,34 @@ Z56 !s100 ]MK<R0k12m;Q;?MDfTJHC1
 !i111 1
 vcontrol_unit
 R1
-R36
-Z57 !s110 1392762730
-Z58 IFIK33LgZbf1I51j2MFLNi3
+R37
+R2
+Z57 IFIK33LgZbf1I51j2MFLNi3
 R4
-Z59 !s105 control_unit_sv_unit
+Z58 !s105 control_unit_sv_unit
 S1
 R5
 R41
-Z60 8source/control_unit.sv
-Z61 Fsource/control_unit.sv
+Z59 8source/control_unit.sv
+Z60 Fsource/control_unit.sv
 L0 4
 R9
 r1
 31
-Z62 !s108 1392762730.774775
-Z63 !s107 include/cpu_types_pkg.vh|include/datapath_cache_if.vh|source/control_unit.sv|
-Z64 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/control_unit.sv|
+Z61 !s108 1392841059.474773
+Z62 !s107 include/cpu_types_pkg.vh|include/datapath_cache_if.vh|source/control_unit.sv|
+Z63 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/control_unit.sv|
 R13
 R14
 R15
-Z65 !s100 @@TJK6W9eZNQMk4lbNLV01
+Z64 !s100 @@TJK6W9eZNQMk4lbNLV01
 !i10b 1
 !s85 0
 !i111 1
 Ycpu_ram_if
 R1
-R36
 R37
+Z65 !s110 1392841062
 Z66 Ib1YGEJ;;?>c7fQIG?hJD20
 R4
 Z67 !s105 ram_sv_unit
@@ -178,7 +178,7 @@ L0 14
 R9
 r1
 31
-Z72 !s108 1392762733.360627
+Z72 !s108 1392841062.022430
 Z73 !s107 include/cpu_types_pkg.vh|include/cpu_ram_if.vh|source/ram.sv|
 Z74 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/ram.sv|
 R13
@@ -190,7 +190,7 @@ Z75 !s100 clMX=@_ZhhYD;VDHf==KL2
 !i111 1
 Xcpu_types_pkg
 R1
-R37
+R65
 !i10b 1
 Z76 !s100 Ndl@OHnJdbQGfoOlXTz:O0
 Z77 IeeN54E[D9>RDQn3I:31UN2
@@ -207,7 +207,7 @@ R9
 r1
 !s85 0
 31
-Z84 !s108 1392762733.781751
+Z84 !s108 1392841062.533954
 Z85 !s107 include/cpu_types_pkg.vh|include/system_if.vh|testbench/system_tb.sv|
 Z86 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|testbench/system_tb.sv|
 !i111 1
@@ -216,8 +216,8 @@ R14
 R15
 vdatapath
 R1
-R36
 R37
+R18
 Z87 I2KYk0N]XFT;5leR3b^>752
 R4
 Z88 !s105 datapath_sv_unit
@@ -230,7 +230,7 @@ L0 18
 R9
 r1
 31
-Z92 !s108 1392762733.033125
+Z92 !s108 1392841061.686030
 Z93 !s107 include/register_file_if.vh|include/cpu_types_pkg.vh|include/datapath_cache_if.vh|source/datapath.sv|
 Z94 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/datapath.sv|
 R13
@@ -242,8 +242,8 @@ Z95 !s100 8V8gaN81eLgYLkiB@Qe=K1
 !i111 1
 Ydatapath_cache_if
 R1
-R36
 R37
+R18
 Z96 !s100 R^R3kf1AED@h`@;WDF<]C3
 Z97 Id1B4GIec2d078@f^m4<7A3
 R4
@@ -269,32 +269,32 @@ R15
 !i111 1
 vex_mem_latch
 R1
-R18
-Z99 IGloUDBM>R?^d0BVGoJn_f0
+R31
+Z99 ICZVA0YdlJ@BCHME>2l>_S2
 R4
 Z100 !s105 ex_mem_latch_sv_unit
 S1
 R5
-Z101 w1392762617
+Z101 w1392838967
 Z102 8source/ex_mem_latch.sv
 Z103 Fsource/ex_mem_latch.sv
 L0 4
 R9
 r1
 31
-Z104 !s108 1392762732.099381
+Z104 !s108 1392841060.833799
 Z105 !s107 include/cpu_types_pkg.vh|include/register_file_if.vh|source/ex_mem_latch.sv|
 Z106 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/ex_mem_latch.sv|
 R13
 R14
 R15
-Z107 !s100 LGhlUVnNKk4gLKJPK<9:a0
+Z107 !s100 fSQ2YeR>Y3F1oDF^Ib?h20
 !i10b 1
 !s85 0
 !i111 1
 vextender
 R1
-R36
+R37
 R18
 Z108 I2H?7`7T;5XaedcB73obEU3
 R4
@@ -307,7 +307,7 @@ L0 3
 R9
 r1
 31
-Z112 !s108 1392762732.701020
+Z112 !s108 1392841061.354613
 Z113 !s107 include/cpu_types_pkg.vh|source/extender.sv|
 Z114 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/extender.sv|
 R13
@@ -321,56 +321,56 @@ Z116 !s105 extender_sv_unit
 vid_ex_latch
 R1
 R18
-Z117 I_`o]cUF4B6E[R?@dGn=b?0
+Z117 IDinX2T:GW^CCY`@k0Xd2S3
 R4
 Z118 !s105 id_ex_latch_sv_unit
 S1
 R5
-Z119 w1392762317
+Z119 w1392841051
 Z120 8source/id_ex_latch.sv
 Z121 Fsource/id_ex_latch.sv
 L0 4
 R9
 r1
 31
-Z122 !s108 1392762732.259933
+Z122 !s108 1392841060.966536
 Z123 !s107 include/cpu_types_pkg.vh|include/register_file_if.vh|source/id_ex_latch.sv|
 Z124 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/id_ex_latch.sv|
 R13
 R14
 R15
-Z125 !s100 WUKd79Ff_<M8UT4_bJET22
+Z125 !s100 @Z<7FTX5=WIThZGKM?aRC0
 !i10b 1
 !s85 0
 !i111 1
 vif_id_latch
 R1
-R2
-Z126 IA]4nQf86`]i>jkd7Zg0W63
+R31
+Z126 IY9a=^_hLTL_MH9JRnD_9o0
 R4
 Z127 !s105 if_id_latch_sv_unit
 S1
 R5
-Z128 w1392762291
+Z128 w1392840743
 Z129 8source/if_id_latch.sv
 Z130 Fsource/if_id_latch.sv
 L0 4
 R9
 r1
 31
-Z131 !s108 1392762731.809610
+Z131 !s108 1392841060.544314
 Z132 !s107 include/cpu_types_pkg.vh|include/register_file_if.vh|source/if_id_latch.sv|
 Z133 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/if_id_latch.sv|
 R13
 R14
 R15
-Z134 !s100 DnKI_^7=NJzjVbDO6VR=C3
+Z134 !s100 i6Y9FH9IU19>03hn8EWj;2
 !i10b 1
 !s85 0
 !i111 1
 vmem_to_reg_mux
 R1
-R2
+R31
 Z135 I^_OaPhMz4CfJAczKl<zR71
 R4
 S1
@@ -387,7 +387,7 @@ R14
 R15
 Z138 !s100 _EM[1KARD7F>TF<VTBQFd0
 Z139 !s105 mem_to_reg_mux_sv_unit
-Z140 !s108 1392762731.389665
+Z140 !s108 1392841060.102853
 Z141 !s107 source/mem_to_reg_mux.sv|
 Z142 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/mem_to_reg_mux.sv|
 !i10b 1
@@ -395,20 +395,20 @@ Z142 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/mem_to_reg_mux.sv|
 !i111 1
 vmem_wb_latch
 R1
-R2
+R31
 Z143 IH>VkhEfPlllOW_A7d<RE[2
 R4
 Z144 !s105 mem_wb_latch_sv_unit
 S1
 R5
-Z145 w1392663659
+Z145 w1392840651
 Z146 8source/mem_wb_latch.sv
 Z147 Fsource/mem_wb_latch.sv
 L0 4
 R9
 r1
 31
-Z148 !s108 1392762731.640012
+Z148 !s108 1392841060.375988
 Z149 !s107 include/cpu_types_pkg.vh|include/register_file_if.vh|source/mem_wb_latch.sv|
 Z150 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/mem_wb_latch.sv|
 R13
@@ -420,8 +420,8 @@ Z151 !s100 i[Bc9nn]06==e3kg3`Z6J0
 !i111 1
 vmemory_control
 R1
-R36
 R37
+R18
 Z152 I4S:zNZodTWO<gaFi<G9QY3
 R4
 R40
@@ -446,7 +446,7 @@ Z153 !s100 GDSZUQlBd7lQcUEc=b]@01
 !i111 1
 vnpc_mux
 R1
-R2
+R31
 Z154 IM5h1hkD[;zk4GQ25o@iHX2
 R4
 S1
@@ -463,7 +463,7 @@ R14
 R15
 Z158 !s100 fMVQ`lz:cR<_eTUV?_@;O1
 Z159 !s105 npc_mux_sv_unit
-Z160 !s108 1392762731.523725
+Z160 !s108 1392841060.255960
 Z161 !s107 source/npc_mux.sv|
 Z162 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/npc_mux.sv|
 !i10b 1
@@ -471,7 +471,7 @@ Z162 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/npc_mux.sv|
 !i111 1
 vpipeline
 R1
-R37
+R65
 Z163 InD2E4805ko3P89OhU93OK1
 R4
 S1
@@ -488,7 +488,7 @@ R14
 R15
 Z167 !s100 DgB32Td]@jzM^R92]cZ>g2
 Z168 !s105 pipeline_sv_unit
-Z169 !s108 1392762733.503625
+Z169 !s108 1392841062.156975
 Z170 !s107 source/pipeline.sv|
 Z171 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/pipeline.sv|
 !i10b 1
@@ -496,34 +496,34 @@ Z171 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/pipeline.sv|
 !i111 1
 vprogram_count
 R1
-R36
-R18
-Z172 IY?dZ1YR?e:[mhAZGCaD==2
+R37
+R31
+Z172 IzUJb9XMoL0aAg?UIeS3ln1
 R4
 S1
 R5
-Z173 w1392762243
+Z173 w1392838818
 Z174 8source/program_count.sv
 Z175 Fsource/program_count.sv
 L0 3
 R9
 r1
 31
-Z176 !s108 1392762731.953641
+Z176 !s108 1392841060.695941
 Z177 !s107 include/cpu_types_pkg.vh|source/program_count.sv|
 Z178 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/program_count.sv|
 R13
 R14
 R15
-Z179 !s100 _9Kz::<XZTb;jG=KMeZ>o2
+Z179 !s100 m77Jn3:@9IU^@7:2R9[6V0
 Z180 !s105 program_count_sv_unit
 !i10b 1
 !s85 0
 !i111 1
 vram
 R1
-R36
 R37
+R65
 Z181 I:ao[C^Ai>042j5c99nQYK3
 R4
 R67
@@ -565,7 +565,7 @@ R14
 R15
 Z186 !s100 55I[Y[^h@;;oAczi3`W[A3
 Z187 !s105 reg_dest_mux_sv_unit
-Z188 !s108 1392762731.131518
+Z188 !s108 1392841059.824845
 Z189 !s107 source/reg_dest_mux.sv|
 Z190 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/reg_dest_mux.sv|
 !i10b 1
@@ -586,7 +586,7 @@ L0 4
 R9
 r1
 31
-Z196 !s108 1392762732.552005
+Z196 !s108 1392841061.222477
 Z197 !s107 include/cpu_types_pkg.vh|include/register_file_if.vh|source/register_file.sv|
 Z198 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/register_file.sv|
 R13
@@ -598,8 +598,8 @@ Z199 !s100 z6D_4T5XEC:i0>VPRTBhE2
 !i111 1
 Yregister_file_if
 R1
-R36
 R37
+R18
 Z200 !s100 A:`7l^eP2f@Fc>>00linZ2
 Z201 I@NUUf[n<XeS6[HKc10>6?0
 R4
@@ -625,7 +625,7 @@ R15
 !i111 1
 vsystem
 R1
-R37
+R65
 Z203 IX^7`4Fn`YZ:kXTZ^bRSFI0
 R4
 Z204 !s105 system_sv_unit
@@ -638,7 +638,7 @@ L0 15
 R9
 r1
 31
-Z207 !s108 1392762733.641653
+Z207 !s108 1392841062.275929
 Z208 !s107 include/cpu_types_pkg.vh|include/system_if.vh|source/system.sv|
 Z209 !s90 +acc|-sv12compat|-mfcu|-lint|+incdir+include|source/system.sv|
 R13
@@ -650,8 +650,8 @@ Z210 !s100 a?T[@gD?A3_?Q^=<H;0Sj0
 !i111 1
 Ysystem_if
 R1
-R36
 R37
+R65
 !i10b 1
 Z211 !s100 AT1:zBiOjo:3fYNFGAUf:3
 Z212 IQ4L3@W`:]Dnm;l:QH@j1=3
@@ -677,7 +677,7 @@ R14
 R15
 vsystem_tb
 R1
-R37
+R65
 !i10b 1
 !s100 BO4[Yz5@oH:b_0n8Gjk>A2
 ILGRfY[jBB5E=1=H:0@eYB1
@@ -702,8 +702,8 @@ R14
 R15
 4test
 R1
-R36
 R37
+R65
 !i10b 1
 !s100 0zQmC2;RgT^NkSH`YX9`72
 Im`jN5B8gJn9aHY0>5SAFI1

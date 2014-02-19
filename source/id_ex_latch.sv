@@ -112,6 +112,10 @@ module id_ex_latch (
 				temp_imemload_output <= imemload;
 				temp_uppersixteen_output <= uppersixteen;
 				temp_signzerovalue_output <= signzerovalue;
+			end else begin
+				temp_request_dmemWEN_output <= 0;
+				temp_request_dmemREN_output <= 0;
+				temp_regwrite_output <= '0;
 			end
 		end
 

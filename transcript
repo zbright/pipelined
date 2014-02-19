@@ -53,12 +53,44 @@
 # Executing ONERROR command at macro ./scripts/system.do line 23
 #  run 1000 
 # Starting Processor.
-# Halted at 800 time and ran for         39 cycles.
-# Starting memory dump.
 #  
+add wave -position end  sim:/system_tb/DUT/CPU/DP/dpif/ihit
+add wave -position end  sim:/system_tb/DUT/CPU/DP/dpif/halt
 add wave -position end  sim:/system_tb/DUT/CPU/DP/dpif/dmemWEN
 add wave -position end  sim:/system_tb/DUT/CPU/DP/dpif/dmemREN
-restart -f;run 1000
+add wave -position end  sim:/system_tb/DUT/CPU/DP/dpif/dhit
+restart -f; runu -all
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# invalid command name "runu"
+restart -f; run -all
 # Loading sv_std.std
 # Loading work.system_tb
 # Loading work.cpu_types_pkg
@@ -89,10 +121,31 @@ restart -f;run 1000
 # Loading work.memory_control
 # Loading work.ram
 # Starting Processor.
-# Halted at 800 time and ran for         39 cycles.
+# Halted at 1680 time and ran for         83 cycles.
 # Starting memory dump.
-add wave -position end  sim:/system_tb/DUT/CPU/DP/PC/pccount
-restart -f;run 1000
+# Finished memory dump.
+# Break in Module test at testbench/system_tb.sv line 80
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/ramstore
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/ramstate
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/ramload
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/ramaddr
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/ramWEN
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/ramREN
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/iwait
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/iload
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/iaddr
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/iREN
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/dwait
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/dstore
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/dload
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/daddr
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/dWEN
+add wave -position end  sim:/system_tb/DUT/CPU/CC/ccif/dREN
+rstat -f; run 2500
+# invalid command name "rstat"
+rstart -f; run 2500
+# invalid command name "rstart"
+restart -f; run 2500
 # Loading sv_std.std
 # Loading work.system_tb
 # Loading work.cpu_types_pkg
@@ -123,6 +176,74 @@ restart -f;run 1000
 # Loading work.memory_control
 # Loading work.ram
 # Starting Processor.
-# Halted at 800 time and ran for         39 cycles.
+# Halted at 1680 time and ran for         83 cycles.
 # Starting memory dump.
-# Break key hit 
+add wave -position end  sim:/system_tb/DUT/CPU/DP/EXMEM/stall
+restart -f; run 2500
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Starting Processor.
+# Halted at 1680 time and ran for         83 cycles.
+# Starting memory dump.
+add wave -position end  sim:/system_tb/DUT/RAM/count
+
+restart -f; run 2500
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Starting Processor.
+# Halted at 1680 time and ran for         83 cycles.
+# Starting memory dump.

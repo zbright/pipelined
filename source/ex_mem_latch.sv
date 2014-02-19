@@ -56,6 +56,7 @@ module ex_mem_latch (
     logic [31:0] 			temp_upper16;
     logic [31:0] 			temp_signZero;
     logic [25:0]            temp_iMemLoad;
+    logic                   temp_stall;
 
 
 	always_ff @(posedge CLK, negedge nRST)
@@ -75,9 +76,12 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
+               temp_dmemREN <= 0;
+               temp_dmemWEN <= 0;
+               temp_stall <= 0;
 			end else  begin
-			   temp_dmemREN <= !dhit ? dmemREN_in : 0;
-			   temp_dmemWEN <= !dhit ? dmemWEN_in : 0;
+			   temp_dmemREN <= dmemREN_in;
+			   temp_dmemWEN <= dmemWEN_in;
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
@@ -92,11 +96,13 @@ module ex_mem_latch (
 			   temp_upper16 <= upper16_in;
 			   temp_signZero <= signZero_in;
 			   temp_iMemLoad <= iMemLoad_in;
+               temp_stall <= (dmemREN || dmemWEN) && !dhit;
 			end
+
+
 		end
 
-
-   assign stall = (dmemREN || dmemWEN) && !dhit;
+   assign stall = temp_stall;
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
    assign pcselect = temp_pcselect;
