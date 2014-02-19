@@ -17,7 +17,7 @@ module if_id_latch (
 	logic [31:0] temp_NPC_output;
 	logic [31:0] temp_imemload_output;
 
-	assign NPC_if_id_output = temp_NPC_output;
+	assign npc_if_id_output = temp_NPC_output;
 	assign imemload_if_id_output = temp_imemload_output;
 
 	always_ff @(posedge CLK, negedge nRST)

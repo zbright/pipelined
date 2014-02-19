@@ -78,8 +78,7 @@ module ex_mem_latch (
 			   temp_iMemLoad <= '0;
                temp_dmemREN <= 0;
                temp_dmemWEN <= 0;
-               temp_stall <= 0;
-			end else  begin
+			end else if(!stall)  begin
 			   temp_dmemREN <= dmemREN_in;
 			   temp_dmemWEN <= dmemWEN_in;
 			   temp_memtoreg <= memtoreg_in;
@@ -96,13 +95,12 @@ module ex_mem_latch (
 			   temp_upper16 <= upper16_in;
 			   temp_signZero <= signZero_in;
 			   temp_iMemLoad <= iMemLoad_in;
-               temp_stall <= (dmemREN || dmemWEN) && !dhit;
 			end
 
 
 		end
 
-   assign stall = temp_stall;
+   assign stall = (dmemREN_in || dmemWEN_in) && !dhit;
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
    assign pcselect = temp_pcselect;
