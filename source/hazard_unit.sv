@@ -1,18 +1,24 @@
 `include "cpu_types_pkg.vh"
 
-module harzard_unit (
-	input logic [4:0]   branch_dest,
-	input logic [31:0]  imemload,
-    input logic         mem_read,
+module hazard_unit (
+    input logic         dmemREN,
+    input logic         dmemWEN,
+    input logic         dhit,
+    input logic         ihit,
+    input logic         halt,
 	output logic        pc_stall ,
-	output logic [1:0]  if_id_out,
-	output logic [1:0]  id_ex_out,
-	output logic [1:0]  ex_mem_out
+	output logic        if_id_stall,
+    output logic        if_id_bubble,
+	output logic        id_ex_stall
 );
 
-always_comb
-    begin
-    end
+logic stall;
+
+assign stall = (dmemREN || dmemWEN) && ~dhit;
+assign pc_stall = ihit && ~halt && ~stall;
+assign if_id_stall = stall;
+assign if_id_bubble = ~ihit;
+assign id_ex_stall = stall;
 
 
 endmodule

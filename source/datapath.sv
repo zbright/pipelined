@@ -121,6 +121,12 @@ module datapath (
 	logic 			halt_id_ex_input;
 	logic 	        stall;
 
+	//Hazard Unit signals
+	logic 			pc_stall;
+	logic			if_id_stall;
+	logic 			id_ex_stall;
+	logic			if_id_bubble;
+
 	//assign statements
 
 	assign pc_count_four_output = current_pc_count + 4;
@@ -154,12 +160,10 @@ module datapath (
 
 	//instantiation
 	program_count PC(
-		.ihit(dpif.ihit),
-		.halt(halt_out_ex_mem_output),
 		.CLK(CLK),
 		.nRST(nRST),
 		.next_pc_count(next_pc_count),
-		.stall(stall),
+		.stall(pc_stall),
 		.current_pc_count(current_pc_count)
 		);
 
@@ -190,14 +194,28 @@ module datapath (
 		.ZERO(alu_zero)
 		);
 
+	hazard_unit HAZARDUNIT(
+		.dmemREN(dmemren_ex_mem_output),
+		.dmemWEN(dmemwen_ex_mem_output),
+		.dhit(dpif.dhit),
+		.ihit(dpif.ihit),
+		.halt(halt_out_ex_mem_output),
+		.pc_stall(pc_stall),
+		.if_id_stall(if_id_stall),
+		.if_id_bubble(if_id_bubble),
+		.id_ex_stall(id_ex_stall)
+		);
+
+///////////////PIPELINE REGISTERS//////////////////////////////
+
 	//instantiation of IF ID LATCH
 	if_id_latch IFID(
 		.CLK(CLK),
 		.nRST(nRST),
 		.NPC(next_pc_count),
 		.imemload(dpif.imemload),
-		.ihit(dpif.ihit),
-		.stall(stall),
+		.bubble(if_id_bubble),
+		.stall(if_id_stall),
 		.npc_if_id_output(npc_if_id_output),
 		.imemload_if_id_output(imemload_if_id_output)
 		);
@@ -222,7 +240,7 @@ module datapath (
 		.imemload(imemload_if_id_output),
 		.uppersixteen(uppersixteen),
 		.signzerovalue(signzero_output),
-		.stall(stall),
+		.stall(id_ex_stall),
 		.dhit(dpif.dhit),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
@@ -304,6 +322,9 @@ module datapath (
 		.dMemLoad(dmemload_mem_wb_output)
 		);
 
+
+/////////////////MUXES///////////////////////////////////////
+
 	//instantiate branch mux
 	branch_mux BRANCHMUX(
 		.nextPC(pc_count_four_output),
@@ -311,7 +332,6 @@ module datapath (
 		.branchSelect(branch_xnor_output),
 		.out(branch_mux_output)
 		);
-
 
 	//instantiate NPC mux
 	npc_mux NPCMUX(

@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"d",
+				"dpif"
+			],
+			[
+				"temp_reg",
+				"temp_regwrite_output"
+			],
+			[
+				"temp_req",
+				"temp_request_dmemREN_output"
+			],
+			[
+				"temp_",
+				"temp_stall"
+			],
+			[
 				"temp",
 				"temp_rdat1"
 			],
@@ -16,18 +32,18 @@
 	"buffers":
 	[
 		{
-			"file": "source/id_ex_latch.sv",
+			"file": "source/program_count.sv",
 			"settings":
 			{
-				"buffer_size": 4049,
+				"buffer_size": 509,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/program_count.sv",
+			"file": "source/id_ex_latch.sv",
 			"settings":
 			{
-				"buffer_size": 564,
+				"buffer_size": 4056,
 				"line_ending": "Unix"
 			}
 		},
@@ -35,15 +51,7 @@
 			"file": "source/if_id_latch.sv",
 			"settings":
 			{
-				"buffer_size": 756,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/mem_wb_latch.sv",
-			"settings":
-			{
-				"buffer_size": 1936,
+				"buffer_size": 835,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,26 +59,23 @@
 			"file": "source/ex_mem_latch.sv",
 			"settings":
 			{
-				"buffer_size": 3835,
+				"buffer_size": 3918,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "`include \"cpu_types_pkg.vh\"\n\nmodule harzard_unit (\n	input logic [4:0]   branch_dest,\n	input logic [31:0]  imemload,\n    input logic         mem_read,\n	output logic        pc_stall ,\n	output logic [1:0]  if_id_out,\n	output logic [1:0]  id_ex_out,\n	output logic [1:0]  ex_mem_out\n);\n\nalways_comb\n    begin\n    end\n\n\nendmodule",
-			"file": "source/hazard_unit.sv",
-			"file_size": 294,
-			"file_write_time": 130372304782706065,
+			"file": "source/mem_wb_latch.sv",
 			"settings":
 			{
-				"buffer_size": 323,
+				"buffer_size": 1928,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/alu.sv",
+			"file": "asmFiles/test.ldst1.asm",
 			"settings":
 			{
-				"buffer_size": 1654,
+				"buffer_size": 540,
 				"line_ending": "Unix"
 			}
 		},
@@ -78,7 +83,7 @@
 			"file": "source/datapath.sv",
 			"settings":
 			{
-				"buffer_size": 10102,
+				"buffer_size": 10122,
 				"line_ending": "Unix"
 			}
 		}
@@ -86,15 +91,23 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 305.0,
+		"height": 187.0,
 		"selected_items":
 		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"package con",
 				"Package Control: Install Package"
 			]
 		],
-		"width": 400.0
+		"width": 528.0
 	},
 	"console":
 	{
@@ -115,6 +128,10 @@
 	},
 	"file_history":
 	[
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv~",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/memory_control.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/control_unit.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv",
@@ -131,7 +148,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 382.0
 	},
 	"find_in_files":
 	{
@@ -145,6 +162,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"aluresult_ex_mem_output",
+			"halt_out_id_ex_output",
+			"halt_out_ex_mem_output",
+			"halt",
 			"jumpPC",
 			"branchDest_input",
 			"dMemLoad_mem_wb_output",
@@ -230,48 +251,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "source/id_ex_latch.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4049,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								631,
-								631
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 459.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "source/program_count.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 564,
+						"buffer_size": 509,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								389,
-								389
+								443,
+								443
 							]
 						],
 						"settings":
@@ -283,6 +275,35 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "source/id_ex_latch.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4056,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3390,
+								3390
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1061.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 4,
 					"type": "text"
 				},
@@ -292,15 +313,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 756,
+						"buffer_size": 835,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								228,
-								228
+								835,
+								835
 							]
 						],
 						"settings":
@@ -317,19 +338,47 @@
 				},
 				{
 					"buffer": 3,
-					"file": "source/mem_wb_latch.sv",
+					"file": "source/ex_mem_latch.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1936,
+						"buffer_size": 3918,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2256,
+								2256
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "source/mem_wb_latch.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1928,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1142,
+								1142
 							]
 						],
 						"settings":
@@ -337,35 +386,7 @@
 							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
 						},
 						"translation.x": -0.0,
-						"translation.y": 255.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "source/ex_mem_latch.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3835,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2593,
-								2593
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1020.0,
+						"translation.y": 357.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -373,59 +394,32 @@
 				},
 				{
 					"buffer": 5,
-					"file": "source/hazard_unit.sv",
+					"file": "asmFiles/test.ldst1.asm",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 323,
+						"buffer_size": 540,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								308,
-								308
+								539,
+								539
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "source/alu.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1654,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -435,20 +429,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 7,
+					"buffer": 6,
 					"file": "source/datapath.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10102,
+						"buffer_size": 10122,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6051,
-								6051
+								10122,
+								10122
 							]
 						],
 						"settings":
@@ -457,7 +451,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3825.0,
+						"translation.y": 2941.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -468,7 +462,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 382.0
 	},
 	"input":
 	{
@@ -511,7 +505,7 @@
 	"project": "source.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 760.0
 	},
 	"save_all_on_build": true,
 	"select_file":

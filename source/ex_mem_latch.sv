@@ -100,7 +100,7 @@ module ex_mem_latch (
 
 		end
 
-   assign stall = (dmemREN || dmemWEN) && ~dhit;
+   //assign stall = (dmemREN || dmemWEN) && ~dhit;
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
    assign pcselect = temp_pcselect;
