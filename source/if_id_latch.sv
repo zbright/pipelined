@@ -22,7 +22,10 @@ module if_id_latch (
 
 	always_ff @(posedge CLK, negedge nRST)
 		begin: IFIDLATCH
-			if (nRST == 0 || ~ihit) begin
+			if (nRST == 0) begin
+				temp_NPC_output <= '0;
+				temp_imemload_output <= '0;
+			end else if(~ihit) begin
 				temp_NPC_output <= '0;
 				temp_imemload_output <= '0;
 			end else if(~stall) begin
