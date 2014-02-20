@@ -21,7 +21,7 @@ module program_count(
 		begin: PC
 			if (nRST == 0) begin
 				pccount <= '0;
-			end else if (ihit && !halt && !stall) begin
+			end else if (ihit && ~halt && ~stall) begin
 				pccount <= next_pc_count;
 			end
 		end

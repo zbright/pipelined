@@ -1,3 +1,4 @@
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run 1000000; exit;} -c -wlf system_tb.wlf work.system_tb 
 # //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.el6.x86_64
 # //
 # //  Copyright 1991-2013 Mentor Graphics Corporation
@@ -7,7 +8,6 @@
 # //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {view objects; do scripts/system.do; run 1000;} -onfinish stop -wlf system_tb.wlf work.system_tb 
 # Loading sv_std.std
 # Loading work.system_tb
 # Loading work.cpu_types_pkg
@@ -40,13 +40,8 @@
 # Loading altera_mf_ver.altsyncram
 # Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
 # Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
-# view objects 
-# .main_pane.objects.interior.cs.body.tree
-#  do scripts/system.do 
-# ** Error: (vish-4014) No objects found matching '/system_tb/DUT/CPU/DP/IFID/NPC_if_id_output'.
-# Executing ONERROR command at macro ./scripts/system.do line 39
-#  run 1000 
+# run 1000000 
 # Starting Processor.
 # Halted at 880 time and ran for         43 cycles.
 # Starting memory dump.
-#  
+# Finished memory dump.
