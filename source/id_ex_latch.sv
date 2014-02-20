@@ -21,7 +21,7 @@ module id_ex_latch (
 	input logic [31:0]  uppersixteen,
 	input logic [31:0]  signzerovalue,
 	input logic 	    stall,
-	input logic ihit,
+	input logic dhit,
 	output logic [1:0]  ALUsrc_id_ex_output,
 	output logic [1:0]  memtoreg_id_ex_output,
 	output logic [3:0]  ALUop_id_ex_output,
@@ -95,7 +95,7 @@ module id_ex_latch (
 				temp_imemload_output <= 0;
 				temp_uppersixteen_output <= 0;
 				temp_signzerovalue_output <= 0;
-			end else if(~stall && ihit) begin
+			end else if(~stall) begin
 				temp_ALUsrc_output <= ALUsrc;
 				temp_memtoreg_output <= memtoreg;
 				temp_ALUop_output <= ALUop;

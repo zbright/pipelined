@@ -61,7 +61,7 @@ module ex_mem_latch (
 
 	always_ff @(posedge CLK, negedge nRST)
 	  begin: WRITE
-			if (~nRST || dhit) begin
+			if (~nRST) begin
 			   temp_memtoreg <= '0;
 			   temp_regwrite <= '0;
 			   temp_pcselect <= '0;

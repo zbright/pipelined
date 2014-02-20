@@ -223,7 +223,7 @@ module datapath (
 		.uppersixteen(uppersixteen),
 		.signzerovalue(signzero_output),
 		.stall(stall),
-		.ihit(dpif.ihit),
+		.dhit(dpif.dhit),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
 		.ALUop_id_ex_output(aluop_id_ex_output),

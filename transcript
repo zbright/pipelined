@@ -42,6 +42,6 @@
 # Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
 # run 1000000 
 # Starting Processor.
-# Halted at 880 time and ran for         43 cycles.
+# Halted at 920 time and ran for         45 cycles.
 # Starting memory dump.
 # Finished memory dump.
