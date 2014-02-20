@@ -119,13 +119,14 @@ module datapath (
 	logic [4:0] 	branchdest_input;
 	logic [31:0] 	jump_pc;
 	logic 			halt_id_ex_input;
-	logic 	        stall;
 
 	//Hazard Unit signals
 	logic 			pc_stall;
 	logic			if_id_stall;
 	logic 			id_ex_stall;
 	logic			if_id_bubble;
+	logic			if_id_flush;
+	logic 			id_ex_flush;
 
 	//assign statements
 
@@ -200,10 +201,15 @@ module datapath (
 		.dhit(dpif.dhit),
 		.ihit(dpif.ihit),
 		.halt(halt_out_ex_mem_output),
+		.branch_flag(branch_id_ex_output),
+		.zero_flag(alu_zero),
+		.imemload(imemload_if_id_output),
 		.pc_stall(pc_stall),
 		.if_id_stall(if_id_stall),
 		.if_id_bubble(if_id_bubble),
-		.id_ex_stall(id_ex_stall)
+		.if_id_flush(if_id_flush),
+		.id_ex_stall(id_ex_stall),
+		.id_ex_flush(id_ex_flush)
 		);
 
 ///////////////PIPELINE REGISTERS//////////////////////////////
@@ -216,6 +222,7 @@ module datapath (
 		.imemload(dpif.imemload),
 		.bubble(if_id_bubble),
 		.stall(if_id_stall),
+		.flush(if_id_flush),
 		.npc_if_id_output(npc_if_id_output),
 		.imemload_if_id_output(imemload_if_id_output)
 		);
@@ -241,6 +248,7 @@ module datapath (
 		.uppersixteen(uppersixteen),
 		.signzerovalue(signzero_output),
 		.stall(id_ex_stall),
+		.flush(id_ex_flush),
 		.dhit(dpif.dhit),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
@@ -296,8 +304,7 @@ module datapath (
 		.branchDest(branchdest_ex_mem_output),
 		.upper16(upper16_ex_mem_output),
 		.signZero(signzero_ex_mem_output),
-		.iMemLoad(imemload_ex_mem_output),
-		.stall(stall)
+		.iMemLoad(imemload_ex_mem_output)
 		);
 
 	//instantiation of MEM WB

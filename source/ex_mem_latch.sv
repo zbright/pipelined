@@ -36,8 +36,7 @@ module ex_mem_latch (
 		     output logic [4:0]       branchDest,
 		     output logic [31:0]      upper16,
 		     output logic [31:0]      signZero,
-		     output logic [25:0]      iMemLoad,
-             output logic             stall
+		     output logic [25:0]      iMemLoad
 );
 
     logic [1:0] 			temp_memtoreg;
@@ -56,8 +55,6 @@ module ex_mem_latch (
     logic [31:0] 			temp_upper16;
     logic [31:0] 			temp_signZero;
     logic [25:0]            temp_iMemLoad;
-    logic                   temp_stall;
-
 
 	always_ff @(posedge CLK, negedge nRST)
 	  begin: WRITE
@@ -100,7 +97,6 @@ module ex_mem_latch (
 
 		end
 
-   //assign stall = (dmemREN || dmemWEN) && ~dhit;
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
    assign pcselect = temp_pcselect;

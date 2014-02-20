@@ -9,6 +9,7 @@ module if_id_latch (
 	input logic [31:0] imemload,
 	input logic 	   bubble,
 	input logic 	   stall,
+	input logic 	   flush,
 	output [31:0] 	   npc_if_id_output,
 	output [31:0] 	   imemload_if_id_output
 
@@ -25,7 +26,7 @@ module if_id_latch (
 			if (nRST == 0) begin
 				temp_NPC_output <= '0;
 				temp_imemload_output <= '0;
-			end else if(bubble) begin
+			end else if(bubble || flush) begin
 				temp_NPC_output <= '0;
 				temp_imemload_output <= '0;
 			end else if(~stall) begin
