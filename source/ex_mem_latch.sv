@@ -36,7 +36,8 @@ module ex_mem_latch (
 		     output logic [4:0]       branchDest,
 		     output logic [31:0]      upper16,
 		     output logic [31:0]      signZero,
-		     output logic [25:0]      iMemLoad
+		     output logic [25:0]      iMemLoad,
+             output logic             stall
 );
 
     logic [1:0] 			temp_memtoreg;
@@ -55,11 +56,12 @@ module ex_mem_latch (
     logic [31:0] 			temp_upper16;
     logic [31:0] 			temp_signZero;
     logic [25:0]            temp_iMemLoad;
+    logic                   temp_stall;
 
 
 	always_ff @(posedge CLK, negedge nRST)
 	  begin: WRITE
-			if (nRST == 0) begin
+			if (~nRST) begin
 			   temp_memtoreg <= '0;
 			   temp_regwrite <= '0;
 			   temp_pcselect <= '0;
@@ -74,9 +76,11 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
+               temp_dmemREN <= '0;
+               temp_dmemWEN <= '0;
 			end else  begin
-			   temp_dmemREN <= !dhit ? dmemREN_in : 0;
-			   temp_dmemWEN <= !dhit ? dmemWEN_in : 0;
+			   temp_dmemREN <= dmemREN_in;
+			   temp_dmemWEN <= dmemWEN_in;
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
@@ -92,9 +96,11 @@ module ex_mem_latch (
 			   temp_signZero <= signZero_in;
 			   temp_iMemLoad <= iMemLoad_in;
 			end
+
+
 		end
 
-
+   assign stall = (dmemREN || dmemWEN) && ~dhit;
    assign memtoreg = temp_memtoreg;
    assign regwrite = temp_regwrite;
    assign pcselect = temp_pcselect;

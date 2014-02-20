@@ -5,7 +5,7 @@ module mem_wb_latch (
 		     input logic 	 CLK,
 		     input logic 	 nRST,
 		     input logic [1:0] 	 memtoreg_in,
-		     input logic [1:0] 	 pcselect_in, 
+		     input logic [1:0] 	 pcselect_in,
 		     input logic 	 regwrite_in,
 		     input logic [31:0]  npc_in,
 		     input logic [31:0]  aluResult_in,
@@ -30,7 +30,7 @@ module mem_wb_latch (
    logic [4:0] 				 temp_branchDest;
    logic [31:0] 			 temp_upper16;
    logic [25:0] 			 temp_dMemLoad;
-   
+
 
 	always_ff @(posedge CLK, negedge nRST)
 		begin: WRITE
@@ -64,5 +64,5 @@ module mem_wb_latch (
    assign upper16 = temp_upper16;
    assign dMemLoad = temp_dMemLoad;
 endmodule
-   
-	
+
+
