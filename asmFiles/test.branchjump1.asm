@@ -20,4 +20,4 @@ braR:
   sw    $1, 12($2)
 jmpR:
   bne   $ra, $3, end
-  #halt
+  halt
