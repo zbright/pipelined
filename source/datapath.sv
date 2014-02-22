@@ -126,6 +126,7 @@ module datapath (
 	logic			if_id_stall;
 	logic 			id_ex_stall;
 	logic			if_id_bubble;
+	logic 			id_ex_bubble;
 	logic			if_id_flush;
 	logic 			id_ex_flush;
 
@@ -215,12 +216,17 @@ module datapath (
 		.branch_flag(branch_id_ex_output),
 		.zero_flag(alu_zero),
 		.imemload(imemload_if_id_output),
+		.id_ex_dmemren(dmemren_id_ex_output),
+		.id_ex_rt(imemload_id_ex_output[20:16]),
+		.if_id_rs(imemload_if_id_output[25:21]),
+		.if_id_rt(imemload_if_id_output[20:16]),
 		.pc_stall(pc_stall),
 		.if_id_stall(if_id_stall),
 		.if_id_bubble(if_id_bubble),
 		.if_id_flush(if_id_flush),
 		.id_ex_stall(id_ex_stall),
-		.id_ex_flush(id_ex_flush)
+		.id_ex_flush(id_ex_flush),
+		.id_ex_bubble(id_ex_bubble)
 		);
 
 	//instantiation of forwarding unit
@@ -276,6 +282,7 @@ module datapath (
 		.stall(id_ex_stall),
 		.flush(id_ex_flush),
 		.dhit(dpif.dhit),
+		.bubble(id_ex_bubble),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
 		.ALUop_id_ex_output(aluop_id_ex_output),
@@ -305,7 +312,7 @@ module datapath (
 		.dmemREN_in(dmemren_id_ex_output),
 		.dmemWEN_in(dmemwen_id_ex_output),
 		.halt_in(halt_out_id_ex_output),
-		.rdat1_in(rdat_one_id_ex_output),
+		.rdat1_in(alu_a_mux_output),
 		.rdat2_in(alu_b_mux_output),
 		.npc_in(npc_id_ex_output),
 		.zeroFlag_in(alu_zero),
