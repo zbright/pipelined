@@ -12,6 +12,7 @@ module mem_wb_latch (
 		     input logic [4:0] 	 branchDest_in,
 		     input logic [31:0]  upper16_in,
 		     input logic [31:0]  dMemLoad_in,
+             input logic [25:0]  imemload_in,
 		     output logic [1:0]  memtoreg,
 		     output logic 	 regwrite,
 		     output logic [1:0]  pcselect,
@@ -19,7 +20,8 @@ module mem_wb_latch (
 		     output logic [31:0] aluResult,
 		     output logic [4:0]  branchDest,
 		     output logic [31:0] upper16,
-		     output logic [31:0] dMemLoad
+		     output logic [31:0] dMemLoad,
+             output logic [25:0] imemload
 );
 
    logic [1:0] 				 temp_memtoreg;
@@ -30,6 +32,7 @@ module mem_wb_latch (
    logic [4:0] 				 temp_branchDest;
    logic [31:0] 			 temp_upper16;
    logic [25:0] 			 temp_dMemLoad;
+   logic [25:0]              temp_imemload;
 
 
 	always_ff @(posedge CLK, negedge nRST)
@@ -43,6 +46,7 @@ module mem_wb_latch (
 			   temp_branchDest <= '0;
 			   temp_upper16 <= '0;
 			   temp_dMemLoad <= '0;
+               temp_imemload <= '0;
 			end else begin // if (nRST == 0)
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
@@ -52,6 +56,7 @@ module mem_wb_latch (
 			   temp_branchDest <= branchDest_in;
 			   temp_upper16 <= upper16_in;
 			   temp_dMemLoad <= dMemLoad_in;
+               temp_imemload <= imemload_in;
 			end
 		end
 
@@ -63,6 +68,7 @@ module mem_wb_latch (
    assign branchDest = temp_branchDest;
    assign upper16 = temp_upper16;
    assign dMemLoad = temp_dMemLoad;
+   assign imemload = temp_imemload;
 endmodule
 
 

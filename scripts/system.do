@@ -2,6 +2,25 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate /system_tb/CLK
 add wave -noupdate /system_tb/nRST
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/branchdest_input
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/branchdest_ex_mem_output
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/branchdest_mem_wb_output
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/imemload_id_ex_output
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/regwrite_id_ex_output
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/regwrite_ex_mem_output
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/regwrite_mem_wb_output
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/forwarda
+add wave -noupdate -expand -group {Forward Unit} /system_tb/DUT/CPU/DP/FORWADUNIT/forwardb
+add wave -noupdate -expand -group {ALU A Mux} /system_tb/DUT/CPU/DP/ALUAMUX/forwarda
+add wave -noupdate -expand -group {ALU A Mux} /system_tb/DUT/CPU/DP/ALUAMUX/rdat_one_id_ex_output
+add wave -noupdate -expand -group {ALU A Mux} /system_tb/DUT/CPU/DP/ALUAMUX/aluresult_ex_mem_output
+add wave -noupdate -expand -group {ALU A Mux} /system_tb/DUT/CPU/DP/ALUAMUX/aluresult_mem_wb_output
+add wave -noupdate -expand -group {ALU A Mux} /system_tb/DUT/CPU/DP/ALUAMUX/alu_a_mux_output
+add wave -noupdate -expand -group {ALU B Mux} /system_tb/DUT/CPU/DP/ALUBMUX/forwardb
+add wave -noupdate -expand -group {ALU B Mux} /system_tb/DUT/CPU/DP/ALUBMUX/rdat_two_id_ex_output
+add wave -noupdate -expand -group {ALU B Mux} /system_tb/DUT/CPU/DP/ALUBMUX/aluresult_ex_mem_output
+add wave -noupdate -expand -group {ALU B Mux} /system_tb/DUT/CPU/DP/ALUBMUX/aluresult_mem_wb_output
+add wave -noupdate -expand -group {ALU B Mux} /system_tb/DUT/CPU/DP/ALUBMUX/alu_b_mux_output
 add wave -noupdate -expand -group DPIF /system_tb/DUT/CPU/DP/dpif/imemload
 add wave -noupdate -expand -group DPIF /system_tb/DUT/CPU/DP/dpif/imemaddr
 add wave -noupdate -expand -group DPIF /system_tb/DUT/CPU/DP/dpif/imemREN
@@ -23,14 +42,11 @@ add wave -noupdate -expand -group Register /system_tb/DUT/CPU/DP/REGISTER/regist
 add wave -noupdate -expand -group Register /system_tb/DUT/CPU/DP/REGISTER/registerval/WEN
 add wave -noupdate -expand -group Register /system_tb/DUT/CPU/DP/REGISTER/storeregister
 add wave -noupdate -expand -group PC -radix decimal /system_tb/DUT/CPU/DP/PC/pccount
-add wave -noupdate -expand -group PC /system_tb/DUT/CPU/DP/PC/ihit
-add wave -noupdate -expand -group PC /system_tb/DUT/CPU/DP/PC/halt
 add wave -noupdate -expand -group PC /system_tb/DUT/CPU/DP/PC/next_pc_count
 add wave -noupdate -expand -group PC /system_tb/DUT/CPU/DP/PC/stall
 add wave -noupdate -expand -group PC /system_tb/DUT/CPU/DP/PC/current_pc_count
 add wave -noupdate -expand -group IF_ID /system_tb/DUT/CPU/DP/IFID/NPC
 add wave -noupdate -expand -group IF_ID /system_tb/DUT/CPU/DP/IFID/imemload
-add wave -noupdate -expand -group IF_ID /system_tb/DUT/CPU/DP/IFID/ihit
 add wave -noupdate -expand -group IF_ID /system_tb/DUT/CPU/DP/IFID/stall
 add wave -noupdate -expand -group IF_ID /system_tb/DUT/CPU/DP/IFID/npc_if_id_output
 add wave -noupdate -expand -group IF_ID /system_tb/DUT/CPU/DP/IFID/imemload_if_id_output
@@ -71,7 +87,6 @@ add wave -noupdate -expand -group EX_MEM /system_tb/DUT/CPU/DP/EXMEM/branchDest
 add wave -noupdate -expand -group EX_MEM /system_tb/DUT/CPU/DP/EXMEM/upper16
 add wave -noupdate -expand -group EX_MEM /system_tb/DUT/CPU/DP/EXMEM/signZero
 add wave -noupdate -expand -group EX_MEM /system_tb/DUT/CPU/DP/EXMEM/iMemLoad
-add wave -noupdate -expand -group EX_MEM /system_tb/DUT/CPU/DP/EXMEM/stall
 add wave -noupdate -expand -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/memtoreg
 add wave -noupdate -expand -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/regwrite
 add wave -noupdate -expand -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/pcselect

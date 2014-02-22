@@ -113,6 +113,7 @@ module datapath (
 	logic [4:0]  	branchdest_mem_wb_output;
 	logic [31:0] 	upper16_mem_wb_output;
 	logic [31:0] 	dmemload_mem_wb_output;
+	logic [25:0]	imemload_mem_wb_output;
 
 	//misc
 	logic [31:0] 	uppersixteen;
@@ -127,6 +128,14 @@ module datapath (
 	logic			if_id_bubble;
 	logic			if_id_flush;
 	logic 			id_ex_flush;
+
+	//forward unit signals
+	logic [1:0] 	forwarda;
+	logic [1:0] 	forwardb;
+	logic [31:0]	alu_a_mux_output;
+	logic [31:0]	alu_b_mux_output;
+
+
 
 	//assign statements
 
@@ -186,7 +195,7 @@ module datapath (
 
 	//instantiation of ALU
 	alu ALU(
-		.A(rdat_one_id_ex_output),
+		.A(alu_a_mux_output),
 		.B(alu_input_two),
 		.OPCODE(aluop_id_ex_output),
 		.OUTPUT(alu_output),
@@ -194,6 +203,8 @@ module datapath (
 		.OVERFLOW(alu_overflow),
 		.ZERO(alu_zero)
 		);
+
+	//instantiation of hazard unit
 
 	hazard_unit HAZARDUNIT(
 		.dmemREN(dmemren_ex_mem_output),
@@ -211,6 +222,21 @@ module datapath (
 		.id_ex_stall(id_ex_stall),
 		.id_ex_flush(id_ex_flush)
 		);
+
+	//instantiation of forwarding unit
+
+	forward FORWADUNIT(
+		.branchdest_input(branchdest_input),
+		.branchdest_ex_mem_output(branchdest_ex_mem_output),
+		.branchdest_mem_wb_output(branchdest_mem_wb_output),
+		.imemload_id_ex_output(imemload_id_ex_output),
+		.regwrite_id_ex_output(regwrite_id_ex_output),
+		.regwrite_ex_mem_output(regwrite_ex_mem_output),
+		.regwrite_mem_wb_output(regwrite_mem_wb_output),
+		.forwarda(forwarda),
+		.forwardb(forwardb)
+		);
+
 
 ///////////////PIPELINE REGISTERS//////////////////////////////
 
@@ -280,7 +306,7 @@ module datapath (
 		.dmemWEN_in(dmemwen_id_ex_output),
 		.halt_in(halt_out_id_ex_output),
 		.rdat1_in(rdat_one_id_ex_output),
-		.rdat2_in(rdat_two_id_ex_output),
+		.rdat2_in(alu_b_mux_output),
 		.npc_in(npc_id_ex_output),
 		.zeroFlag_in(alu_zero),
 		.aluResult_in(alu_output),
@@ -319,6 +345,7 @@ module datapath (
 		.branchDest_in(branchdest_ex_mem_output),
 		.upper16_in(upper16_ex_mem_output),
 		.dMemLoad_in(dpif.dmemload),
+		.imemload_in(imemload_ex_mem_output),
 		.memtoreg(memtoreg_mem_wb_output),
 		.regwrite(regwrite_mem_wb_output),
 		.pcselect(pcselect_mem_wb_output),
@@ -326,7 +353,8 @@ module datapath (
 		.aluResult(aluresult_mem_wb_output),
 		.branchDest(branchdest_mem_wb_output),
 		.upper16(upper16_mem_wb_output),
-		.dMemLoad(dmemload_mem_wb_output)
+		.dMemLoad(dmemload_mem_wb_output),
+		.imemload(imemload_mem_wb_output)
 		);
 
 
@@ -359,7 +387,7 @@ module datapath (
 
 	//instantiate alu source mux
 	alu_source_mux alusourceMUX(
-		.readReg2(read_data_two_output),
+		.readReg2(alu_b_mux_output),
 		.extendedImmediate(signzerovalue_id_ex_output),
 		.shiftAmount(imemload_id_ex_output[10:6]),
 		.aluSource(alusource_id_ex_output),
@@ -382,6 +410,24 @@ module datapath (
 		.npc(npc_mem_wb_output),
 		.memToReg(memtoreg_mem_wb_output),
 		.out(writedata_output)
+		);
+
+	//instantiation of alu_a_mux
+	alu_a_mux ALUAMUX(
+		.forwarda(forwarda),
+		.rdat_one_id_ex_output(rdat_one_id_ex_output),
+		.aluresult_ex_mem_output(aluresult_ex_mem_output),
+		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.alu_a_mux_output(alu_a_mux_output)
+		);
+
+	//instantiate alu_b_mux
+	alu_b_mux ALUBMUX(
+		.forwardb(forwardb),
+		.rdat_two_id_ex_output(rdat_two_id_ex_output),
+		.aluresult_ex_mem_output(aluresult_ex_mem_output),
+		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.alu_b_mux_output(alu_b_mux_output)
 		);
 
 
