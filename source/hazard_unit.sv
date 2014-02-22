@@ -19,7 +19,8 @@ module hazard_unit (
     output logic        if_id_flush,
 	output logic        id_ex_stall,
     output logic        id_ex_flush,
-    output logic        id_ex_bubble
+    output logic        id_ex_bubble,
+    output logic        ex_mem_flush
 );
 
 logic stall;
@@ -48,5 +49,6 @@ assign id_ex_bubble = use_after_load;
 
 assign if_id_flush = flush;
 assign id_ex_flush = flush;
+assign ex_mem_flush = flush;
 
 endmodule

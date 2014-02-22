@@ -103,7 +103,7 @@ module datapath (
 	logic [4:0]  	branchdest_ex_mem_output;
 	logic [31:0] 	upper16_ex_mem_output;
 	logic [31:0] 	signzero_ex_mem_output;
-	logic [25:0] 	imemload_ex_mem_output;
+	logic [31:0] 	imemload_ex_mem_output;
 	//memwb signals
 	logic [1:0]  	memtoreg_mem_wb_output;
 	logic 	 		regwrite_mem_wb_output;
@@ -113,7 +113,7 @@ module datapath (
 	logic [4:0]  	branchdest_mem_wb_output;
 	logic [31:0] 	upper16_mem_wb_output;
 	logic [31:0] 	dmemload_mem_wb_output;
-	logic [25:0]	imemload_mem_wb_output;
+	logic [31:0]	imemload_mem_wb_output;
 
 	//misc
 	logic [31:0] 	uppersixteen;
@@ -129,6 +129,7 @@ module datapath (
 	logic 			id_ex_bubble;
 	logic			if_id_flush;
 	logic 			id_ex_flush;
+	logic 			ex_mem_flush;
 
 	//forward unit signals
 	logic [2:0] 	forwarda;
@@ -143,7 +144,7 @@ module datapath (
 	assign pc_count_four_output = current_pc_count + 4;
 	assign branch_count_output = (signzero_ex_mem_output << 2) + npc_ex_mem_output;
 	assign branch_xnor_output = ~(branchselect_ex_mem_output ^ zeroflag_ex_mem_output);
-	assign jump_pc = {pc_count_four_output[31:28], (imemload_ex_mem_output << 2)};
+	assign jump_pc = {pc_count_four_output[31:28], (imemload_ex_mem_output[25:0] << 2)};
 	assign uppersixteen = imemload_if_id_output[15:0] << 16;
 	assign read_data_one_output = registerval.rdat1;
 	assign read_data_two_output = registerval.rdat2;
@@ -215,7 +216,7 @@ module datapath (
 		.halt(halt_out_ex_mem_output),
 		.branch_flag(branch_id_ex_output),
 		.zero_flag(alu_zero),
-		.imemload(imemload_if_id_output),
+		.imemload(imemload_ex_mem_output),
 		.id_ex_dmemren(dmemren_id_ex_output),
 		.id_ex_rt(imemload_id_ex_output[20:16]),
 		.if_id_rs(imemload_if_id_output[25:21]),
@@ -226,7 +227,8 @@ module datapath (
 		.if_id_flush(if_id_flush),
 		.id_ex_stall(id_ex_stall),
 		.id_ex_flush(id_ex_flush),
-		.id_ex_bubble(id_ex_bubble)
+		.id_ex_bubble(id_ex_bubble),
+		.ex_mem_flush(ex_mem_flush)
 		);
 
 	//instantiation of forwarding unit
@@ -321,8 +323,9 @@ module datapath (
 		.branchDest_in(branchdest_input),
 		.upper16_in(uppersixteen_id_ex_output),
 		.signZero_in(signzerovalue_id_ex_output),
-		.iMemLoad_in(imemload_id_ex_output[25:0]),
+		.iMemLoad_in(imemload_id_ex_output),
 		.dhit(dpif.dhit),
+		.flush(ex_mem_flush),
 		.memtoreg(memtoreg_ex_mem_output),
 		.regwrite(regwrite_ex_mem_output),
 		.pcselect(pcselect_ex_mem_output),
