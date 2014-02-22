@@ -131,8 +131,8 @@ module datapath (
 	logic 			id_ex_flush;
 
 	//forward unit signals
-	logic [1:0] 	forwarda;
-	logic [1:0] 	forwardb;
+	logic [2:0] 	forwarda;
+	logic [2:0] 	forwardb;
 	logic [31:0]	alu_a_mux_output;
 	logic [31:0]	alu_b_mux_output;
 
@@ -236,9 +236,10 @@ module datapath (
 		.branchdest_ex_mem_output(branchdest_ex_mem_output),
 		.branchdest_mem_wb_output(branchdest_mem_wb_output),
 		.imemload_id_ex_output(imemload_id_ex_output),
-		.regwrite_id_ex_output(regwrite_id_ex_output),
 		.regwrite_ex_mem_output(regwrite_ex_mem_output),
 		.regwrite_mem_wb_output(regwrite_mem_wb_output),
+		.memtoreg_ex_mem_output(memtoreg_ex_mem_output),
+		.memtoreg_mem_wb_output(memtoreg_mem_wb_output),
 		.forwarda(forwarda),
 		.forwardb(forwardb)
 		);
@@ -425,6 +426,8 @@ module datapath (
 		.rdat_one_id_ex_output(rdat_one_id_ex_output),
 		.aluresult_ex_mem_output(aluresult_ex_mem_output),
 		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.upper16_ex_mem_output(upper16_ex_mem_output),
+		.upper16_mem_wb_output(upper16_mem_wb_output),
 		.alu_a_mux_output(alu_a_mux_output)
 		);
 
@@ -434,6 +437,8 @@ module datapath (
 		.rdat_two_id_ex_output(rdat_two_id_ex_output),
 		.aluresult_ex_mem_output(aluresult_ex_mem_output),
 		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.upper16_ex_mem_output(upper16_ex_mem_output),
+		.upper16_mem_wb_output(upper16_mem_wb_output),
 		.alu_b_mux_output(alu_b_mux_output)
 		);
 
