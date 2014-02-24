@@ -23,6 +23,8 @@ always_comb
             alu_b_mux_output = upper16_ex_mem_output;
         end else if (forwardb == 3'b100) begin
             alu_b_mux_output = upper16_mem_wb_output;
+        end else begin
+            alu_b_mux_output = rdat_two_id_ex_output;
         end
     end
 
