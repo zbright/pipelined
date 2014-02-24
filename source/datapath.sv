@@ -159,9 +159,18 @@ module datapath (
 	assign dpif.dmemaddr = aluresult_ex_mem_output;
 	assign dpif.dmemWEN = dmemwen_ex_mem_output;
 	assign dpif.dmemREN = dmemren_ex_mem_output;
-	assign dpif.halt = halt_out_ex_mem_output;
 	assign dpif.imemaddr = current_pc_count;
 
+	always_ff @(posedge CLK, negedge nRST)
+	begin
+		if (nRST == 0) begin
+			dpif.halt = 0;
+		end else if (halt_out_ex_mem_output == 1) begin
+			dpif.halt = 1;
+		end else begin
+			dpif.halt = 0;
+		end
+	end
 
 	//instantiation of REGISTER
 	register_file REGISTER(
@@ -214,8 +223,8 @@ module datapath (
 		.dhit(dpif.dhit),
 		.ihit(dpif.ihit),
 		.halt(halt_out_ex_mem_output),
-		.branch_flag(branch_id_ex_output),
-		.zero_flag(alu_zero),
+		.branch_flag(branchselect_ex_mem_output),
+		.zero_flag(zeroflag_ex_mem_output),
 		.imemload(imemload_ex_mem_output),
 		.id_ex_dmemren(dmemren_id_ex_output),
 		.id_ex_rt(imemload_id_ex_output[20:16]),
