@@ -251,6 +251,8 @@ module datapath (
 		.regwrite_mem_wb_output(regwrite_mem_wb_output),
 		.memtoreg_ex_mem_output(memtoreg_ex_mem_output),
 		.memtoreg_mem_wb_output(memtoreg_mem_wb_output),
+		.imemload_ex_mem_output(imemload_ex_mem_output),
+		.imemload_mem_wb_output(imemload_mem_wb_output),
 		.forwarda(forwarda),
 		.forwardb(forwardb)
 		);
@@ -440,6 +442,8 @@ module datapath (
 		.aluresult_mem_wb_output(aluresult_mem_wb_output),
 		.upper16_ex_mem_output(upper16_ex_mem_output),
 		.upper16_mem_wb_output(upper16_mem_wb_output),
+		.dmemload_mem_wb_output(dmemload_mem_wb_output),
+		.writedata_output(writedata_output),
 		.alu_a_mux_output(alu_a_mux_output)
 		);
 
@@ -449,8 +453,10 @@ module datapath (
 		.rdat_two_id_ex_output(rdat_two_id_ex_output),
 		.aluresult_ex_mem_output(aluresult_ex_mem_output),
 		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.dmemload_mem_wb_output(dmemload_mem_wb_output),
 		.upper16_ex_mem_output(upper16_ex_mem_output),
 		.upper16_mem_wb_output(upper16_mem_wb_output),
+		.writedata_output(writedata_output),
 		.alu_b_mux_output(alu_b_mux_output)
 		);
 
