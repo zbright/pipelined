@@ -130,6 +130,8 @@ module datapath (
 	logic			if_id_flush;
 	logic 			id_ex_flush;
 	logic 			ex_mem_flush;
+	logic 			ex_mem_stall;
+	logic 			mem_wb_stall;
 
 	//forward unit signals
 	logic [2:0] 	forwarda;
@@ -237,7 +239,9 @@ module datapath (
 		.id_ex_stall(id_ex_stall),
 		.id_ex_flush(id_ex_flush),
 		.id_ex_bubble(id_ex_bubble),
-		.ex_mem_flush(ex_mem_flush)
+		.ex_mem_flush(ex_mem_flush),
+		.ex_mem_stall(ex_mem_stall),
+		.mem_wb_stall(mem_wb_stall)
 		);
 
 	//instantiation of forwarding unit
@@ -337,6 +341,7 @@ module datapath (
 		.iMemLoad_in(imemload_id_ex_output),
 		.dhit(dpif.dhit),
 		.flush(ex_mem_flush),
+		.stall(ex_mem_stall),
 		.memtoreg(memtoreg_ex_mem_output),
 		.regwrite(regwrite_ex_mem_output),
 		.pcselect(pcselect_ex_mem_output),
@@ -368,6 +373,7 @@ module datapath (
 		.upper16_in(upper16_ex_mem_output),
 		.dMemLoad_in(dpif.dmemload),
 		.imemload_in(imemload_ex_mem_output),
+		.stall(ex_mem_stall),
 		.memtoreg(memtoreg_mem_wb_output),
 		.regwrite(regwrite_mem_wb_output),
 		.pcselect(pcselect_mem_wb_output),

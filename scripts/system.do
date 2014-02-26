@@ -94,31 +94,41 @@ add wave -noupdate -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/aluResult
 add wave -noupdate -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/branchDest
 add wave -noupdate -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/upper16
 add wave -noupdate -group MEM_WB /system_tb/DUT/CPU/DP/MEMWB/dMemLoad
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/zero_flag
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/use_after_load
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/stall
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/pc_stall
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/jump_flush
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/imemload
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/ihit
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_stall
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_rt
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_rs
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_flush
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_bubble
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_stall
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_rt
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_flush
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_dmemren
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_bubble
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/halt
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/flush
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/ex_mem_flush
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/dmemWEN
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/dmemREN
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/dhit
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/branch_flush
-add wave -noupdate -expand -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/branch_flag
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/zero_flag
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/use_after_load
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/stall
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/pc_stall
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/jump_flush
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/imemload
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/ihit
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_stall
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_rt
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_rs
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_flush
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/if_id_bubble
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_stall
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_rt
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_flush
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_dmemren
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/id_ex_bubble
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/halt
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/flush
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/ex_mem_flush
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/dmemWEN
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/dmemREN
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/dhit
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/branch_flush
+add wave -noupdate -group HAZARD /system_tb/DUT/CPU/DP/HAZARDUNIT/branch_flag
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/ramREN
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/ramWEN
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/ramaddr
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/ramstore
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/ramload
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/ramstate
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/memREN
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/memWEN
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/memaddr
+add wave -noupdate -expand -group RAM /system_tb/DUT/RAM/ramif/memstore
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {1178736 ps} 0}
 quietly wave cursor active 1
