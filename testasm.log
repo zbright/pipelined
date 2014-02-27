@@ -1,0 +1,2133 @@
+processing file asmFiles/count_days.asm (1 of 24)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 7720 time and ran for        385 cycles.
+# Starting memory dump.
+# Finished memory dump.
+116 instructions
+processing file asmFiles/count_days.asm~ (2 of 24)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 2840 time and ran for        141 cycles.
+# Starting memory dump.
+# Finished memory dump.
+71 instructions
+--- memsim.hex	2014-02-27 14:06:36.471778506 -0500
++++ memcpu.hex	2014-02-27 14:06:36.450777944 -0500
+@@ -41,6 +41,4 @@
+ :040028000100404251
+ :0400290008000023A8
+ :04002A0003E00008E7
+-:043FFD000000016D52
+-:043FFE000000034379
+ :00000001FF
+processing file asmFiles/fib.asm (3 of 24)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 11760 time and ran for        587 cycles.
+# Starting memory dump.
+# Finished memory dump.
+160 instructions
+processing file asmFiles/jumpbranch.asm (4 of 24)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1360 time and ran for         67 cycles.
+# Starting memory dump.
+# Finished memory dump.
+17 instructions
+processing file asmFiles/kevinforward.asm (5 of 24)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 680 time and ran for         33 cycles.
+# Starting memory dump.
+# Finished memory dump.
+12 instructions
+processing file asmFiles/meminit.hex (6 of 24)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+processing file asmFiles/count_days.asm (1 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 7720 time and ran for        385 cycles.
+# Starting memory dump.
+# Finished memory dump.
+116 instructions
+processing file asmFiles/count_days.asm~ (2 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 2840 time and ran for        141 cycles.
+# Starting memory dump.
+# Finished memory dump.
+71 instructions
+--- memsim.hex	2014-02-27 14:07:23.342034142 -0500
++++ memcpu.hex	2014-02-27 14:07:23.300033016 -0500
+@@ -41,6 +41,4 @@
+ :040028000100404251
+ :0400290008000023A8
+ :04002A0003E00008E7
+-:043FFD000000016D52
+-:043FFE000000034379
+ :00000001FF
+processing file asmFiles/fib.asm (3 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 11760 time and ran for        587 cycles.
+# Starting memory dump.
+# Finished memory dump.
+160 instructions
+processing file asmFiles/jumpbranch.asm (4 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1360 time and ran for         67 cycles.
+# Starting memory dump.
+# Finished memory dump.
+17 instructions
+processing file asmFiles/kevinforward.asm (5 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 680 time and ran for         33 cycles.
+# Starting memory dump.
+# Finished memory dump.
+12 instructions
+processing file asmFiles/mult.asm (6 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 4440 time and ran for        221 cycles.
+# Starting memory dump.
+# Finished memory dump.
+65 instructions
+processing file asmFiles/mult.asm~ (7 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 4440 time and ran for        221 cycles.
+# Starting memory dump.
+# Finished memory dump.
+65 instructions
+processing file asmFiles/mult_procedure.asm (8 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 3200 time and ran for        159 cycles.
+# Starting memory dump.
+# Finished memory dump.
+104 instructions
+--- memsim.hex	2014-02-27 14:07:32.753286257 -0500
++++ memcpu.hex	2014-02-27 14:07:32.732285694 -0500
+@@ -35,8 +35,4 @@
+ :040022008FBC00008F
+ :0400230027BD0004F1
+ :04002400FFFFFFFFDC
+-:043FFB0000000006BC
+-:043FFC0000000005BC
+-:043FFD0000000004BC
+-:043FFE00000001E0DE
+ :00000001FF
+processing file asmFiles/mult_procedure.asm~ (9 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Break key hit 
+# Break in Module ram at source/ram.sv line 86
+# Stopped at source/ram.sv line 86 
+#  exit 
+processing file asmFiles/count_days.asm (1 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 7720 time and ran for        385 cycles.
+# Starting memory dump.
+# Finished memory dump.
+116 instructions
+processing file asmFiles/count_days.asm~ (2 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 7720 time and ran for        385 cycles.
+# Starting memory dump.
+# Finished memory dump.
+116 instructions
+processing file asmFiles/fib.asm (3 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 11760 time and ran for        587 cycles.
+# Starting memory dump.
+# Finished memory dump.
+160 instructions
+processing file asmFiles/jumpbranch.asm (4 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1360 time and ran for         67 cycles.
+# Starting memory dump.
+# Finished memory dump.
+17 instructions
+processing file asmFiles/kevinforward.asm (5 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 680 time and ran for         33 cycles.
+# Starting memory dump.
+# Finished memory dump.
+12 instructions
+processing file asmFiles/mult.asm (6 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 4440 time and ran for        221 cycles.
+# Starting memory dump.
+# Finished memory dump.
+65 instructions
+processing file asmFiles/mult.asm~ (7 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 4440 time and ran for        221 cycles.
+# Starting memory dump.
+# Finished memory dump.
+65 instructions
+processing file asmFiles/mult_procedure.asm (8 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 12320 time and ran for        615 cycles.
+# Starting memory dump.
+# Finished memory dump.
+169 instructions
+processing file asmFiles/mult_procedure.asm~ (9 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 12320 time and ran for        615 cycles.
+# Starting memory dump.
+# Finished memory dump.
+169 instructions
+processing file asmFiles/search.asm (10 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 19160 time and ran for        957 cycles.
+# Starting memory dump.
+# Finished memory dump.
+278 instructions
+processing file asmFiles/test.branch.asm (11 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 2480 time and ran for        123 cycles.
+# Starting memory dump.
+# Finished memory dump.
+31 instructions
+processing file asmFiles/test.branchjump1.asm (12 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1040 time and ran for         51 cycles.
+# Starting memory dump.
+# Finished memory dump.
+11 instructions
+processing file asmFiles/test.jr.asm (13 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1120 time and ran for         55 cycles.
+# Starting memory dump.
+# Finished memory dump.
+20 instructions
+processing file asmFiles/test.jump.asm (14 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1120 time and ran for         55 cycles.
+# Starting memory dump.
+# Finished memory dump.
+17 instructions
+processing file asmFiles/test.ldst1.asm (15 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 880 time and ran for         43 cycles.
+# Starting memory dump.
+# Finished memory dump.
+14 instructions
+processing file asmFiles/test.ldst1.asm~ (16 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1160 time and ran for         57 cycles.
+# Starting memory dump.
+# Finished memory dump.
+20 instructions
+processing file asmFiles/test.ldst2.asm (17 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1000 time and ran for         49 cycles.
+# Starting memory dump.
+# Finished memory dump.
+15 instructions
+processing file asmFiles/test.ldst2.asm~ (18 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1040 time and ran for         51 cycles.
+# Starting memory dump.
+# Finished memory dump.
+16 instructions
+processing file asmFiles/test.loadstore.asm (19 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 840 time and ran for         41 cycles.
+# Starting memory dump.
+# Finished memory dump.
+12 instructions
+processing file asmFiles/test.rtype.asm (20 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 1600 time and ran for         79 cycles.
+# Starting memory dump.
+# Finished memory dump.
+27 instructions
+processing file asmFiles/test.simplebranch.asm (21 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 440 time and ran for         21 cycles.
+# Starting memory dump.
+# Finished memory dump.
+5 instructions
+processing file asmFiles/test.slt.asm (22 of 22)
+Reading /mtitcl/vsim/pref.tcl 
+
+# 10.2b
+
+# vsim -L altera_mf_ver -L altera_ver -L cycloneii_ver -L cycloneive_ver -do {run -all; exit;} -c -wlf system_tb.wlf work.system_tb 
+# //  ModelSim SE-64 10.2b May 16 2013 Linux 2.6.32-431.5.1.el6.x86_64
+# //
+# //  Copyright 1991-2013 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+# Loading sv_std.std
+# Loading work.system_tb
+# Loading work.cpu_types_pkg
+# Loading work.system_if
+# Loading work.test
+# Loading work.system
+# Loading work.cpu_ram_if
+# Loading work.pipeline
+# Loading work.datapath_cache_if
+# Loading work.cache_control_if
+# Loading work.datapath
+# Loading work.register_file_if
+# Loading work.register_file
+# Loading work.program_count
+# Loading work.control_unit
+# Loading work.alu
+# Loading work.hazard_unit
+# Loading work.forward
+# Loading work.if_id_latch
+# Loading work.id_ex_latch
+# Loading work.ex_mem_latch
+# Loading work.mem_wb_latch
+# Loading work.branch_mux
+# Loading work.npc_mux
+# Loading work.extender
+# Loading work.alu_source_mux
+# Loading work.reg_dest_mux
+# Loading work.mem_to_reg_mux
+# Loading work.alu_a_mux
+# Loading work.alu_b_mux
+# Loading work.caches
+# Loading work.memory_control
+# Loading work.ram
+# Loading altera_mf_ver.altsyncram
+# Loading altera_mf_ver.ALTERA_DEVICE_FAMILIES
+# Loading altera_mf_ver.ALTERA_MF_MEMORY_INITIALIZATION
+# run -all 
+# Starting Processor.
+# Halted at 880 time and ran for         43 cycles.
+# Starting memory dump.
+# Finished memory dump.
+15 instructions

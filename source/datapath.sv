@@ -103,7 +103,7 @@ module datapath (
 	logic [4:0]  	branchdest_ex_mem_output;
 	logic [31:0] 	upper16_ex_mem_output;
 	logic [31:0] 	signzero_ex_mem_output;
-	logic [25:0] 	imemload_ex_mem_output;
+	logic [31:0] 	imemload_ex_mem_output;
 	//memwb signals
 	logic [1:0]  	memtoreg_mem_wb_output;
 	logic 	 		regwrite_mem_wb_output;
@@ -113,20 +113,38 @@ module datapath (
 	logic [4:0]  	branchdest_mem_wb_output;
 	logic [31:0] 	upper16_mem_wb_output;
 	logic [31:0] 	dmemload_mem_wb_output;
+	logic [31:0]	imemload_mem_wb_output;
 
 	//misc
 	logic [31:0] 	uppersixteen;
 	logic [4:0] 	branchdest_input;
 	logic [31:0] 	jump_pc;
 	logic 			halt_id_ex_input;
-	logic 	        stall;
+
+	//Hazard Unit signals
+	logic 			pc_wen;
+	logic			if_id_wen;
+	logic 			id_ex_wen;
+	logic			if_id_flush;
+	logic 			id_ex_flush;
+	logic 			ex_mem_flush;
+	logic 			ex_mem_wen;
+	logic 			mem_wb_wen;
+
+	//forward unit signals
+	logic [2:0] 	forwarda;
+	logic [2:0] 	forwardb;
+	logic [31:0]	alu_a_mux_output;
+	logic [31:0]	alu_b_mux_output;
+
+
 
 	//assign statements
 
 	assign pc_count_four_output = current_pc_count + 4;
 	assign branch_count_output = (signzero_ex_mem_output << 2) + npc_ex_mem_output;
 	assign branch_xnor_output = ~(branchselect_ex_mem_output ^ zeroflag_ex_mem_output);
-	assign jump_pc = {pc_count_four_output[31:28], (imemload_ex_mem_output << 2)};
+	assign jump_pc = {pc_count_four_output[31:28], (imemload_ex_mem_output[25:0] << 2)};
 	assign uppersixteen = imemload_if_id_output[15:0] << 16;
 	assign read_data_one_output = registerval.rdat1;
 	assign read_data_two_output = registerval.rdat2;
@@ -141,9 +159,18 @@ module datapath (
 	assign dpif.dmemaddr = aluresult_ex_mem_output;
 	assign dpif.dmemWEN = dmemwen_ex_mem_output;
 	assign dpif.dmemREN = dmemren_ex_mem_output;
-	assign dpif.halt = halt_out_ex_mem_output;
 	assign dpif.imemaddr = current_pc_count;
 
+	always_ff @(posedge CLK, negedge nRST)
+	begin
+		if (nRST == 0) begin
+			dpif.halt = 0;
+		end else if (halt_out_ex_mem_output == 1) begin
+			dpif.halt = 1;
+		end else begin
+			dpif.halt = 0;
+		end
+	end
 
 	//instantiation of REGISTER
 	register_file REGISTER(
@@ -154,12 +181,10 @@ module datapath (
 
 	//instantiation
 	program_count PC(
-		.ihit(dpif.ihit),
-		.halt(halt_out_ex_mem_output),
 		.CLK(CLK),
 		.nRST(nRST),
 		.next_pc_count(next_pc_count),
-		.stall(stall),
+		.wen(pc_wen),
 		.current_pc_count(current_pc_count)
 		);
 
@@ -181,7 +206,7 @@ module datapath (
 
 	//instantiation of ALU
 	alu ALU(
-		.A(rdat_one_id_ex_output),
+		.A(alu_a_mux_output),
 		.B(alu_input_two),
 		.OPCODE(aluop_id_ex_output),
 		.OUTPUT(alu_output),
@@ -190,14 +215,59 @@ module datapath (
 		.ZERO(alu_zero)
 		);
 
+	//instantiation of hazard unit
+
+	hazard_unit HAZARDUNIT(
+		.dmemREN(dmemren_ex_mem_output),
+		.dmemWEN(dmemwen_ex_mem_output),
+		.dhit(dpif.dhit),
+		.ihit(dpif.ihit),
+		.halt(halt_out_ex_mem_output),
+		.branch_flag(branchselect_ex_mem_output),
+		.zero_flag(zeroflag_ex_mem_output),
+		.imemload(imemload_ex_mem_output),
+		.id_ex_dmemren(dmemren_id_ex_output),
+		.id_ex_rt(imemload_id_ex_output[20:16]),
+		.if_id_rs(imemload_if_id_output[25:21]),
+		.if_id_rt(imemload_if_id_output[20:16]),
+		.pc_wen(pc_wen),
+		.id_ex_flush(id_ex_flush),
+		.ex_mem_flush(ex_mem_flush),
+		.if_id_flush(if_id_flush),
+		.if_id_wen(if_id_wen),
+		.id_ex_wen(id_ex_wen),
+		.ex_mem_wen(ex_mem_wen),
+		.mem_wb_wen(mem_wb_wen)
+		);
+
+	//instantiation of forwarding unit
+
+	forward FORWADUNIT(
+		.branchdest_input(branchdest_input),
+		.branchdest_ex_mem_output(branchdest_ex_mem_output),
+		.branchdest_mem_wb_output(branchdest_mem_wb_output),
+		.imemload_id_ex_output(imemload_id_ex_output),
+		.regwrite_ex_mem_output(regwrite_ex_mem_output),
+		.regwrite_mem_wb_output(regwrite_mem_wb_output),
+		.memtoreg_ex_mem_output(memtoreg_ex_mem_output),
+		.memtoreg_mem_wb_output(memtoreg_mem_wb_output),
+		.imemload_ex_mem_output(imemload_ex_mem_output),
+		.imemload_mem_wb_output(imemload_mem_wb_output),
+		.forwarda(forwarda),
+		.forwardb(forwardb)
+		);
+
+
+///////////////PIPELINE REGISTERS//////////////////////////////
+
 	//instantiation of IF ID LATCH
 	if_id_latch IFID(
 		.CLK(CLK),
 		.nRST(nRST),
 		.NPC(next_pc_count),
 		.imemload(dpif.imemload),
-		.ihit(dpif.ihit),
-		.stall(stall),
+		.wen(if_id_wen),
+		.flush(if_id_flush),
 		.npc_if_id_output(npc_if_id_output),
 		.imemload_if_id_output(imemload_if_id_output)
 		);
@@ -222,7 +292,8 @@ module datapath (
 		.imemload(imemload_if_id_output),
 		.uppersixteen(uppersixteen),
 		.signzerovalue(signzero_output),
-		.stall(stall),
+		.wen(id_ex_wen),
+		.flush(id_ex_flush),
 		.dhit(dpif.dhit),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
@@ -253,16 +324,18 @@ module datapath (
 		.dmemREN_in(dmemren_id_ex_output),
 		.dmemWEN_in(dmemwen_id_ex_output),
 		.halt_in(halt_out_id_ex_output),
-		.rdat1_in(rdat_one_id_ex_output),
-		.rdat2_in(rdat_two_id_ex_output),
+		.rdat1_in(alu_a_mux_output),
+		.rdat2_in(alu_b_mux_output),
 		.npc_in(npc_id_ex_output),
 		.zeroFlag_in(alu_zero),
 		.aluResult_in(alu_output),
 		.branchDest_in(branchdest_input),
 		.upper16_in(uppersixteen_id_ex_output),
 		.signZero_in(signzerovalue_id_ex_output),
-		.iMemLoad_in(imemload_id_ex_output[25:0]),
+		.iMemLoad_in(imemload_id_ex_output),
 		.dhit(dpif.dhit),
+		.flush(ex_mem_flush),
+		.wen(ex_mem_wen),
 		.memtoreg(memtoreg_ex_mem_output),
 		.regwrite(regwrite_ex_mem_output),
 		.pcselect(pcselect_ex_mem_output),
@@ -278,8 +351,7 @@ module datapath (
 		.branchDest(branchdest_ex_mem_output),
 		.upper16(upper16_ex_mem_output),
 		.signZero(signzero_ex_mem_output),
-		.iMemLoad(imemload_ex_mem_output),
-		.stall(stall)
+		.iMemLoad(imemload_ex_mem_output)
 		);
 
 	//instantiation of MEM WB
@@ -294,6 +366,8 @@ module datapath (
 		.branchDest_in(branchdest_ex_mem_output),
 		.upper16_in(upper16_ex_mem_output),
 		.dMemLoad_in(dpif.dmemload),
+		.imemload_in(imemload_ex_mem_output),
+		.wen(ex_mem_wen),
 		.memtoreg(memtoreg_mem_wb_output),
 		.regwrite(regwrite_mem_wb_output),
 		.pcselect(pcselect_mem_wb_output),
@@ -301,8 +375,12 @@ module datapath (
 		.aluResult(aluresult_mem_wb_output),
 		.branchDest(branchdest_mem_wb_output),
 		.upper16(upper16_mem_wb_output),
-		.dMemLoad(dmemload_mem_wb_output)
+		.dMemLoad(dmemload_mem_wb_output),
+		.imemload(imemload_mem_wb_output)
 		);
+
+
+/////////////////MUXES///////////////////////////////////////
 
 	//instantiate branch mux
 	branch_mux BRANCHMUX(
@@ -311,7 +389,6 @@ module datapath (
 		.branchSelect(branch_xnor_output),
 		.out(branch_mux_output)
 		);
-
 
 	//instantiate NPC mux
 	npc_mux NPCMUX(
@@ -332,7 +409,7 @@ module datapath (
 
 	//instantiate alu source mux
 	alu_source_mux alusourceMUX(
-		.readReg2(read_data_two_output),
+		.readReg2(alu_b_mux_output),
 		.extendedImmediate(signzerovalue_id_ex_output),
 		.shiftAmount(imemload_id_ex_output[10:6]),
 		.aluSource(alusource_id_ex_output),
@@ -355,6 +432,32 @@ module datapath (
 		.npc(npc_mem_wb_output),
 		.memToReg(memtoreg_mem_wb_output),
 		.out(writedata_output)
+		);
+
+	//instantiation of alu_a_mux
+	alu_a_mux ALUAMUX(
+		.forwarda(forwarda),
+		.rdat_one_id_ex_output(rdat_one_id_ex_output),
+		.aluresult_ex_mem_output(aluresult_ex_mem_output),
+		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.upper16_ex_mem_output(upper16_ex_mem_output),
+		.upper16_mem_wb_output(upper16_mem_wb_output),
+		.dmemload_mem_wb_output(dmemload_mem_wb_output),
+		.writedata_output(writedata_output),
+		.alu_a_mux_output(alu_a_mux_output)
+		);
+
+	//instantiate alu_b_mux
+	alu_b_mux ALUBMUX(
+		.forwardb(forwardb),
+		.rdat_two_id_ex_output(rdat_two_id_ex_output),
+		.aluresult_ex_mem_output(aluresult_ex_mem_output),
+		.aluresult_mem_wb_output(aluresult_mem_wb_output),
+		.dmemload_mem_wb_output(dmemload_mem_wb_output),
+		.upper16_ex_mem_output(upper16_ex_mem_output),
+		.upper16_mem_wb_output(upper16_mem_wb_output),
+		.writedata_output(writedata_output),
+		.alu_b_mux_output(alu_b_mux_output)
 		);
 
 

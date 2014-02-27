@@ -3,10 +3,8 @@
 module program_count(
 	input logic CLK,
 	input logic nRST,
-	input logic ihit,
-	input logic halt,
 	input logic [31:0] next_pc_count,
-	input logic stall,
+	input logic wen,
 	output logic [31:0] current_pc_count
 	);
 
@@ -21,7 +19,7 @@ module program_count(
 		begin: PC
 			if (nRST == 0) begin
 				pccount <= '0;
-			end else if (ihit && ~halt && ~stall) begin
+			end else if (wen) begin
 				pccount <= next_pc_count;
 			end
 		end

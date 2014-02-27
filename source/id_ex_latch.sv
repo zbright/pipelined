@@ -20,8 +20,9 @@ module id_ex_latch (
 	input logic [31:0]  imemload,
 	input logic [31:0]  uppersixteen,
 	input logic [31:0]  signzerovalue,
-	input logic 	    stall,
-	input logic dhit,
+	input logic 	    wen,
+	input logic 		flush,
+	input logic 		dhit,
 	output logic [1:0]  ALUsrc_id_ex_output,
 	output logic [1:0]  memtoreg_id_ex_output,
 	output logic [3:0]  ALUop_id_ex_output,
@@ -95,7 +96,24 @@ module id_ex_latch (
 				temp_imemload_output <= 0;
 				temp_uppersixteen_output <= 0;
 				temp_signzerovalue_output <= 0;
-			end else if(~stall) begin
+			end else if(flush) begin
+				temp_ALUsrc_output <= 0;
+				temp_memtoreg_output <= 0;
+				temp_ALUop_output <= 0;
+				temp_regwrite_output <= 0;
+ 				temp_pcselect_output <= 0;
+				temp_regdst_output <= 0;
+				temp_branch_output <= 0;
+				temp_request_dmemREN_output <= 0;
+				temp_request_dmemWEN_output <= 0;
+				temp_halt_out_output <= 0;
+				temp_NPC_output <= 0;
+				temp_rdat_one_output <= 0;
+				temp_rdat_two_output <= 0;
+				temp_imemload_output <= 0;
+				temp_uppersixteen_output <= 0;
+				temp_signzerovalue_output <= 0;
+			end else if(wen) begin
 				temp_ALUsrc_output <= ALUsrc;
 				temp_memtoreg_output <= memtoreg;
 				temp_ALUop_output <= ALUop;
