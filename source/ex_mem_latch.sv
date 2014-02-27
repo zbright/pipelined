@@ -22,7 +22,7 @@ module ex_mem_latch (
 		     input logic [31:0]       iMemLoad_in,
 		     input logic 	          dhit,
              input logic              flush,
-             input logic              stall,
+             input logic              wen,
 		     output logic [1:0]       memtoreg,
 		     output logic 	          regwrite,
 		     output logic [1:0]       pcselect,
@@ -94,7 +94,7 @@ module ex_mem_latch (
                temp_iMemLoad <= '0;
                temp_dmemREN <= '0;
                temp_dmemWEN <= '0;
-			end else if(~stall)  begin
+			end else if(wen)  begin
 			   temp_dmemREN <= dmemREN_in;
 			   temp_dmemWEN <= dmemWEN_in;
 			   temp_memtoreg <= memtoreg_in;

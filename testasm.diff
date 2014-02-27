@@ -1,0 +1,66 @@
+processing file asmFiles/count_days.asm (1 of 24)
+processing file asmFiles/count_days.asm~ (2 of 24)
+--- memsim.hex	2014-02-27 14:06:36.471778506 -0500
++++ memcpu.hex	2014-02-27 14:06:36.450777944 -0500
+@@ -41,6 +41,4 @@
+ :040028000100404251
+ :0400290008000023A8
+ :04002A0003E00008E7
+-:043FFD000000016D52
+-:043FFE000000034379
+ :00000001FF
+processing file asmFiles/fib.asm (3 of 24)
+processing file asmFiles/jumpbranch.asm (4 of 24)
+processing file asmFiles/kevinforward.asm (5 of 24)
+processing file asmFiles/meminit.hex (6 of 24)
+processing file asmFiles/count_days.asm (1 of 22)
+processing file asmFiles/count_days.asm~ (2 of 22)
+--- memsim.hex	2014-02-27 14:07:23.342034142 -0500
++++ memcpu.hex	2014-02-27 14:07:23.300033016 -0500
+@@ -41,6 +41,4 @@
+ :040028000100404251
+ :0400290008000023A8
+ :04002A0003E00008E7
+-:043FFD000000016D52
+-:043FFE000000034379
+ :00000001FF
+processing file asmFiles/fib.asm (3 of 22)
+processing file asmFiles/jumpbranch.asm (4 of 22)
+processing file asmFiles/kevinforward.asm (5 of 22)
+processing file asmFiles/mult.asm (6 of 22)
+processing file asmFiles/mult.asm~ (7 of 22)
+processing file asmFiles/mult_procedure.asm (8 of 22)
+--- memsim.hex	2014-02-27 14:07:32.753286257 -0500
++++ memcpu.hex	2014-02-27 14:07:32.732285694 -0500
+@@ -35,8 +35,4 @@
+ :040022008FBC00008F
+ :0400230027BD0004F1
+ :04002400FFFFFFFFDC
+-:043FFB0000000006BC
+-:043FFC0000000005BC
+-:043FFD0000000004BC
+-:043FFE00000001E0DE
+ :00000001FF
+processing file asmFiles/mult_procedure.asm~ (9 of 22)
+processing file asmFiles/count_days.asm (1 of 22)
+processing file asmFiles/count_days.asm~ (2 of 22)
+processing file asmFiles/fib.asm (3 of 22)
+processing file asmFiles/jumpbranch.asm (4 of 22)
+processing file asmFiles/kevinforward.asm (5 of 22)
+processing file asmFiles/mult.asm (6 of 22)
+processing file asmFiles/mult.asm~ (7 of 22)
+processing file asmFiles/mult_procedure.asm (8 of 22)
+processing file asmFiles/mult_procedure.asm~ (9 of 22)
+processing file asmFiles/search.asm (10 of 22)
+processing file asmFiles/test.branch.asm (11 of 22)
+processing file asmFiles/test.branchjump1.asm (12 of 22)
+processing file asmFiles/test.jr.asm (13 of 22)
+processing file asmFiles/test.jump.asm (14 of 22)
+processing file asmFiles/test.ldst1.asm (15 of 22)
+processing file asmFiles/test.ldst1.asm~ (16 of 22)
+processing file asmFiles/test.ldst2.asm (17 of 22)
+processing file asmFiles/test.ldst2.asm~ (18 of 22)
+processing file asmFiles/test.loadstore.asm (19 of 22)
+processing file asmFiles/test.rtype.asm (20 of 22)
+processing file asmFiles/test.simplebranch.asm (21 of 22)
+processing file asmFiles/test.slt.asm (22 of 22)

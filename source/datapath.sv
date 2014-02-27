@@ -122,16 +122,14 @@ module datapath (
 	logic 			halt_id_ex_input;
 
 	//Hazard Unit signals
-	logic 			pc_stall;
-	logic			if_id_stall;
-	logic 			id_ex_stall;
-	logic			if_id_bubble;
-	logic 			id_ex_bubble;
+	logic 			pc_wen;
+	logic			if_id_wen;
+	logic 			id_ex_wen;
 	logic			if_id_flush;
 	logic 			id_ex_flush;
 	logic 			ex_mem_flush;
-	logic 			ex_mem_stall;
-	logic 			mem_wb_stall;
+	logic 			ex_mem_wen;
+	logic 			mem_wb_wen;
 
 	//forward unit signals
 	logic [2:0] 	forwarda;
@@ -186,7 +184,7 @@ module datapath (
 		.CLK(CLK),
 		.nRST(nRST),
 		.next_pc_count(next_pc_count),
-		.stall(pc_stall),
+		.wen(pc_wen),
 		.current_pc_count(current_pc_count)
 		);
 
@@ -232,16 +230,14 @@ module datapath (
 		.id_ex_rt(imemload_id_ex_output[20:16]),
 		.if_id_rs(imemload_if_id_output[25:21]),
 		.if_id_rt(imemload_if_id_output[20:16]),
-		.pc_stall(pc_stall),
-		.if_id_stall(if_id_stall),
-		.if_id_bubble(if_id_bubble),
-		.if_id_flush(if_id_flush),
-		.id_ex_stall(id_ex_stall),
+		.pc_wen(pc_wen),
 		.id_ex_flush(id_ex_flush),
-		.id_ex_bubble(id_ex_bubble),
 		.ex_mem_flush(ex_mem_flush),
-		.ex_mem_stall(ex_mem_stall),
-		.mem_wb_stall(mem_wb_stall)
+		.if_id_flush(if_id_flush),
+		.if_id_wen(if_id_wen),
+		.id_ex_wen(id_ex_wen),
+		.ex_mem_wen(ex_mem_wen),
+		.mem_wb_wen(mem_wb_wen)
 		);
 
 	//instantiation of forwarding unit
@@ -270,8 +266,7 @@ module datapath (
 		.nRST(nRST),
 		.NPC(next_pc_count),
 		.imemload(dpif.imemload),
-		.bubble(if_id_bubble),
-		.stall(if_id_stall),
+		.wen(if_id_wen),
 		.flush(if_id_flush),
 		.npc_if_id_output(npc_if_id_output),
 		.imemload_if_id_output(imemload_if_id_output)
@@ -297,10 +292,9 @@ module datapath (
 		.imemload(imemload_if_id_output),
 		.uppersixteen(uppersixteen),
 		.signzerovalue(signzero_output),
-		.stall(id_ex_stall),
+		.wen(id_ex_wen),
 		.flush(id_ex_flush),
 		.dhit(dpif.dhit),
-		.bubble(id_ex_bubble),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
 		.ALUop_id_ex_output(aluop_id_ex_output),
@@ -341,7 +335,7 @@ module datapath (
 		.iMemLoad_in(imemload_id_ex_output),
 		.dhit(dpif.dhit),
 		.flush(ex_mem_flush),
-		.stall(ex_mem_stall),
+		.wen(ex_mem_wen),
 		.memtoreg(memtoreg_ex_mem_output),
 		.regwrite(regwrite_ex_mem_output),
 		.pcselect(pcselect_ex_mem_output),
@@ -373,7 +367,7 @@ module datapath (
 		.upper16_in(upper16_ex_mem_output),
 		.dMemLoad_in(dpif.dmemload),
 		.imemload_in(imemload_ex_mem_output),
-		.stall(ex_mem_stall),
+		.wen(ex_mem_wen),
 		.memtoreg(memtoreg_mem_wb_output),
 		.regwrite(regwrite_mem_wb_output),
 		.pcselect(pcselect_mem_wb_output),

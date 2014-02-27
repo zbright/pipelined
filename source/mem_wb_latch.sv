@@ -13,7 +13,7 @@ module mem_wb_latch (
 		     input logic [31:0]  upper16_in,
 		     input logic [31:0]  dMemLoad_in,
              input logic [31:0]  imemload_in,
-             input logic         stall,
+             input logic         wen,
 		     output logic [1:0]  memtoreg,
 		     output logic 	 regwrite,
 		     output logic [1:0]  pcselect,
@@ -48,7 +48,7 @@ module mem_wb_latch (
 			   temp_upper16 <= '0;
 			   temp_dMemLoad <= '0;
                temp_imemload <= '0;
-			end else if(~stall) begin
+			end else if(wen) begin
 			   temp_memtoreg <= memtoreg_in;
 			   temp_regwrite <= regwrite_in;
 			   temp_pcselect <= pcselect_in;
