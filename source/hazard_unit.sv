@@ -37,9 +37,10 @@ assign jump_flush = (imemload[31:26] == 6'b000010 || imemload[31:26] == 6'b00001
                     || (imemload[31:26] == 6'b000000 && imemload[5:0] == 6'b001000)) ? 1 : 0;
 
 assign flush = branch_flush || jump_flush;
+
 assign use_after_load = id_ex_dmemren && ((id_ex_rt == if_id_rt) || (id_ex_rt == if_id_rs));
 
-assign pc_wen = ihit && ~halt && ~data_stall && ~use_after_load;
+assign pc_wen = (ihit || flush) && ~halt && ~data_stall && ~use_after_load;
 
 assign if_id_wen = ~data_stall && ~use_after_load && ~halt;
 assign id_ex_wen = ~halt;
