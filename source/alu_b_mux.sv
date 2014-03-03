@@ -5,10 +5,7 @@ module alu_b_mux (
             input logic [2:0] forwardb,
             input logic [31:0] rdat_two_id_ex_output,
             input logic [31:0] aluresult_ex_mem_output,
-            input logic [31:0] aluresult_mem_wb_output,
             input logic [31:0] upper16_ex_mem_output,
-            input logic [31:0] upper16_mem_wb_output,
-            input logic [31:0] dmemload_mem_wb_output,
             input logic [31:0] writedata_output,
             output logic [31:0] alu_b_mux_output
    );
