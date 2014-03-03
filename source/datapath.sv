@@ -132,8 +132,8 @@ module datapath (
 	logic 			mem_wb_wen;
 
 	//forward unit signals
-	logic [2:0] 	forwarda;
-	logic [2:0] 	forwardb;
+	logic [1:0] 	forwarda;
+	logic [1:0] 	forwardb;
 	logic [31:0]	alu_a_mux_output;
 	logic [31:0]	alu_b_mux_output;
 
@@ -243,16 +243,12 @@ module datapath (
 	//instantiation of forwarding unit
 
 	forward FORWADUNIT(
-		.branchdest_input(branchdest_input),
 		.branchdest_ex_mem_output(branchdest_ex_mem_output),
 		.branchdest_mem_wb_output(branchdest_mem_wb_output),
 		.imemload_id_ex_output(imemload_id_ex_output),
 		.regwrite_ex_mem_output(regwrite_ex_mem_output),
 		.regwrite_mem_wb_output(regwrite_mem_wb_output),
 		.memtoreg_ex_mem_output(memtoreg_ex_mem_output),
-		.memtoreg_mem_wb_output(memtoreg_mem_wb_output),
-		.imemload_ex_mem_output(imemload_ex_mem_output),
-		.imemload_mem_wb_output(imemload_mem_wb_output),
 		.forwarda(forwarda),
 		.forwardb(forwardb)
 		);
@@ -439,10 +435,7 @@ module datapath (
 		.forwarda(forwarda),
 		.rdat_one_id_ex_output(rdat_one_id_ex_output),
 		.aluresult_ex_mem_output(aluresult_ex_mem_output),
-		.aluresult_mem_wb_output(aluresult_mem_wb_output),
 		.upper16_ex_mem_output(upper16_ex_mem_output),
-		.upper16_mem_wb_output(upper16_mem_wb_output),
-		.dmemload_mem_wb_output(dmemload_mem_wb_output),
 		.writedata_output(writedata_output),
 		.alu_a_mux_output(alu_a_mux_output)
 		);
@@ -452,10 +445,7 @@ module datapath (
 		.forwardb(forwardb),
 		.rdat_two_id_ex_output(rdat_two_id_ex_output),
 		.aluresult_ex_mem_output(aluresult_ex_mem_output),
-		.aluresult_mem_wb_output(aluresult_mem_wb_output),
-		.dmemload_mem_wb_output(dmemload_mem_wb_output),
 		.upper16_ex_mem_output(upper16_ex_mem_output),
-		.upper16_mem_wb_output(upper16_mem_wb_output),
 		.writedata_output(writedata_output),
 		.alu_b_mux_output(alu_b_mux_output)
 		);
