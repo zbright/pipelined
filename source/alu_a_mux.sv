@@ -2,7 +2,7 @@
 
 
 module alu_a_mux (
-            input logic [2:0] forwarda,
+            input logic [1:0] forwarda,
             input logic [31:0] rdat_one_id_ex_output,
             input logic [31:0] aluresult_ex_mem_output,
             input logic [31:0] upper16_ex_mem_output,
@@ -12,13 +12,13 @@ module alu_a_mux (
 
 always_comb
     begin
-        if (forwarda == 3'b000) begin
+        if (forwarda == 2'b00) begin
             alu_a_mux_output = rdat_one_id_ex_output;
-        end else if (forwarda == 3'b001) begin
+        end else if (forwarda == 2'b01) begin
             alu_a_mux_output = aluresult_ex_mem_output;
-        end else if (forwarda == 3'b010) begin
+        end else if (forwarda == 2'b10) begin
             alu_a_mux_output = writedata_output;
-        end else if (forwarda == 3'b011) begin
+        end else if (forwarda == 2'b11) begin
             alu_a_mux_output = upper16_ex_mem_output;
         end else begin
             alu_a_mux_output = rdat_one_id_ex_output;
