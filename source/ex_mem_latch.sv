@@ -77,42 +77,43 @@ module ex_mem_latch (
 			   temp_iMemLoad <= '0;
                temp_dmemREN <= '0;
                temp_dmemWEN <= '0;
-            end else if(flush) begin
-               temp_memtoreg <= '0;
-               temp_regwrite <= '0;
-               temp_pcselect <= '0;
-               temp_branchSelect <= '0;
-               temp_halt_out <= '0;
-               temp_rdat1 <= '0;
-               temp_rdat2 <= '0;
-               temp_npc <= '0;
-               temp_zeroFlag <= '0;
-               temp_aluResult <= '0;
-               temp_branchDest <= '0;
-               temp_upper16 <= '0;
-               temp_signZero <= '0;
-               temp_iMemLoad <= '0;
-               temp_dmemREN <= '0;
-               temp_dmemWEN <= '0;
-			end else if(wen)  begin
-			   temp_dmemREN <= dmemREN_in;
-			   temp_dmemWEN <= dmemWEN_in;
-			   temp_memtoreg <= memtoreg_in;
-			   temp_regwrite <= regwrite_in;
-			   temp_pcselect <= pcselect_in;
-			   temp_branchSelect <= branchSelect_in;
-			   temp_halt_out <= halt_in;
-			   temp_rdat1 <= rdat1_in;
-			   temp_rdat2 <= rdat2_in;
-			   temp_npc <= npc_in;
-			   temp_zeroFlag <= zeroFlag_in;
-			   temp_aluResult <= aluResult_in;
-			   temp_branchDest <= branchDest_in;
-			   temp_upper16 <= upper16_in;
-			   temp_signZero <= signZero_in;
-			   temp_iMemLoad <= iMemLoad_in;
-			end
-
+            end else if(wen) begin
+                if(flush) begin
+                   temp_memtoreg <= '0;
+                   temp_regwrite <= '0;
+                   temp_pcselect <= '0;
+                   temp_branchSelect <= '0;
+                   temp_halt_out <= '0;
+                   temp_rdat1 <= '0;
+                   temp_rdat2 <= '0;
+                   temp_npc <= '0;
+                   temp_zeroFlag <= '0;
+                   temp_aluResult <= '0;
+                   temp_branchDest <= '0;
+                   temp_upper16 <= '0;
+                   temp_signZero <= '0;
+                   temp_iMemLoad <= '0;
+                   temp_dmemREN <= '0;
+                   temp_dmemWEN <= '0;
+    			end else begin
+    			   temp_dmemREN <= dmemREN_in;
+    			   temp_dmemWEN <= dmemWEN_in;
+    			   temp_memtoreg <= memtoreg_in;
+    			   temp_regwrite <= regwrite_in;
+    			   temp_pcselect <= pcselect_in;
+    			   temp_branchSelect <= branchSelect_in;
+    			   temp_halt_out <= halt_in;
+    			   temp_rdat1 <= rdat1_in;
+    			   temp_rdat2 <= rdat2_in;
+    			   temp_npc <= npc_in;
+    			   temp_zeroFlag <= zeroFlag_in;
+    			   temp_aluResult <= aluResult_in;
+    			   temp_branchDest <= branchDest_in;
+    			   temp_upper16 <= upper16_in;
+    			   temp_signZero <= signZero_in;
+    			   temp_iMemLoad <= iMemLoad_in;
+    			end
+            end
 
 		end
 
