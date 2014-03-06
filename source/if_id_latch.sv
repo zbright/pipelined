@@ -25,12 +25,14 @@ module if_id_latch (
 			if (nRST == 0) begin
 				temp_NPC_output <= '0;
 				temp_imemload_output <= '0;
-			end else if(flush) begin
-				temp_NPC_output <= '0;
-				temp_imemload_output <= '0;
 			end else if(wen) begin
-				temp_NPC_output <= NPC;
-				temp_imemload_output <= imemload;
+				if(flush) begin
+					temp_NPC_output <= '0;
+					temp_imemload_output <= '0;
+				end else begin
+					temp_NPC_output <= NPC;
+					temp_imemload_output <= imemload;
+				end
 			end
 		end
 

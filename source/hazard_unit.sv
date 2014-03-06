@@ -29,7 +29,7 @@ logic use_after_load;
 logic branch_flush;
 logic jump_flush;
 
-assign data_stall = (dmemREN || dmemWEN);
+assign data_stall = (dmemREN || dmemWEN) && ~dhit;
 
 assign branch_flush = (imemload[31:26] == 6'b000100 || imemload[31:26] == 6'b000101) //if BEQ || BNE
                 ? ~(branch_flag ^ zero_flag) : 0;
@@ -43,12 +43,12 @@ assign use_after_load = id_ex_dmemren && ((id_ex_rt == if_id_rt) || (id_ex_rt ==
 assign pc_wen = (ihit || flush) && ~halt && ~data_stall && ~use_after_load;
 
 assign if_id_wen = ~data_stall && ~use_after_load && ~halt;
-assign id_ex_wen = ~halt;
-assign ex_mem_wen = ~halt;
-assign mem_wb_wen = ~halt;
+assign id_ex_wen = ~data_stall && ~halt;
+assign ex_mem_wen = ~data_stall && ~halt;
+assign mem_wb_wen = ~data_stall && ~halt;
 
-assign if_id_flush = flush;
-assign id_ex_flush = flush || data_stall || use_after_load;
+assign if_id_flush = flush || ~ihit;
+assign id_ex_flush = flush || use_after_load;
 assign ex_mem_flush = flush;
 
 endmodule

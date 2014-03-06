@@ -18,7 +18,7 @@
 
 module system_tb;
   // clock period
-  parameter PERIOD = 20;
+  parameter PERIOD = 2;
 
   // signals
   logic CLK = 1, nRST;
@@ -95,7 +95,7 @@ program test(input logic CLK, output logic nRST, system_if.tb syif);
     else
       begin $display("Failed to open %s.",filename); $finish; end
 
-    for (int unsigned i = 0; memfd && i < 16834; i++)
+    for (int unsigned i = 0; memfd && i < 16384; i++)
     begin
       int chksum = 0;
       bit [7:0][7:0] values;
