@@ -124,7 +124,6 @@ add wave -noupdate -group RAM /system_tb/DUT/RAM/ramif/memstore
 add wave -noupdate -expand -group iCache /system_tb/DUT/CPU/CM/ICACHE/cacheaddress
 add wave -noupdate -expand -group iCache /system_tb/DUT/CPU/CM/ICACHE/cacheblock
 add wave -noupdate -expand -group iCache /system_tb/DUT/CPU/CM/ICACHE/match
-add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/i
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cacheaddress
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cacheblock_one
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cacheblock_two
@@ -151,4 +150,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {396902 ps} {1031743 ps}
+WaveRestoreZoom {0 ps} {634841 ps}
