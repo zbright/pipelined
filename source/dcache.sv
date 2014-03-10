@@ -44,13 +44,13 @@ module dcache(
     assign cacheaddress = dcachef_t'(dcif.dmemaddr);
 
     assign match_one = (cacheblock_one[cacheaddress.idx].tag == cacheaddress.tag)
-                    && !cacheblock_one[cacheaddress.idx].dirty && (dcif.dmemREN || dcif.dmemWEN);
+                    && !cacheblock_one[cacheaddress.idx].dirty && (dcif.dmemREN || dcif.dmemWEN) && cacheblock_one[cacheaddress.idx].valid;
 
     assign match_two = (cacheblock_two[cacheaddress.idx].tag == cacheaddress.tag)
-                    && !cacheblock_two[cacheaddress.idx].dirty && (dcif.dmemREN || dcif.dmemWEN);
+                    && !cacheblock_two[cacheaddress.idx].dirty && (dcif.dmemREN || dcif.dmemWEN) && cacheblock_two[cacheaddress.idx].valid;
 
 
-    typedef enum {IDLE, WAITING, COMPARE, WRITEBACK_ONE, WRITEBACK_TWO, OVERWRITE, OUTPUT, WRITECACHE, FETCH_ONE, FETCH_TWO, HALT} states;
+    typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, OVERWRITE, OUTPUT, FETCH_ONE, FETCH_TWO, HALT} states;
     states cstate, nstate;
 
     //state transition
@@ -86,22 +86,30 @@ module dcache(
         cacheblock_two_next = cacheblock_two;
         nstate = cstate;
 
-        if (cstate == IDLE) begin
-            nstate = WAITING;
-        end else if (cstate == WAITING && i == 0) begin
+        if (cstate == IDLE && i == 0) begin
             WEN = 0;
 
             if (dcif.halt)
                 nstate = HALT;
-            else if (dcif.dmemREN || dcif.dmemWEN)
-                nstate = COMPARE;
-        end else if (cstate == COMPARE) begin
-            if(match_one || match_two)
-                nstate = dcif.dmemWEN ? OVERWRITE : OUTPUT;
-            else if((cacheblock_one[cacheaddress.idx].valid && cacheblock_one[cacheaddress.idx].dirty) || (cacheblock_two[cacheaddress.idx].valid && cacheblock_two[cacheaddress.idx].dirty))
-                nstate = WRITEBACK_ONE;
-            else
-                nstate = FETCH_ONE;
+            else if (dcif.dmemREN || dcif.dmemWEN) begin
+                if(temp_fetch_store != 0) begin
+                    if(!cacheblock_one[cacheaddress.idx].recent) begin
+                        cacheblock_one_next[cacheaddress.idx] = temp_fetch_store;
+                        cacheblock_two_next[cacheaddress.idx].recent = 0;
+                    end else begin
+                        cacheblock_two_next[cacheaddress.idx] = temp_fetch_store;
+                        cacheblock_one_next[cacheaddress.idx].recent = 0;
+                    end
+
+                    WEN = 1;
+                    nstate = dcif.dmemWEN ? OVERWRITE : OUTPUT;
+                end else if(match_one || match_two)
+                    nstate = dcif.dmemWEN ? OVERWRITE : OUTPUT;
+                else if((cacheblock_one[cacheaddress.idx].valid && cacheblock_one[cacheaddress.idx].dirty) || (cacheblock_two[cacheaddress.idx].valid && cacheblock_two[cacheaddress.idx].dirty))
+                    nstate = WRITEBACK_ONE;
+                else
+                    nstate = FETCH_ONE;
+            end
         end else if(cstate == WRITEBACK_ONE && !ccif.dwait)
             nstate = WRITEBACK_TWO;
         else if(cstate == WRITEBACK_TWO && !ccif.dwait)
@@ -110,23 +118,12 @@ module dcache(
             nstate = FETCH_TWO;
             temp_fetch_store.data_one = ccif.dload;
         end else if(cstate == FETCH_TWO && !ccif.dwait) begin
-            nstate = WRITECACHE;
+            nstate = IDLE;
             temp_fetch_store.data_two = ccif.dload;
             temp_fetch_store.dirty = 0;
             temp_fetch_store.recent = 1;
             temp_fetch_store.valid = 1;
             temp_fetch_store.tag = cacheaddress.tag;
-        end else if(cstate == WRITECACHE) begin
-            if(!cacheblock_one[cacheaddress.idx].recent) begin
-                cacheblock_one_next[cacheaddress.idx] = temp_fetch_store;
-                cacheblock_two_next[cacheaddress.idx].recent = 0;
-            end else begin
-                cacheblock_two_next[cacheaddress.idx] = temp_fetch_store;
-                cacheblock_one_next[cacheaddress.idx].recent = 0;
-            end
-
-            WEN = 1;
-            nstate = dcif.dmemWEN ? OVERWRITE : OUTPUT;
         end else if(cstate == OVERWRITE) begin
             temp_fetch_store = 0;
 
@@ -156,11 +153,11 @@ module dcache(
                 cacheblock_one_next[cacheaddress.idx].recent = 1;
                 end
             WEN = 1;
-            nstate = WAITING;
+            nstate = IDLE;
         end else if(cstate == OUTPUT) begin
             temp_fetch_store = 0;
             WEN = 0;
-            nstate = WAITING;
+            nstate = IDLE;
         end
     end
 
@@ -177,10 +174,6 @@ module dcache(
 
         casez(cstate)
             IDLE: begin
-            end
-            WAITING: begin
-            end
-            COMPARE: begin
             end
             WRITEBACK_ONE: begin
                 ccif.dWEN = 1;
@@ -217,8 +210,6 @@ module dcache(
                 else if (!cacheaddress.blkoff && match_two)
                     dcif.dmemload = cacheblock_two[cacheaddress.idx].data_one;
                 dcif.dhit = 1;
-            end
-            WRITECACHE: begin
             end
             FETCH_ONE: begin
                 ccif.dREN = 1;
@@ -260,8 +251,5 @@ module dcache(
                 end
         endcase
     end
-
-    //dcache logic
-
 
 endmodule
