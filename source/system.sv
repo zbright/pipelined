@@ -20,7 +20,7 @@ module system (input logic CLK, nRST, system_if.sys syif);
 
   // clock division
   parameter CLKDIV = 2;
-  logic CPUCLK;
+  logic CPUCLK = 0;
   logic [3:0] count;
   //logic CPUnRST;
 

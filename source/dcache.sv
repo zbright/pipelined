@@ -24,6 +24,7 @@ module dcache(
     word_t             data_two;
     logic [ITAG_W-1:0]  tag;
     logic               dirty;
+    logic               valid;
     logic               recent;
     } dcacheblock;
 
@@ -34,9 +35,7 @@ module dcache(
     //variable declaration
     logic match_one;
     logic match_two;
-    logic [4:0] i;
-
-    logic halt = 0;
+    logic [5:0] i;
 
     //assign statements
     assign cacheaddress = dcachef_t'(dcif.dmemaddr);
@@ -54,31 +53,26 @@ module dcache(
     //state transition
     always_ff @(posedge CLK, negedge nRST)
     begin
-        if(cstate == HALT && ~ccif.dwait)
-            i <= i + 1;
-        else if (cstate == WAITING)
+        if (!nRST) begin
+            cstate <= IDLE;
             i <= 0;
-
-        if (!nRST)
-            cstate <= HALT;
-        else
+        end else
             cstate <= nstate;
+
+        if(cstate == HALT && (ccif.dwait != ccif.dWEN))
+            i <= i + 1'b1;
 
     end
 
     //next state logic
     always_comb
     begin
-        //nstate = IDLE;
         if (cstate == IDLE) begin
-            // cacheblock_one = 0;
-            // cacheblock_two = 0;
-            // temp_fetch_store = 0;
             nstate = WAITING;
-        end else if (dcif.halt)
-            nstate = HALT;
-        else if (cstate == WAITING) begin
-            if (dcif.dmemREN || dcif.dmemWEN)
+        end else if (cstate == WAITING && i == 0) begin
+            if (dcif.halt)
+                nstate = HALT;
+            else if (dcif.dmemREN || dcif.dmemWEN)
                 nstate = COMPARE;
         end else if (cstate == COMPARE) begin
             if(match_one || match_two)
@@ -98,11 +92,22 @@ module dcache(
             nstate = WRITECACHE;
             temp_fetch_store.data_two = ccif.dload;
             temp_fetch_store.dirty = 0;
+            temp_fetch_store.recent = 1;
+            temp_fetch_store.valid = 1;
             temp_fetch_store.tag = cacheaddress.tag;
         end else if(cstate == WRITECACHE) begin
-            cacheblock_one[cacheaddress.idx] = temp_fetch_store;
+            if(!cacheblock_one[cacheaddress.idx].recent) begin
+                cacheblock_one[cacheaddress.idx] = temp_fetch_store;
+                cacheblock_two[cacheaddress.idx].recent = 0;
+            end else begin
+                cacheblock_two[cacheaddress.idx] = temp_fetch_store;
+                cacheblock_one[cacheaddress.idx].recent = 0;
+            end
+
             nstate = dcif.dmemWEN ? OVERWRITE : OUTPUT;
         end else if(cstate == OVERWRITE) begin
+            temp_fetch_store = 0;
+
             if(match_one) begin
                 if (cacheaddress.blkoff)
                     cacheblock_one[cacheaddress.idx].data_two = dcif.dmemstore;
@@ -123,10 +128,10 @@ module dcache(
                 cacheblock_one[cacheaddress.idx].recent = 1;
                 end
             nstate = WAITING;
-        end else if(cstate == OUTPUT)
+        end else if(cstate == OUTPUT) begin
+            temp_fetch_store = 0;
             nstate = WAITING;
-        else if (cstate == HALT && i > 32)
-            nstate = WAITING;
+        end
     end
 
     //output logic
@@ -134,7 +139,7 @@ module dcache(
     begin
         dcif.dhit = 0;
         dcif.dmemload = 0;
-        //dcif.flushed = 0;
+        dcif.flushed = 0;
         ccif.dREN = 0;
         ccif.dWEN = 0;
         ccif.daddr = 0;
@@ -163,7 +168,7 @@ module dcache(
 
                 if (!cacheblock_one[cacheaddress.idx].recent) begin
                     ccif.dstore = cacheblock_one[cacheaddress.idx].data_two;
-                    ccif.daddr = {cacheblock_one[cacheaddress.idx].tag, cacheaddress.idx, 'b100};
+                    ccif.daddr = {cacheblock_one[cacheaddress.idx].tag, cacheaddress.idx, 3'b100};
                 end else begin
                     ccif.dstore = cacheblock_two[cacheaddress.idx].data_two;
                     ccif.daddr = {cacheblock_two[cacheaddress.idx].tag, cacheaddress.idx, 3'b100};
@@ -194,36 +199,35 @@ module dcache(
                 ccif.daddr = dcif.dmemaddr + 4;
             end
             HALT: begin
-
-                if(cacheblock_one != 0 && cacheblock_two != 0) begin
                     ccif.dWEN = 1;
+                    if(i < 6'b001000) begin //cacheblock 1 word 1
+                        if(cacheblock_one[i].valid && cacheblock_one[i].dirty) begin
+                            ccif.dstore = cacheblock_one[i].data_one;
+                            ccif.daddr = {cacheblock_one[i].tag, i[2:0], 3'b000};
+                        end else
+                            ccif.dWEN = 0;
+                    end else if(i < 6'b010000) begin //cache block 1 word 2
+                        if(cacheblock_one[i-8].valid && cacheblock_one[i-8].dirty) begin
+                            ccif.dstore = cacheblock_one[i-8].data_two;
+                            ccif.daddr = {cacheblock_one[i-8].tag, i[2:0], 3'b100};
+                        end else
+                            ccif.dWEN = 0;
+                    end else if(i < 6'b011000) begin //cacheblock 2 word 1
+                        if(cacheblock_two[i-16].valid && cacheblock_two[i-16].dirty) begin
+                            ccif.dstore = cacheblock_two[i-16].data_one;
+                            ccif.daddr = {cacheblock_two[i-16].tag, i[2:0], 3'b000};
+                        end else
+                            ccif.dWEN = 0;
+                    end else if(i < 6'b100000) begin //cache bloack 2 word 2
+                        if(cacheblock_two[i-24].valid && cacheblock_two[i-24].dirty) begin
+                            ccif.dstore = cacheblock_two[i-24].data_two;
+                            ccif.daddr = {cacheblock_two[i-24].tag, i[2:0], 3'b100};
+                        end else
+                            ccif.dWEN = 0;
 
-                    // if(!ccif.dwait) begin
-                        if(i < 8) begin //cacheblock 1 word 1
-                            if(cacheblock_one[i].dirty) begin
-                                ccif.dstore = cacheblock_one[i].data_one;
-                                ccif.daddr = {cacheblock_one[i].tag, i, 3'b000};
-                            end
-                        end else if(i < 16) begin //cache block 1 word 2
-                            if(cacheblock_one[i-8].dirty) begin
-                                ccif.dstore = cacheblock_one[i-8].data_two;
-                                ccif.daddr = {cacheblock_one[i-8].tag, i, 3'b000};
-                            end
-                        end else if(i < 24) begin //cacheblock 2 word 1
-                            if(cacheblock_two[i-16].dirty) begin
-                                ccif.dstore = cacheblock_two[i-16].data_one;
-                                ccif.daddr = {cacheblock_two[i-16].tag, i, 3'b000};
-                            end
-                        end else if(i < 32) begin //cache bloack 2 word 2
-                            if(cacheblock_two[i-24].dirty) begin
-                                ccif.dstore = cacheblock_two[i-24].data_two;
-                                ccif.daddr = {cacheblock_two[i-24].tag, i, 3'b000};
-                            end
-
-                        end
-                    // end
+                    end else
+                         dcif.flushed = 1;
                 end
-            end
         endcase
     end
 
