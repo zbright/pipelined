@@ -15,11 +15,6 @@
   #lw    $8, 8($1)
   #ori   $4, $zero, 0x500
   #ori   $5, $zero, 0x600
-  nop
-  nop
-  nop
-  nop
-  nop
   sw    $6, 0($2)
   sw    $3, 4($2)
   sw    $4, 8($2)
