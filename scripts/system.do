@@ -135,6 +135,7 @@ add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/match_one
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/match_two
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cstate
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/nstate
+add wave -noupdate /system_tb/DUT/CPU/CM/DCACHE/WEN
 add wave -noupdate /system_tb/DUT/CPU/CC/ccif/dwait
 add wave -noupdate -group CCIF /system_tb/DUT/CPU/ccif/iwait
 add wave -noupdate -group CCIF /system_tb/DUT/CPU/ccif/dwait
@@ -169,7 +170,7 @@ TreeUpdate [SetDefaultTree]
 quietly WaveActivateNextPane
 add wave -noupdate /system_tb/DUT/CPU/CLK
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {1520000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {360000 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 186
 configure wave -valuecolwidth 78
@@ -185,4 +186,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {998546 ps} {1652788 ps}
+WaveRestoreZoom {78629 ps} {732871 ps}
