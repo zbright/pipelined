@@ -4,6 +4,102 @@
 		"selected_items":
 		[
 			[
+				"miss",
+				"miss_count"
+			],
+			[
+				"mis",
+				"miss_count"
+			],
+			[
+				"nex",
+				"next_hit_count"
+			],
+			[
+				"ne",
+				"next_miss_count"
+			],
+			[
+				"id",
+				"IDLE"
+			],
+			[
+				"mat",
+				"match_two"
+			],
+			[
+				"fla",
+				"flag"
+			],
+			[
+				"cac",
+				"cacheblock_one"
+			],
+			[
+				"flag",
+				"flag_next"
+			],
+			[
+				"temp",
+				"temp_fetch_store"
+			],
+			[
+				"cach",
+				"cacheblock_two_next"
+			],
+			[
+				"dmm",
+				"dmemREN"
+			],
+			[
+				"dm",
+				"dmemREN"
+			],
+			[
+				"ma",
+				"match_two"
+			],
+			[
+				"dmem",
+				"dmemWEN"
+			],
+			[
+				"tmep",
+				"temp_fetch_store_next"
+			],
+			[
+				"ca",
+				"cacheaddress"
+			],
+			[
+				"data",
+				"data_one"
+			],
+			[
+				"da",
+				"data_two"
+			],
+			[
+				"canc",
+				"cacheblock_one_next"
+			],
+			[
+				"dw",
+				"dwait"
+			],
+			[
+				"be",
+				"begin"
+			],
+			[
+				"pc",
+				"pc_stall_branchjump"
+			],
+			[
+				"p",
+				"pc_stall_branchjump"
+			],
+			[
 				"ex_",
 				"ex_mem_stall"
 			],
@@ -16,16 +112,8 @@
 				"halt_in"
 			],
 			[
-				"temp",
-				"temp_halt"
-			],
-			[
 				"f",
 				"flush"
-			],
-			[
-				"id",
-				"id_ex_bubble"
 			],
 			[
 				"bran",
@@ -72,75 +160,45 @@
 	"buffers":
 	[
 		{
-			"file": "source/if_id_latch.sv",
+			"file": "source/system.sv",
 			"settings":
 			{
-				"buffer_size": 871,
+				"buffer_size": 1552,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/id_ex_latch.sv",
+			"file": "testbench/system_tb.sv",
 			"settings":
 			{
-				"buffer_size": 4647,
+				"buffer_size": 2479,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/ex_mem_latch.sv",
+			"file": "source/caches.sv",
 			"settings":
 			{
-				"buffer_size": 4490,
+				"buffer_size": 1404,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/mem_wb_latch.sv",
+			"file": "source/dcache.sv",
 			"settings":
 			{
-				"buffer_size": 2215,
+				"buffer_size": 12764,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/forward.sv",
+			"contents": "Package Control Messages\n========================\n\nSystemVerilog:\n-------------\n\n  SystemVerilog 1.1.1 Changelog:\n   - Fix issue with ( ) not being recognised properby by Sublime near function\n   - Minor fix to get null correctly highlighted inside function parameter list\n   - Better highlight of user-define type with assignement\n   - Highlight end label (e.g. endfunction : funcname)\n\n  SystemVerilog 1.1.0 Changelog:\n   - Add Module instantiation feature\n   - Fix a few highlight issue around typedef, userdefined type and interface\n   - Change module declaration highlight to start having context information (to be used by incoming feature)\n\n  SystemVerilog 1.0.2 Changelog:\n   - Merge contribution from Matthew on interface highlight in module\n\n  SystemVerilog 1.0.1 Changelog:\n   - Fix all snippets to use tab so that indentation is correct for all user (sublime auto replace tab :) )\n   - Add snippet for function\n   - Continue support for typedef (add typedef class and simple typedef)\n   - Add support for interface declaration in module port list (ANSI-C style only)\n   - Highlight of scope like uvm_pkg::\n   - Better highlight for bind\n\n  SystemVerilog 1.0.0 Changelog:\n   - Repo reorg to support explicit versioning and Package Control upgrade messages.\n   - Better support for task/function highlight\n   - Start supporting highlight/symbol for typedef struct and enum (simple typedef not supported yet)\n",
 			"settings":
 			{
-				"buffer_size": 2247,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/program_count.sv",
-			"settings":
-			{
-				"buffer_size": 453,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/datapath.sv",
-			"settings":
-			{
-				"buffer_size": 13283,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/hazard_unit.sv",
-			"settings":
-			{
-				"buffer_size": 1778,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "asmFiles/fib.asm",
-			"settings":
-			{
-				"buffer_size": 514,
-				"line_ending": "Unix"
+				"buffer_size": 1418,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"scratch": true
 			}
 		}
 	],
@@ -185,25 +243,46 @@
 	},
 	"file_history":
 	[
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/mult.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/icache.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/quicksort.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst3.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/y.test.ldst3.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/caches.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/pipeline.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/ram.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm~",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/mem_wb_latch.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/ex_mem_latch.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/if_id_latch.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm~",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/system_tb.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/system500.log",
+		"/home/ecegrid/a/mg201/ece437/pipelined/system200.log",
+		"/home/ecegrid/a/mg201/ece437/pipelined/system100.log",
+		"/home/ecegrid/a/mg201/ece437/pipelined/system50.log",
+		"/home/ecegrid/a/mg201/ece437/pipelined/system.log",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/branchforward.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/forward.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/program_count.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/fib.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.branchjump1.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.simplebranch.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/forward.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/program_count.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst1.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv~",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/memory_control.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/control_unit.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv~",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/ram.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu_source_mux.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/singlecycle.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
 		"/home/ecegrid/a/mg201/ece437/pipelined/include/datapath_cache_if.vh",
 		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/control_unit_tb.sv",
 		"/home/ecegrid/a/mg201/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap"
@@ -221,9 +300,37 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"begin",
+			"else",
+			"begin",
+			"WEN",
+			"hit_count",
+			"3100",
+			"temp_fetch_store",
+			"WRITECACHE",
+			"compare",
+			"waiting",
+			";\n",
+			")\n",
+			"halt",
+			"i",
+			"endmodule",
+			"viola",
+			"fmax",
+			"Fmax Summary",
+			"propagation delay",
+			"latency",
+			"critical",
+			"Fmax Summary",
+			"slow",
+			"fast",
+			"fmax",
+			"slow",
+			"fast",
+			"FMAX",
 			"halt_out_id_ex_output",
 			"halt",
 			"25",
@@ -283,6 +390,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"next_count",
 			"jump_pc",
 			"branchdest_input",
 			"dmemload_mem_wb_output",
@@ -313,138 +421,114 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/if_id_latch.sv",
+					"file": "source/system.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 871,
+						"buffer_size": 1552,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								773,
-								773
+								161,
+								161
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 153.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "source/id_ex_latch.sv",
+					"file": "testbench/system_tb.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4647,
+						"buffer_size": 2479,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3446,
-								3446
+								1164,
+								1164
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1275.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "source/ex_mem_latch.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4490,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3339,
-								3339
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
-						},
-						"translation.x": -0.0,
-						"translation.y": 102.0,
+						"translation.y": 408.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "source/mem_wb_latch.sv",
+					"buffer": 2,
+					"file": "source/caches.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2215,
+						"buffer_size": 1404,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1543,
-								1543
+								518,
+								518
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 306.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "source/forward.sv",
+					"buffer": 3,
+					"file": "source/dcache.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2247,
+						"buffer_size": 12764,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								62,
-								62
+								3032,
+								3032
 							]
 						],
 						"settings":
@@ -454,132 +538,38 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 17.0,
+						"translation.y": 1775.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "source/program_count.sv",
+					"buffer": 4,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 453,
+						"buffer_size": 1418,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								387,
-								387
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 6,
-					"file": "source/datapath.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13283,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10682,
-								10682
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5916.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "source/hazard_unit.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1778,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								777,
-								777
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "asmFiles/fib.asm",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 514,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								350,
-								350
+								1418,
+								1418
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"word_wrap": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -602,18 +592,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.445835760047,
 			1.0
 		],
 		"rows":
@@ -630,7 +613,7 @@
 	"project": "source.sublime-project",
 	"replace":
 	{
-		"height": 760.0
+		"height": 94.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -676,7 +659,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 203.0,
+	"side_bar_width": 195.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
