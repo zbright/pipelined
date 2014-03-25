@@ -28,20 +28,19 @@ module dcache(
     logic               recent;
     } dcacheblock;
 
-    dcacheblock [7:0] cacheblock_one;// = 0;
-    dcacheblock [7:0] cacheblock_two;// = 0;
-    dcacheblock [7:0] cacheblock_one_next;// = 0;
-    dcacheblock [7:0] cacheblock_two_next;// = 0;
-    dcacheblock        temp_fetch_store;// = 0;
-    dcacheblock        temp_fetch_store_next;// = 0;
+    dcacheblock [7:0] cacheblock_one;
+    dcacheblock [7:0] cacheblock_two;
+    dcacheblock [7:0] cacheblock_one_next;
+    dcacheblock [7:0] cacheblock_two_next;
+    dcacheblock        temp_fetch_store;
+    dcacheblock        temp_fetch_store_next;
 
     //variable declaration
     logic match_one;
     logic match_two;
     logic [5:0] i;
     logic [31:0] hit_count;
-    logic [31:0] next_hit_count;// = 0;
-    logic WEN;
+    logic [31:0] next_hit_count;
     logic flag;
     logic flag_next;
 
@@ -82,10 +81,8 @@ module dcache(
             hit_count <= 0;
             flag <= 0;
         end else begin
-            //if(WEN) begin
-                cacheblock_one <= cacheblock_one_next;
-                cacheblock_two <= cacheblock_two_next;
-            //end
+            cacheblock_one <= cacheblock_one_next;
+            cacheblock_two <= cacheblock_two_next;
 
             hit_count <= next_hit_count;
 
@@ -97,27 +94,21 @@ module dcache(
     //next state logic
     always_comb
     begin
+        dcif.dhit = 0;
+        dcif.dmemload = 0;
         nstate = cstate;
         next_hit_count = hit_count;
-        //WEN = 0;
         flag_next = flag;
 
         cacheblock_two_next = cacheblock_two;
         cacheblock_one_next = cacheblock_one;
         temp_fetch_store_next = temp_fetch_store;
 
-        // if(hit_count == 0)
-        //     next_hit_count = 0;
-
-        //next_hit_count = hit_count == 0 ? 0 : hit_count;
-
         if (cstate == IDLE && i == 0) begin
-            //WEN = 0;
-
             if (dcif.halt)
                 nstate = HALT;
             else if (dcif.dmemREN || dcif.dmemWEN) begin
-                if(flag == 0) begin
+                if(temp_fetch_store != 0) begin
                     if(!cacheblock_one[cacheaddress.idx].recent) begin
                         cacheblock_one_next[cacheaddress.idx] = temp_fetch_store;
                         cacheblock_two_next[cacheaddress.idx].recent = 0;
@@ -126,20 +117,39 @@ module dcache(
                         cacheblock_one_next[cacheaddress.idx].recent = 0;
                     end
 
-                    //WEN = 1;
                     if(dcif.dmemWEN)
                         nstate = OVERWRITE;
                     else begin
-                        temp_fetch_store_next = 0;
                         flag_next = 1;
+                        temp_fetch_store_next = 0;
+
+                        if(cacheaddress.blkoff && match_one)
+                            dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_two;
+                        else if (!cacheaddress.blkoff && match_one)
+                            dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_one;
+                        else if (cacheaddress.blkoff && match_two)
+                            dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_two;
+                        else if (!cacheaddress.blkoff && match_two)
+                            dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_one;
+                        dcif.dhit = 1;
                     end
                 end else if(match_one || match_two) begin
                     next_hit_count = hit_count + 1'b1;
                     if(dcif.dmemWEN)
                         nstate = OVERWRITE;
                     else begin
-                        temp_fetch_store_next = 0;
                         flag_next = 1;
+                        temp_fetch_store_next = 0;
+
+                        if(cacheaddress.blkoff && match_one)
+                            dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_two;
+                        else if (!cacheaddress.blkoff && match_one)
+                            dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_one;
+                        else if (cacheaddress.blkoff && match_two)
+                            dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_two;
+                        else if (!cacheaddress.blkoff && match_two)
+                            dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_one;
+                        dcif.dhit = 1;
                     end
                 end else if((cacheblock_one[cacheaddress.idx].valid && cacheblock_one[cacheaddress.idx].dirty) || (cacheblock_two[cacheaddress.idx].valid && cacheblock_two[cacheaddress.idx].dirty))
                     nstate = WRITEBACK_ONE;
@@ -151,17 +161,17 @@ module dcache(
         else if(cstate == WRITEBACK_TWO && !ccif.dwait)
             nstate = FETCH_ONE;
         else if(cstate == FETCH_ONE && !ccif.dwait) begin
+            flag_next = 0;
             nstate = FETCH_TWO;
             temp_fetch_store_next.data_one = ccif.dload;
-            flag_next = 0;
         end else if(cstate == FETCH_TWO && !ccif.dwait) begin
             nstate = IDLE;
+            flag_next = 0;
             temp_fetch_store_next.data_two = ccif.dload;
             temp_fetch_store_next.dirty = 0;
             temp_fetch_store_next.recent = 1;
             temp_fetch_store_next.valid = 1;
             temp_fetch_store_next.tag = cacheaddress.tag;
-            flag_next = 0;
         end else if(cstate == OVERWRITE) begin
             temp_fetch_store_next = 0;
             flag_next = 1;
@@ -191,16 +201,17 @@ module dcache(
                 cacheblock_two_next[cacheaddress.idx].recent = 0;
                 cacheblock_one_next[cacheaddress.idx].recent = 1;
                 end
-            //WEN = 1;
             nstate = IDLE;
+            dcif.dhit = 1;
+
         end
     end
 
     //output logic
     always_comb
     begin
-        dcif.dhit = 0;
-        dcif.dmemload = 0;
+        // dcif.dhit = 0;
+        // dcif.dmemload = 0;
         dcif.flushed = 0;
         ccif.dREN = 0;
         ccif.dWEN = 0;
@@ -209,17 +220,19 @@ module dcache(
 
         casez(cstate)
             IDLE: begin
-                if((temp_fetch_store != 0 || match_one || match_two) && flag == 1 && dcif.dmemREN) begin
-                    if(cacheaddress.blkoff && match_one)
-                        dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_two;
-                    else if (!cacheaddress.blkoff && match_one)
-                        dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_one;
-                    else if (cacheaddress.blkoff && match_two)
-                        dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_two;
-                    else if (!cacheaddress.blkoff && match_two)
-                        dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_one;
-                    dcif.dhit = 1;
-                end
+
+                // if((temp_fetch_store != 0 || match_one || match_two) && flag_next == 1 && dcif.dmemREN) begin
+                // //if((temp_fetch_store != 0 || match_one || match_two) && flag_next == 1 && dcif.dmemREN) begin
+                //     if(cacheaddress.blkoff && match_one)
+                //         dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_two;
+                //     else if (!cacheaddress.blkoff && match_one)
+                //         dcif.dmemload = cacheblock_one_next[cacheaddress.idx].data_one;
+                //     else if (cacheaddress.blkoff && match_two)
+                //         dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_two;
+                //     else if (!cacheaddress.blkoff && match_two)
+                //         dcif.dmemload = cacheblock_two_next[cacheaddress.idx].data_one;
+                //     dcif.dhit = 1;
+                //end
             end
             WRITEBACK_ONE: begin
                 ccif.dWEN = 1;
@@ -244,7 +257,7 @@ module dcache(
                 end
             end
             OVERWRITE: begin
-                dcif.dhit = 1;
+                // dcif.dhit = 1;
             end
             FETCH_ONE: begin
                 ccif.dREN = 1;

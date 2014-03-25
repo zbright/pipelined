@@ -124,6 +124,10 @@ add wave -noupdate -group RAM /system_tb/DUT/RAM/ramif/memstore
 add wave -noupdate -expand -group iCache /system_tb/DUT/CPU/CM/ICACHE/cacheaddress
 add wave -noupdate -expand -group iCache /system_tb/DUT/CPU/CM/ICACHE/cacheblock
 add wave -noupdate -expand -group iCache /system_tb/DUT/CPU/CM/ICACHE/match
+add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/next_hit_count
+add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/hit_count
+add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/flag_next
+add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/flag
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cacheblock_one_next
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cacheblock_two_next
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/i
@@ -135,7 +139,6 @@ add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/match_one
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/match_two
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/cstate
 add wave -noupdate -expand -group dCache /system_tb/DUT/CPU/CM/DCACHE/nstate
-add wave -noupdate /system_tb/DUT/CPU/CM/DCACHE/WEN
 add wave -noupdate /system_tb/DUT/CPU/CC/ccif/dwait
 add wave -noupdate -group CCIF /system_tb/DUT/CPU/ccif/iwait
 add wave -noupdate -group CCIF /system_tb/DUT/CPU/ccif/dwait
@@ -170,7 +173,7 @@ TreeUpdate [SetDefaultTree]
 quietly WaveActivateNextPane
 add wave -noupdate /system_tb/DUT/CPU/CLK
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {360000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {9963848 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 186
 configure wave -valuecolwidth 78
@@ -186,4 +189,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {78629 ps} {732871 ps}
+WaveRestoreZoom {9663654 ps} {10317897 ps}
