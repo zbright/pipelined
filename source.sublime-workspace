@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"end",
+				"end"
+			],
+			[
+				"e",
+				"end"
+			],
+			[
+				"blk",
+				"blk_offset"
+			],
+			[
+				"word",
+				"word_t"
+			],
+			[
+				"cache",
+				"cacheblock_two"
+			],
+			[
+				"cachbl",
+				"cacheblock_one"
+			],
+			[
+				"cach",
+				"cacheaddress"
+			],
+			[
+				"cac",
+				"cacheblock_two"
+			],
+			[
+				"W",
+				"dWEN"
+			],
+			[
+				"mat",
+				"match_two"
+			],
+			[
+				"dmem",
+				"dmemload"
+			],
+			[
 				"miss",
 				"miss_count"
 			],
@@ -24,16 +68,8 @@
 				"IDLE"
 			],
 			[
-				"mat",
-				"match_two"
-			],
-			[
 				"fla",
 				"flag"
-			],
-			[
-				"cac",
-				"cacheblock_one"
 			],
 			[
 				"flag",
@@ -42,10 +78,6 @@
 			[
 				"temp",
 				"temp_fetch_store"
-			],
-			[
-				"cach",
-				"cacheblock_two_next"
 			],
 			[
 				"dmm",
@@ -58,10 +90,6 @@
 			[
 				"ma",
 				"match_two"
-			],
-			[
-				"dmem",
-				"dmemWEN"
 			],
 			[
 				"tmep",
@@ -160,45 +188,19 @@
 	"buffers":
 	[
 		{
-			"file": "source/system.sv",
-			"settings":
-			{
-				"buffer_size": 1552,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "testbench/system_tb.sv",
-			"settings":
-			{
-				"buffer_size": 2479,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/caches.sv",
-			"settings":
-			{
-				"buffer_size": 1404,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "source/dcache.sv",
 			"settings":
 			{
-				"buffer_size": 12764,
+				"buffer_size": 10800,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Package Control Messages\n========================\n\nSystemVerilog:\n-------------\n\n  SystemVerilog 1.1.1 Changelog:\n   - Fix issue with ( ) not being recognised properby by Sublime near function\n   - Minor fix to get null correctly highlighted inside function parameter list\n   - Better highlight of user-define type with assignement\n   - Highlight end label (e.g. endfunction : funcname)\n\n  SystemVerilog 1.1.0 Changelog:\n   - Add Module instantiation feature\n   - Fix a few highlight issue around typedef, userdefined type and interface\n   - Change module declaration highlight to start having context information (to be used by incoming feature)\n\n  SystemVerilog 1.0.2 Changelog:\n   - Merge contribution from Matthew on interface highlight in module\n\n  SystemVerilog 1.0.1 Changelog:\n   - Fix all snippets to use tab so that indentation is correct for all user (sublime auto replace tab :) )\n   - Add snippet for function\n   - Continue support for typedef (add typedef class and simple typedef)\n   - Add support for interface declaration in module port list (ANSI-C style only)\n   - Highlight of scope like uvm_pkg::\n   - Better highlight for bind\n\n  SystemVerilog 1.0.0 Changelog:\n   - Repo reorg to support explicit versioning and Package Control upgrade messages.\n   - Better support for task/function highlight\n   - Start supporting highlight/symbol for typedef struct and enum (simple typedef not supported yet)\n",
+			"file": "source/ram.sv",
 			"settings":
 			{
-				"buffer_size": 1418,
-				"line_ending": "Unix",
-				"name": "Package Control Messages",
-				"scratch": true
+				"buffer_size": 2890,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -243,13 +245,15 @@
 	},
 	"file_history":
 	[
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/caches.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/system.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/system_tb.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/mult.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/icache.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/quicksort.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst3.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/y.test.ldst3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/caches.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/pipeline.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
@@ -261,7 +265,6 @@
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm~",
 		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/system_tb.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/system500.log",
 		"/home/ecegrid/a/mg201/ece437/pipelined/system200.log",
 		"/home/ecegrid/a/mg201/ece437/pipelined/system100.log",
@@ -421,114 +424,24 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/system.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1552,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								161,
-								161
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 153.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "testbench/system_tb.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2479,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1164,
-								1164
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 408.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "source/caches.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1404,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								518,
-								518
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "source/dcache.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12764,
+						"buffer_size": 10800,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3032,
-								3032
+								2956,
+								2956
 							]
 						],
 						"settings":
@@ -538,32 +451,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1775.0,
+						"translation.y": 1436.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 1,
+					"file": "source/ram.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1418,
+						"buffer_size": 2890,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1418,
-								1418
+								295,
+								295
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"word_wrap": true
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
