@@ -199,7 +199,7 @@
 			"file": "source/ram.sv",
 			"settings":
 			{
-				"buffer_size": 2890,
+				"buffer_size": 2889,
 				"line_ending": "Unix"
 			}
 		}
@@ -245,6 +245,9 @@
 	},
 	"file_history":
 	[
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_2.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_3.asm",
+		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/Hanye_count_days.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/caches.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/system.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/system_tb.sv",
@@ -424,7 +427,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -440,8 +443,8 @@
 						"selection":
 						[
 							[
-								2956,
-								2956
+								4667,
+								4667
 							]
 						],
 						"settings":
@@ -451,10 +454,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1436.0,
+						"translation.y": 314.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -463,15 +466,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2890,
+						"buffer_size": 2889,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								295,
-								295
+								294,
+								294
 							]
 						],
 						"settings":
@@ -484,7 +487,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
