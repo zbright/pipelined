@@ -15,6 +15,7 @@ module icache(
 
     // import types
     import cpu_types_pkg::*;
+    parameter CPUID = 0;
 
     //struct declaration
     icachef_t cacheaddress;
@@ -30,14 +31,14 @@ module icache(
     //declaring values
     logic match;
 
-    assign cacheaddress = icachef_t'(dcif.imemaddr);
+    assign cacheaddress = icachef_t'(dcif.imemaddr[CPUID]);
 
     always_ff @(posedge CLK, negedge nRST)
         begin
             if (nRST == 0) begin
                 cacheblock <= 0;
-            end else if(!match && !ccif.iwait ) begin
-                cacheblock[cacheaddress.idx].data <= ccif.iload;
+            end else if(!match && !ccif.iwait[CPUID]) begin
+                cacheblock[cacheaddress.idx].data <= ccif.iload[CPUID];
                 cacheblock[cacheaddress.idx].tag <= cacheaddress.tag;
                 cacheblock[cacheaddress.idx].valid <= '1;
             end
@@ -46,12 +47,12 @@ module icache(
     assign match = (cacheblock[cacheaddress.idx].tag == cacheaddress.tag)
                     && cacheblock[cacheaddress.idx].valid && dcif.imemREN;
 
-    assign dcif.ihit = (!match && !ccif.iwait) || match ? 1 : 0;
-    assign dcif.imemload = !match && !ccif.iwait ? ccif.iload :
+    assign dcif.ihit = (!match && !ccif.iwait[CPUID]) || match ? 1 : 0;
+    assign dcif.imemload = !match && !ccif.iwait[CPUID] ? ccif.iload[CPUID] :
                 match ? cacheblock[cacheaddress.idx].data : 0;
 
-    assign ccif.iREN = !match;
-    assign ccif.iaddr = dcif.imemaddr;
+    assign ccif.iREN[CPUID] = !match;
+    assign ccif.iaddr[CPUID] = dcif.imemaddr;
 
 endmodule
 

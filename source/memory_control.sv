@@ -32,7 +32,7 @@ module memory_control (
   //assign ccif.dwait [1] = 0;
 
   always_comb
-	begin		
+	begin
 		//initialize
 		ccif.iwait = 1;
 		ccif.dwait = 1;
@@ -42,40 +42,98 @@ module memory_control (
 		ccif.ramaddr = 0;
 		ccif.ramWEN = 0;
 		ccif.ramREN = 0;
-		
+
 		//defaulting everything
 		//if ram is in access then the data is correct
 		//if data read signal is sent
-		if (ccif.dREN == 1) begin
+		if (ccif.dREN[0] == 1) begin
 			ccif.ramREN = 1;
 			ccif.ramWEN = 0;
-			ccif.ramaddr = ccif.daddr;
-			ccif.iwait = 1;
-			ccif.dwait = 1;			
+			ccif.ramaddr = ccif.daddr[0];
+			ccif.iwait[0] = 1;
+			ccif.dwait[0] = 1;
 			if (ccif.ramstate == ACCESS) begin
-				ccif.dwait = 0;
+				ccif.dwait[0] = 0;
 			end
 		//if data write signal is set
-		end else if (ccif.dWEN == 1) begin
+		end else if (ccif.dWEN[0] == 1) begin
 			ccif.ramREN = 0;
 			ccif.ramWEN = 1;
-			ccif.iwait = 1;
-			ccif.dwait = 1;
-			ccif.ramaddr = ccif.daddr;
-			ccif.ramstore = ccif.dstore;
+			ccif.iwait[0] = 1;
+			ccif.dwait[0] = 1;
+			ccif.ramaddr = ccif.daddr[0];
+			ccif.ramstore = ccif.dstore[0];
 			if (ccif.ramstate == ACCESS) begin
-				ccif.dwait = 0;
+				ccif.dwait[0] = 0;
 			end
-		end else if (ccif.iREN == 1) begin
-			ccif.ramREN = 1;
-			ccif.ramWEN = 0;
-			ccif.iwait = 1;
-			ccif.dwait = 1;
-			ccif.ramaddr = ccif.iaddr;
-			if (ccif.ramstate == ACCESS) begin
-				ccif.iwait = 0;
-			end
-		end
+
+        end else if (ccif.dREN[1] == 1  && !ccif.dwait[0]) begin
+            ccif.ramREN = 1;
+            ccif.ramWEN = 0;
+            ccif.ramaddr = ccif.daddr[0];
+            ccif.iwait[1] = 1;
+            ccif.dwait[1] = 1;
+            if (ccif.ramstate == ACCESS) begin
+                ccif.dwait[1] = 0;
+            end
+        //if data write signal is set
+        end else if (ccif.dWEN[1] == 1  && !ccif.dwait[0]) begin
+            ccif.ramREN = 0;
+            ccif.ramWEN = 1;
+            ccif.iwait[1] = 1;
+            ccif.dwait[1] = 1;
+            ccif.ramaddr = ccif.daddr[1];
+            ccif.ramstore = ccif.dstore[1];
+            if (ccif.ramstate == ACCESS) begin
+                ccif.dwait[1] = 0;
+            end
+
+        end else if (ccif.iREN != 0) begin
+            ccif.ramREN = 1;
+            ccif.ramWEN = 0;
+
+            if(ccif.iREN[0] == 1) begin
+                ccif.iwait[0] = 1;
+                ccif.dwait[0] = 1;
+            end
+
+            if(ccif.iREN[1] == 1) begin
+                ccif.iwait[1] = 1;
+                ccif.dwait[1] = 1;
+            end
+
+            if(ccif.iREN[0] == 1) begin
+                ccif.ramaddr = ccif.iaddr[0];
+                if (ccif.ramstate == ACCESS)
+                    ccif.iwait[0] = 0;
+            end else begin
+                ccif.ramaddr = ccif.iaddr[1];
+                if (ccif.ramstate == ACCESS)
+                    ccif.iwait[1] = 0;
+            end
+
+        end
+
+
+		// end else if (ccif.iREN[0] == 1) begin
+		// 	ccif.ramREN = 1;
+		// 	ccif.ramWEN = 0;
+		// 	ccif.iwait[0] = 1;
+		// 	ccif.dwait[0] = 1;
+		// 	ccif.ramaddr = ccif.iaddr[0];
+		// 	if (ccif.ramstate == ACCESS) begin
+		// 		ccif.iwait[0] = 0;
+		// 	end
+		// end else if (ccif.iREN[1] == 1  && !ccif.iwait[0]) begin
+  //           ccif.ramREN = 1;
+  //           ccif.ramWEN = 0;
+  //           ccif.iwait[1] = 1;
+  //           ccif.dwait[1] = 1;
+  //           ccif.ramaddr = ccif.iaddr[1];
+  //           if (ccif.ramstate == ACCESS) begin
+  //               ccif.iwait[1] = 0;
+  //           end
+  //       end
 
 	end
 

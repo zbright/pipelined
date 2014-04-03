@@ -185,6 +185,7 @@ module datapath (
 		.nRST(nRST),
 		.next_pc_count(next_pc_count),
 		.wen(pc_wen),
+		.pc_init(PC_INIT),
 		.current_pc_count(current_pc_count)
 		);
 

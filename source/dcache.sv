@@ -15,6 +15,7 @@ module dcache(
 
     // import types
     import cpu_types_pkg::*;
+    parameter CPUID = 0;
 
     //struct declaration
     dcachef_t cacheaddress;
@@ -67,7 +68,7 @@ module dcache(
 
         if(!nRST)
             i <= 0;
-        else if(cstate == HALT && (ccif.dwait != ccif.dWEN))
+        else if(cstate == HALT && (ccif.dwait[CPUID] != ccif.dWEN[CPUID]))
             i <= i + 1'b1;
 
     end
@@ -139,18 +140,18 @@ module dcache(
                 else
                     nstate = FETCH_ONE;
             end
-        end else if(cstate == WRITEBACK_ONE && !ccif.dwait)
+        end else if(cstate == WRITEBACK_ONE && !ccif.dwait[CPUID])
             nstate = WRITEBACK_TWO;
-        else if(cstate == WRITEBACK_TWO && !ccif.dwait)
+        else if(cstate == WRITEBACK_TWO && !ccif.dwait[CPUID])
             nstate = FETCH_ONE;
-        else if(cstate == FETCH_ONE && !ccif.dwait) begin
+        else if(cstate == FETCH_ONE && !ccif.dwait[CPUID]) begin
             flag_next = 0;
             nstate = FETCH_TWO;
-            temp_fetch_store_next.data_one = ccif.dload;
-        end else if(cstate == FETCH_TWO && !ccif.dwait) begin
+            temp_fetch_store_next.data_one = ccif.dload[CPUID];
+        end else if(cstate == FETCH_TWO && !ccif.dwait[CPUID]) begin
             nstate = IDLE;
             flag_next = 0;
-            temp_fetch_store_next.data_two = ccif.dload;
+            temp_fetch_store_next.data_two = ccif.dload[CPUID];
             temp_fetch_store_next.dirty = 0;
             temp_fetch_store_next.recent = 1;
             temp_fetch_store_next.valid = 1;
@@ -221,57 +222,57 @@ module dcache(
     always_comb
     begin
         dcif.flushed = 0;
-        ccif.dREN = 0;
-        ccif.dWEN = 0;
-        ccif.daddr = 0;
-        ccif.dstore = 0;
+        ccif.dREN[CPUID] = 0;
+        ccif.dWEN[CPUID] = 0;
+        ccif.daddr[CPUID] = 0;
+        ccif.dstore[CPUID] = 0;
 
         casez(cstate)
             IDLE: begin
             end
             WRITEBACK_ONE: begin
-                writeBack(3'b000, ccif.dstore, ccif.daddr, ccif.dWEN);
+                writeBack(3'b000, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
             end
             WRITEBACK_TWO: begin
-                writeBack(3'b100, ccif.dstore, ccif.daddr, ccif.dWEN);
+                writeBack(3'b100, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
             end
             OVERWRITE: begin
             end
             FETCH_ONE: begin
-                fetch(1'b0, ccif.dREN, ccif.daddr);
+                fetch(1'b0, ccif.dREN[CPUID], ccif.daddr[CPUID]);
             end
             FETCH_TWO: begin
-                fetch(1'b1, ccif.dREN, ccif.daddr);
+                fetch(1'b1, ccif.dREN[CPUID], ccif.daddr[CPUID]);
             end
             HALT: begin
-                    ccif.dWEN = 1;
+                    ccif.dWEN[CPUID] = 1;
                     if(i < 6'b001000) begin //cacheblock 1 word 1
                         if(cacheblock_one[i].valid && cacheblock_one[i].dirty) begin
-                            ccif.dstore = cacheblock_one[i].data_one;
-                            ccif.daddr = {cacheblock_one[i].tag, i[2:0], 3'b000};
+                            ccif.dstore[CPUID] = cacheblock_one[i].data_one;
+                            ccif.daddr[CPUID] = {cacheblock_one[i].tag, i[2:0], 3'b000};
                         end else
-                            ccif.dWEN = 0;
+                            ccif.dWEN[CPUID] = 0;
                     end else if(i < 6'b010000) begin //cache block 1 word 2
                         if(cacheblock_one[i-8].valid && cacheblock_one[i-8].dirty) begin
-                            ccif.dstore = cacheblock_one[i-8].data_two;
-                            ccif.daddr = {cacheblock_one[i-8].tag, i[2:0], 3'b100};
+                            ccif.dstore[CPUID] = cacheblock_one[i-8].data_two;
+                            ccif.daddr[CPUID] = {cacheblock_one[i-8].tag, i[2:0], 3'b100};
                         end else
-                            ccif.dWEN = 0;
+                            ccif.dWEN[CPUID] = 0;
                     end else if(i < 6'b011000) begin //cacheblock 2 word 1
                         if(cacheblock_two[i-16].valid && cacheblock_two[i-16].dirty) begin
-                            ccif.dstore = cacheblock_two[i-16].data_one;
-                            ccif.daddr = {cacheblock_two[i-16].tag, i[2:0], 3'b000};
+                            ccif.dstore[CPUID] = cacheblock_two[i-16].data_one;
+                            ccif.daddr[CPUID] = {cacheblock_two[i-16].tag, i[2:0], 3'b000};
                         end else
-                            ccif.dWEN = 0;
+                            ccif.dWEN[CPUID] = 0;
                     end else if(i < 6'b100000) begin //cache bloack 2 word 2
                         if(cacheblock_two[i-24].valid && cacheblock_two[i-24].dirty) begin
-                            ccif.dstore = cacheblock_two[i-24].data_two;
-                            ccif.daddr = {cacheblock_two[i-24].tag, i[2:0], 3'b100};
+                            ccif.dstore[CPUID] = cacheblock_two[i-24].data_two;
+                            ccif.daddr[CPUID] = {cacheblock_two[i-24].tag, i[2:0], 3'b100};
                         end else
-                            ccif.dWEN = 0;
+                            ccif.dWEN[CPUID] = 0;
                     end else if(i == 6'b100000) begin
-                        ccif.dstore = hit_count;
-                        ccif.daddr = 32'b000000000000000011000100000000;
+                        ccif.dstore[CPUID] = hit_count;
+                        ccif.daddr[CPUID] = 32'b000000000000000011000100000000;
                     end else
                             dcif.flushed = 1;
                 end
