@@ -8,7 +8,7 @@
   ori 	$2, $zero, 0x200
   ori	$4, $zero, 0x400
   addu $5, $2, $4
-  sw $5, 0($2)
+#  sw $5, 0($2)
   halt  # that's all
 
 
@@ -17,6 +17,6 @@
   ori 	$2, $zero, 0x500
   ori	$4, $zero, 0x700
   addu $5, $2, $4
-  sw $5, 0($2)
+#  sw $5, 0($2)
 
   halt  # that's all
