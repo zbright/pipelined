@@ -31,7 +31,7 @@ module icache(
     //declaring values
     logic match;
 
-    assign cacheaddress = icachef_t'(dcif.imemaddr[CPUID]);
+    assign cacheaddress = icachef_t'(dcif.imemaddr);
 
     always_ff @(posedge CLK, negedge nRST)
         begin
@@ -50,6 +50,18 @@ module icache(
     assign dcif.ihit = (!match && !ccif.iwait[CPUID]) || match ? 1 : 0;
     assign dcif.imemload = !match && !ccif.iwait[CPUID] ? ccif.iload[CPUID] :
                 match ? cacheblock[cacheaddress.idx].data : 0;
+
+    // always_comb
+    // begin
+    //     ccif.iREN[CPUID] = 0;
+    //     ccif.iaddr[CPUID] = 0;
+
+    //     if (CPUID == 0) begin;
+    //         ccif.iREN[CPUID] = !match;
+    //         ccif.iaddr[CPUID] = dcif.imemaddr;
+    //     end else begin;
+    //         if (ccif.iwait[0] == 1)
+    // end
 
     assign ccif.iREN[CPUID] = !match;
     assign ccif.iaddr[CPUID] = dcif.imemaddr;

@@ -36,9 +36,12 @@ module memory_control (
 		//initialize
 		ccif.iwait = 1;
 		ccif.dwait = 1;
-		ccif.iload = ccif.ramload;
-		ccif.dload = ccif.ramload;
-		ccif.ramstore = 0;
+		ccif.iload[0] = ccif.ramload;
+    ccif.iload[1] = ccif.ramload;
+    ccif.dload[0] = ccif.ramload;
+  	ccif.dload[1] = ccif.ramload;
+
+  	ccif.ramstore = 0;
 		ccif.ramaddr = 0;
 		ccif.ramWEN = 0;
 		ccif.ramREN = 0;
