@@ -4,164 +4,100 @@
 		"selected_items":
 		[
 			[
-				"end",
-				"end"
+				"READ",
+				"READ_ZERO"
 			],
 			[
-				"e",
-				"end"
+				"csate",
+				"cstate"
 			],
 			[
-				"blk",
-				"blk_offset"
+				"mem",
+				"MEM_ACCESS"
 			],
 			[
-				"word",
-				"word_t"
+				"access",
+				"ACCESS"
+			],
+			[
+				"WRITE",
+				"WRITE_ZERO"
+			],
+			[
+				"alu_a_mux",
+				"alu_a_mux_output"
+			],
+			[
+				"dmemWEN_",
+				"dmemwen_ex_mem_output"
+			],
+			[
+				"ca",
+				"cacheblock_two"
+			],
+			[
+				"cach",
+				"cacheblock_one"
 			],
 			[
 				"cache",
 				"cacheblock_two"
 			],
 			[
-				"cachbl",
-				"cacheblock_one"
-			],
-			[
-				"cach",
-				"cacheaddress"
-			],
-			[
-				"cac",
-				"cacheblock_two"
-			],
-			[
-				"W",
-				"dWEN"
-			],
-			[
-				"mat",
-				"match_two"
-			],
-			[
-				"dmem",
-				"dmemload"
-			],
-			[
-				"miss",
-				"miss_count"
-			],
-			[
-				"mis",
-				"miss_count"
-			],
-			[
-				"nex",
-				"next_hit_count"
-			],
-			[
-				"ne",
-				"next_miss_count"
-			],
-			[
-				"id",
-				"IDLE"
-			],
-			[
-				"fla",
-				"flag"
-			],
-			[
-				"flag",
-				"flag_next"
-			],
-			[
-				"temp",
-				"temp_fetch_store"
-			],
-			[
-				"dmm",
-				"dmemREN"
-			],
-			[
-				"dm",
-				"dmemREN"
-			],
-			[
-				"ma",
-				"match_two"
-			],
-			[
-				"tmep",
-				"temp_fetch_store_next"
-			],
-			[
-				"ca",
-				"cacheaddress"
-			],
-			[
-				"data",
-				"data_one"
-			],
-			[
 				"da",
 				"data_two"
 			],
 			[
-				"canc",
-				"cacheblock_one_next"
+				"id",
+				"idx"
 			],
 			[
-				"dw",
-				"dwait"
+				"cac",
+				"cacheaddress"
 			],
 			[
-				"be",
+				"b",
 				"begin"
 			],
 			[
-				"pc",
-				"pc_stall_branchjump"
+				"match_",
+				"match_one"
 			],
 			[
-				"p",
-				"pc_stall_branchjump"
+				"match",
+				"match_two"
 			],
 			[
-				"ex_",
-				"ex_mem_stall"
+				"dat",
+				"data_one"
 			],
 			[
-				"halt",
-				"halt_out"
+				"FET",
+				"FETCH_ONE"
 			],
 			[
-				"ha",
-				"halt_in"
+				"alwa",
+				"always_comb"
 			],
 			[
-				"f",
-				"flush"
+				"dmem",
+				"dmemWEN"
+			],
+			[
+				"ne",
+				"nstate"
+			],
+			[
+				"WRI",
+				"WRITECACHE"
+			],
+			[
+				"im",
+				"imemload"
 			],
 			[
 				"bran",
-				"branch_flush"
-			],
-			[
-				"if",
-				"if_id_rs"
-			],
-			[
-				"id_",
-				"id_ex_rt"
-			],
-			[
-				"if_id_",
-				"if_id_rs"
-			],
-			[
-				"i",
-				"if_id_stall"
+				"branchdest_ex_mem_output"
 			],
 			[
 				"d",
@@ -180,6 +116,10 @@
 				"temp_stall"
 			],
 			[
+				"temp",
+				"temp_rdat1"
+			],
+			[
 				"always_",
 				"always_ff"
 			]
@@ -188,18 +128,79 @@
 	"buffers":
 	[
 		{
-			"file": "source/dcache.sv",
+			"contents": "/*\n  Eric Villasenor\n  evillase@gmail.com\n\n  this block is the coherence protocol\n  and artibtration for ram\n*/\n\n// interface include\n`include \"cache_control_if.vh\"\n\n// memory types\n`include \"cpu_types_pkg.vh\"\n\nmodule memory_control (\n  input CLK, nRST,\n  cache_control_if.cc ccif\n);\n  // type import\n  import cpu_types_pkg::*;\n\n  // number of cpus for cc\n\n  //ask Eric\n\n  parameter CPUS = 2;\n\n  //assign ccif.dREN [1] = 0;\n  //assign ccif.dWEN [1] = 0;\n  //assign ccif.iREN [1] = 0;\n  //assign ccif.iwait [1] = 0;\n  //assign ccif.dwait [1] = 0;\n\n  typedef enum {IDLE, WRITE_ZERO, WAIT_ZERO, READ_ZERO, WRITE_ONE, WAIT_ONE, READ_ONE, MEM_ACCESS} states;\n  states cstate, nstate;\n\n\n  //state transition\n  always_ff @(posedge CLK, negedge nRST)\n  begin\n      if (!nRST)\n          cstate <= IDLE;\n      else\n          cstate <= nstate;\n  end\n\n  always_comb\n  begin\n    nstate = cstate;\n\n    if (cstate == IDLE) begin\n      nstate =  (ccif.cctrans[0] && ccif.ccwrite[0]) ? WRITE_ZERO : \n                (ccif.cctrans[0] && !ccif.ccwrite[0]) ? READ_ZERO :\n                (ccif.cctrans[1] && ccif.ccwrite[1]) ? WRITE_ONE :\n                (ccif.cctrans[1] && !ccif.ccwrite[1]) ? READ_ONE; \n    end else if (cstate == WRITE_ZERO) begin\n      nstate = ccif.dWEN[1] ? WAIT_ZERO : MEM_ACCESS;\n    end else if ((cstate == WAIT_ZERO) && ccif.ramstate == ACCESS)\n      nstate = MEM_ACCESS\n    end else if (cstate == READ_ZERO) begin\n      nstate =  ccif.dREN[1] ? WAIT_ZERO :  \n                ccif.dREN[0] ? MEM_ACCESS; \n    end else if (cstate == WRITE_ONE) begin\n      nstate =  !ccif.dWEN[0] ? MEM_ACCESS :\n                 ccif.dWEN[0] ? WAIT_ONE \n    end else if (ccif.cstate == WAIT_ONE && ccif.ramstate == ACCESS)\n      nstate = MEM_ACCESS;\n    end else if (cstate == READ_ONE) begin\n      nsate =  ccif.dREN[0] ? WAIT_ONE :\n              !ccif.dREN[0] ? MEM_ACCESS;\n    end else if (csate == MEM_ACCESS) begin\n      nstate = IDLE;\n    end\n  end\n\n  always_comb\n  begin\n    casez(cstate)\n      IDLE: begin\n      end\n      WRITE_ONE: begin\n      end\n      WRITE_ZERO: begin\n      end\n      READ_ONE: begin\n      end\n      READ_ZERO: begin\n      end\n      WAIT_ONE: begin\n      end\n      WAIT_ZERO: begin\n      end\n      MEM_ACCESS: begin\n      end\n  end\n\n\n\n\n\n\n  always_comb\n	begin\n		//initialize\n		ccif.iwait = 1;\n		ccif.dwait = 1;\n		ccif.iload[0] = ccif.ramload;\n    ccif.iload[1] = ccif.ramload;\n    ccif.dload[0] = ccif.ramload;\n  	ccif.dload[1] = ccif.ramload;\n\n  	ccif.ramstore = 0;\n		ccif.ramaddr = 0;\n		ccif.ramWEN = 0;\n		ccif.ramREN = 0;\n\n		//defaulting everything\n		//if ram is in access then the data is correct\n		//if data read signal is sent\n		if (ccif.dREN[0] == 1) begin\n			ccif.ramREN = 1;\n			ccif.ramWEN = 0;\n			ccif.ramaddr = ccif.daddr[0];\n			ccif.iwait[0] = 1;\n			ccif.dwait[0] = 1;\n			if (ccif.ramstate == ACCESS) begin\n				ccif.dwait[0] = 0;\n			end\n		//if data write signal is set\n		end else if (ccif.dWEN[0] == 1) begin\n			ccif.ramREN = 0;\n			ccif.ramWEN = 1;\n			ccif.iwait[0] = 1;\n			ccif.dwait[0] = 1;\n			ccif.ramaddr = ccif.daddr[0];\n			ccif.ramstore = ccif.dstore[0];\n			if (ccif.ramstate == ACCESS) begin\n				ccif.dwait[0] = 0;\n			end\n\n        end else if (ccif.dREN[1] == 1  && !ccif.dwait[0]) begin\n            ccif.ramREN = 1;\n            ccif.ramWEN = 0;\n            ccif.ramaddr = ccif.daddr[0];\n            ccif.iwait[1] = 1;\n            ccif.dwait[1] = 1;\n            if (ccif.ramstate == ACCESS) begin\n                ccif.dwait[1] = 0;\n            end\n        //if data write signal is set\n        end else if (ccif.dWEN[1] == 1  && !ccif.dwait[0]) begin\n            ccif.ramREN = 0;\n            ccif.ramWEN = 1;\n            ccif.iwait[1] = 1;\n            ccif.dwait[1] = 1;\n            ccif.ramaddr = ccif.daddr[1];\n            ccif.ramstore = ccif.dstore[1];\n            if (ccif.ramstate == ACCESS) begin\n                ccif.dwait[1] = 0;\n            end\n\n        end else if (ccif.iREN != 0) begin\n            ccif.ramREN = 1;\n            ccif.ramWEN = 0;\n\n            if(ccif.iREN[0] == 1) begin\n                ccif.iwait[0] = 1;\n                ccif.dwait[0] = 1;\n            end\n\n            if(ccif.iREN[1] == 1) begin\n                ccif.iwait[1] = 1;\n                ccif.dwait[1] = 1;\n            end\n\n            if(ccif.iREN[0] == 1) begin\n                ccif.ramaddr = ccif.iaddr[0];\n                if (ccif.ramstate == ACCESS)\n                    ccif.iwait[0] = 0;\n            end else begin\n                ccif.ramaddr = ccif.iaddr[1];\n                if (ccif.ramstate == ACCESS)\n                    ccif.iwait[1] = 0;\n            end\n\n        end\n\n\n		// end else if (ccif.iREN[0] == 1) begin\n		// 	ccif.ramREN = 1;\n		// 	ccif.ramWEN = 0;\n		// 	ccif.iwait[0] = 1;\n		// 	ccif.dwait[0] = 1;\n		// 	ccif.ramaddr = ccif.iaddr[0];\n		// 	if (ccif.ramstate == ACCESS) begin\n		// 		ccif.iwait[0] = 0;\n		// 	end\n		// end else if (ccif.iREN[1] == 1  && !ccif.iwait[0]) begin\n  //           ccif.ramREN = 1;\n  //           ccif.ramWEN = 0;\n  //           ccif.iwait[1] = 1;\n  //           ccif.dwait[1] = 1;\n  //           ccif.ramaddr = ccif.iaddr[1];\n  //           if (ccif.ramstate == ACCESS) begin\n  //               ccif.iwait[1] = 0;\n  //           end\n  //       end\n\n	end\n\nendmodule\n",
+			"file": "source/memory_control.sv",
+			"file_size": 3527,
+			"file_write_time": 130410612643367747,
 			"settings":
 			{
-				"buffer_size": 10800,
+				"buffer_size": 5234,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "source/ram.sv",
+			"file": "source/multicore.sv",
 			"settings":
 			{
-				"buffer_size": 2889,
+				"buffer_size": 1057,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/system.sv",
+			"settings":
+			{
+				"buffer_size": 1553,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/caches.sv",
+			"settings":
+			{
+				"buffer_size": 1438,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/dcache.sv",
+			"settings":
+			{
+				"buffer_size": 11084,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nSystemVerilog:\n-------------\n\n  SystemVerilog 1.1.1 Changelog:\n   - Fix issue with ( ) not being recognised properby by Sublime near function\n   - Minor fix to get null correctly highlighted inside function parameter list\n   - Better highlight of user-define type with assignement\n   - Highlight end label (e.g. endfunction : funcname)\n\n  SystemVerilog 1.1.0 Changelog:\n   - Add Module instantiation feature\n   - Fix a few highlight issue around typedef, userdefined type and interface\n   - Change module declaration highlight to start having context information (to be used by incoming feature)\n\n  SystemVerilog 1.0.2 Changelog:\n   - Merge contribution from Matthew on interface highlight in module\n\n  SystemVerilog 1.0.1 Changelog:\n   - Fix all snippets to use tab so that indentation is correct for all user (sublime auto replace tab :) )\n   - Add snippet for function\n   - Continue support for typedef (add typedef class and simple typedef)\n   - Add support for interface declaration in module port list (ANSI-C style only)\n   - Highlight of scope like uvm_pkg::\n   - Better highlight for bind\n\n  SystemVerilog 1.0.0 Changelog:\n   - Repo reorg to support explicit versioning and Package Control upgrade messages.\n   - Better support for task/function highlight\n   - Start supporting highlight/symbol for typedef struct and enum (simple typedef not supported yet)\n",
+			"settings":
+			{
+				"buffer_size": 1418,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"scratch": true
+			}
+		},
+		{
+			"file": "source/icache.sv",
+			"settings":
+			{
+				"buffer_size": 1903,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "asmFiles/multi_rtype.asm",
+			"settings":
+			{
+				"buffer_size": 462,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "asmFiles/test.rtype.asm",
+			"settings":
+			{
+				"buffer_size": 794,
 				"line_ending": "Unix"
 			}
 		}
@@ -207,12 +208,24 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 77.0,
+		"height": 385.0,
 		"selected_items":
 		[
 			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
 				"install",
 				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: case",
+				"Snippet: Case"
 			],
 			[
 				"insta",
@@ -223,14 +236,13 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 528.0
+		"width": 400.0
 	},
 	"console":
 	{
 		"height": 566.0,
 		"history":
 		[
-			"git status",
 			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
@@ -245,52 +257,55 @@
 	},
 	"file_history":
 	[
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_2.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/Hanye_count_days.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/caches.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/system.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/system_tb.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/mult.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/icache.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/quicksort.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/y.test.ldst3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/pipeline.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/ram.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm~",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/mem_wb_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/ex_mem_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/if_id_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm~",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system500.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system200.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system100.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system50.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/branchforward.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/forward.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/program_count.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/fib.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.branchjump1.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.simplebranch.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst1.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/cache_control_if.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/datapath.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/forward.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/alu_a_mux.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/alu_b_mux.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/forward23.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/control_unit.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/forwarding_2.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/datapath_cache_if.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/icache_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/dcache.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/icache.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/system_if.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/system_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/system.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/dcache_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/lui.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/cpu_types_pkg.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/caches.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/simple_loadstore.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/pipeline.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/mem_wb_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/test.branchjump1.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/ex_mem_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/program_count.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/fib.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/alu_source_mux.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/hazard_unit.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/system_fpga.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/kevinforward.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/if_id_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/id_ex_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/test.ldst1.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv~",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/memory_control.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/control_unit.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv~",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/ram.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu_source_mux.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/singlecycle.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
 		"/home/ecegrid/a/mg201/ece437/pipelined/include/datapath_cache_if.vh",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/control_unit_tb.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/program_count.sv",
 		"/home/ecegrid/a/mg201/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap"
 	],
 	"find":
@@ -306,42 +321,33 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
-			"begin",
-			"else",
-			"begin",
-			"WEN",
-			"hit_count",
-			"3100",
-			"temp_fetch_store",
-			"WRITECACHE",
-			"compare",
-			"waiting",
-			";\n",
-			")\n",
+			"dmemwen_ex_mem_output",
+			"dmemstore",
+			"ccif",
+			"i",
 			"halt",
 			"i",
-			"endmodule",
-			"viola",
-			"fmax",
-			"Fmax Summary",
-			"propagation delay",
-			"latency",
-			"critical",
-			"Fmax Summary",
-			"slow",
-			"fast",
-			"fmax",
-			"slow",
-			"fast",
-			"FMAX",
-			"halt_out_id_ex_output",
-			"halt",
-			"25",
-			"imemload_ex_mem_output",
-			"stall",
+			"ccif.daddr",
+			"ccif.dstore",
+			"ccif",
+			"valid",
+			"cacheblock",
+			"match",
+			"cacheblock",
+			"\"cacheblock\"",
+			"cacheblock",
+			"tag",
+			"hit",
+			"match",
+			"dpif",
+			"iload",
+			"rst",
+			"imemload",
+			"halt_out_ex_mem_output",
+			"imemload_id_ex_output",
 			"aluresult_ex_mem_output",
 			"halt_out_id_ex_output",
 			"halt_out_ex_mem_output",
@@ -396,7 +402,6 @@
 		"regex": false,
 		"replace_history":
 		[
-			"next_count",
 			"jump_pc",
 			"branchdest_input",
 			"dmemload_mem_wb_output",
@@ -432,29 +437,29 @@
 			[
 				{
 					"buffer": 0,
-					"file": "source/dcache.sv",
+					"file": "source/memory_control.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10800,
+						"buffer_size": 5234,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4667,
-								4667
+								973,
+								973
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"tab_size": 4,
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 314.0,
+						"translation.y": 1530.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -462,19 +467,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "source/ram.sv",
+					"file": "source/multicore.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2889,
+						"buffer_size": 1057,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								294,
-								294
+								0,
+								0
 							]
 						],
 						"settings":
@@ -487,7 +492,219 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/system.sv",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "source/caches.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1438,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "source/dcache.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11084,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9191,
+								9191
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3195.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1418,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1418,
+								1418
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "source/icache.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1903,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1109,
+								1109
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "asmFiles/multi_rtype.asm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								335,
+								335
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "asmFiles/test.rtype.asm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 794,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								221,
+								221
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -495,7 +712,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 382.0
+		"height": 23.0
 	},
 	"input":
 	{
@@ -510,11 +727,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.564420188749,
 			1.0
 		],
 		"rows":
@@ -531,7 +755,7 @@
 	"project": "source.sublime-project",
 	"replace":
 	{
-		"height": 94.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -577,7 +801,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 195.0,
+	"side_bar_width": 203.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
