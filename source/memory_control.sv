@@ -73,7 +73,7 @@ module memory_control (
         end else if (ccif.dREN[1] == 1  && !ccif.dwait[0]) begin
             ccif.ramREN = 1;
             ccif.ramWEN = 0;
-            ccif.ramaddr = ccif.daddr[0];
+            ccif.ramaddr = ccif.daddr[1];
             ccif.iwait[1] = 1;
             ccif.dwait[1] = 1;
             if (ccif.ramstate == ACCESS) begin
@@ -114,30 +114,7 @@ module memory_control (
                 if (ccif.ramstate == ACCESS)
                     ccif.iwait[1] = 0;
             end
-
         end
-
-
-		// end else if (ccif.iREN[0] == 1) begin
-		// 	ccif.ramREN = 1;
-		// 	ccif.ramWEN = 0;
-		// 	ccif.iwait[0] = 1;
-		// 	ccif.dwait[0] = 1;
-		// 	ccif.ramaddr = ccif.iaddr[0];
-		// 	if (ccif.ramstate == ACCESS) begin
-		// 		ccif.iwait[0] = 0;
-		// 	end
-		// end else if (ccif.iREN[1] == 1  && !ccif.iwait[0]) begin
-  //           ccif.ramREN = 1;
-  //           ccif.ramWEN = 0;
-  //           ccif.iwait[1] = 1;
-  //           ccif.dwait[1] = 1;
-  //           ccif.ramaddr = ccif.iaddr[1];
-  //           if (ccif.ramstate == ACCESS) begin
-  //               ccif.iwait[1] = 0;
-  //           end
-  //       end
-
 	end
 
 endmodule

@@ -51,18 +51,6 @@ module icache(
     assign dcif.imemload = !match && !ccif.iwait[CPUID] ? ccif.iload[CPUID] :
                 match ? cacheblock[cacheaddress.idx].data : 0;
 
-    // always_comb
-    // begin
-    //     ccif.iREN[CPUID] = 0;
-    //     ccif.iaddr[CPUID] = 0;
-
-    //     if (CPUID == 0) begin;
-    //         ccif.iREN[CPUID] = !match;
-    //         ccif.iaddr[CPUID] = dcif.imemaddr;
-    //     end else begin;
-    //         if (ccif.iwait[0] == 1)
-    // end
-
     assign ccif.iREN[CPUID] = !match;
     assign ccif.iaddr[CPUID] = dcif.imemaddr;
 
