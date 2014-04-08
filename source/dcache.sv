@@ -45,6 +45,11 @@ module dcache(
     logic flag;
     logic flag_next;
 
+    //Coherence signals
+    logic snoop_hit_1;
+    logic snoop_hit_2;
+    dcachef_t snoop_addr;
+
     //assign statements
     assign cacheaddress = dcachef_t'(dcif.dmemaddr);
 
@@ -54,9 +59,39 @@ module dcache(
     assign match_two = (cacheblock_two_next[cacheaddress.idx].tag == cacheaddress.tag)
                     && (dcif.dmemREN || dcif.dmemWEN) && cacheblock_two_next[cacheaddress.idx].valid;
 
+    assign snoop_addr = dcachef_t'(ccif.ccsnoopaddr[CPUID]);
 
-    typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
+    assign snoop_hit_1 = cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag
+                        && cacheblock_one_next[snoop_addr.idx].valid;
+
+    assign snoop_hit_2 = cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag
+                        && cacheblock_two_next[snoop_addr.idx].valid;
+
+    typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
     states cstate, nstate;
+
+    //Coherency shit
+    always_comb
+    begin
+        if (ccif.ccwait[CPUID]) begin
+            ccif.cctrans[CPUID] = (!snoop_hit_1 && !snoop_hit_2) ? 0 : 1;
+            ccif.ccwrite[CPUID] = (snoop_hit_1 && cacheblock_one_next[snoop_addr.idx].dirty)
+                               || (snoop_hit_2 && cacheblock_two_next[snoop_addr.idx].dirty);
+        end else if(!match_one && !match_two) begin
+            if (dcif.dmemREN) begin //I -> S
+                ccif.cctrans[CPUID] = 1;
+                ccif.ccwrite[CPUID] = 0;
+            end else if (dcif.dmemWEN) begin //I -> M
+                ccif.cctrans[CPUID] = 1;
+                ccif.ccwrite[CPUID] = 1;
+            end
+        end else if (((match_one && !cacheblock_one_next[cacheaddress.idx].dirty)
+                    || (match_two && !cacheblock_two_next[cacheaddress.idx].dirty))
+                    && dcif.dmemWEN) begin //S -> M
+            ccif.cctrans[CPUID] = 1;
+            ccif.ccwrite[CPUID] = 1;
+        end
+    end
 
     //state transition
     always_ff @(posedge CLK, negedge nRST)
@@ -107,11 +142,15 @@ module dcache(
         temp_fetch_store_next = temp_fetch_store;
 
         if (cstate == IDLE && i == 0) begin
-            if (dcif.halt)
+            if (ccif.ccwait[CPUID]) begin
+                if (snoop_hit_1 || snoop_hit_2) begin
+                    nstate = WRITECC_ONE;
+                end
+            end else if (dcif.halt)
                 dcif.flushed = 1;
                 // nstate = HALT;
             else if (dcif.dmemREN || dcif.dmemWEN) begin
-                if(temp_fetch_store != 0 || (match_one || match_two)) begin
+                if(temp_fetch_store != 0 || match_one || match_two) begin
                     if(temp_fetch_store != 0) begin
                         if(!cacheblock_one[cacheaddress.idx].recent) begin
                             cacheblock_one_next[cacheaddress.idx] = temp_fetch_store;
@@ -142,6 +181,10 @@ module dcache(
                 else
                     nstate = FETCH_ONE;
             end
+        end else if (cstate == WRITECC_ONE) begin
+            nstate = WRITECC_TWO;
+        end else if (cstate == WRITECC_TWO) begin
+            nstate = IDLE;
         end else if(cstate == WRITEBACK_ONE && !ccif.dwait[CPUID])
             nstate = WRITEBACK_TWO;
         else if(cstate == WRITEBACK_TWO && !ccif.dwait[CPUID])
@@ -186,7 +229,7 @@ module dcache(
                 cacheblock_two_next[cacheaddress.idx].dirty = 1;
                 cacheblock_two_next[cacheaddress.idx].recent = 0;
                 cacheblock_one_next[cacheaddress.idx].recent = 1;
-                end
+            end
             nstate = IDLE;
             dcif.dhit = 1;
 
@@ -229,8 +272,27 @@ module dcache(
         ccif.daddr[CPUID] = 0;
         ccif.dstore[CPUID] = 0;
 
+
         casez(cstate)
             IDLE: begin
+                if (ccif.ccwait[CPUID]) begin
+                    if (snoop_hit_1)
+                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                    else if(snoop_hit_2)
+                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+                end
+            end
+            WRITECC_ONE: begin
+                if (snoop_hit_1)
+                    ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                else if(snoop_hit_2)
+                    ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+            end
+            WRITECC_TWO: begin
+                if (snoop_hit_1)
+                    ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_two;
+                else if(snoop_hit_2)
+                    ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_two;
             end
             WRITEBACK_ONE: begin
                 writeBack(3'b000, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
