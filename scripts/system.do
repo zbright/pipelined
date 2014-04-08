@@ -45,11 +45,11 @@ add wave -noupdate -group {DCIF 0} /system_tb/DUT/CPU/dcif0/dmemaddr
 add wave -noupdate -group {Register 0} /system_tb/DUT/CPU/DP0/REGISTER/CLK
 add wave -noupdate -group {Register 0} /system_tb/DUT/CPU/DP0/REGISTER/nRST
 add wave -noupdate -group {Register 0} -expand /system_tb/DUT/CPU/DP0/REGISTER/storeregister
-add wave -noupdate -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/CLK
-add wave -noupdate -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/nRST
-add wave -noupdate -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/cacheaddress
-add wave -noupdate -group {iCache 0} -expand /system_tb/DUT/CPU/CM0/ICACHE/cacheblock
-add wave -noupdate -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/match
+add wave -noupdate -expand -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/CLK
+add wave -noupdate -expand -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/nRST
+add wave -noupdate -expand -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/cacheaddress
+add wave -noupdate -expand -group {iCache 0} -expand /system_tb/DUT/CPU/CM0/ICACHE/cacheblock
+add wave -noupdate -expand -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/match
 add wave -noupdate -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/CLK
 add wave -noupdate -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/nRST
 add wave -noupdate -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheaddress
@@ -84,11 +84,11 @@ add wave -noupdate -group {DCIF 1} /system_tb/DUT/CPU/dcif1/dmemaddr
 add wave -noupdate -group {Register 1} /system_tb/DUT/CPU/DP1/REGISTER/CLK
 add wave -noupdate -group {Register 1} /system_tb/DUT/CPU/DP1/REGISTER/nRST
 add wave -noupdate -group {Register 1} /system_tb/DUT/CPU/DP1/REGISTER/storeregister
-add wave -noupdate -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/CLK
-add wave -noupdate -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/nRST
-add wave -noupdate -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/cacheaddress
-add wave -noupdate -group {iCache 1} -expand /system_tb/DUT/CPU/CM1/ICACHE/cacheblock
-add wave -noupdate -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/match
+add wave -noupdate -expand -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/CLK
+add wave -noupdate -expand -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/nRST
+add wave -noupdate -expand -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/cacheaddress
+add wave -noupdate -expand -group {iCache 1} -expand /system_tb/DUT/CPU/CM1/ICACHE/cacheblock
+add wave -noupdate -expand -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/match
 add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/CLK
 add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nRST
 add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheaddress
@@ -107,6 +107,10 @@ add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/flag
 add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/flag_next
 add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cstate
 add wave -noupdate -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nstate
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/active_core
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/next_active_core
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/cstate
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/nstate
 TreeUpdate [SetDefaultTree]
 quietly WaveActivateNextPane
 add wave -noupdate /system_tb/DUT/CPU/CLK
@@ -127,4 +131,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {170405 ps} {325364 ps}
+WaveRestoreZoom {0 ps} {154959 ps}

@@ -25,51 +25,91 @@ module memory_control (
 
   parameter CPUS = 2;
 
+  logic active_core;
+  logic next_active_core;
+  logic active;
+
   //assign ccif.dREN [1] = 0;
   //assign ccif.dWEN [1] = 0;
   //assign ccif.iREN [1] = 0;
   //assign ccif.iwait [1] = 0;
   //assign ccif.dwait [1] = 0;
 
-  typedef enum {IDLE, WRITE_ZERO, WAIT_ZERO, READ_ZERO, WRITE_ONE, WAIT_ONE, READ_ONE, MEM_ACCESS} states;
+  typedef enum {IDLE, ARBITER, SNOOP, WRITE_BACK_0, WRITE_BACK_1, FETCH_CACHE_0, FETCH_CACHE_1, MISS_0, MISS_1, EVICTION} states;
   states cstate, nstate;
+
+
 
 
   //state transition
   always_ff @(posedge CLK, negedge nRST)
   begin
-      if (!nRST)
+      if (!nRST) begin
           cstate <= IDLE;
-      else
+          active_core <=0;
+      end else begin
           cstate <= nstate;
+          active_core <= next_active_core;
+      end
   end
 
   always_comb
   begin
     nstate = cstate;
+    next_active_core = active_core;
 
-    if (cstate == IDLE) begin
-      nstate =  (ccif.cctrans[0] && ccif.ccwrite[0]) ? WRITE_ZERO :
-                (ccif.cctrans[0] && !ccif.ccwrite[0]) ? READ_ZERO :
-                (ccif.cctrans[1] && ccif.ccwrite[1]) ? WRITE_ONE :
-                (ccif.cctrans[1] && !ccif.ccwrite[1]) ? READ_ONE : IDLE;
-    end else if (cstate == WRITE_ZERO) begin
-      nstate = ccif.dWEN[1] ? WAIT_ZERO : MEM_ACCESS;
-    end else if ((cstate == WAIT_ZERO) && ccif.ramstate == ACCESS) begin
-      nstate = MEM_ACCESS;
-    end else if (cstate == READ_ZERO) begin
-      nstate =  ccif.dREN[1] ? WAIT_ZERO :
-                ccif.dREN[0] ? MEM_ACCESS : IDLE;
-    end else if (cstate == WRITE_ONE) begin
-      nstate =  !ccif.dWEN[0] ? MEM_ACCESS :
-                 ccif.dWEN[0] ? WAIT_ONE : IDLE;
-    end else if (cstate == WAIT_ONE && ccif.ramstate == ACCESS) begin
-      nstate = MEM_ACCESS;
-    end else if (cstate == READ_ONE) begin
-      nstate =  ccif.dREN[0] ? WAIT_ONE :
-              !ccif.dREN[0] ? MEM_ACCESS : IDLE;
-    end else if (cstate == MEM_ACCESS) begin
-      nstate = IDLE;
+    if(cstate == IDLE) begin
+        $display ("POOP5");
+        active = 0;
+        if(ccif.dREN[0] || ccif.dREN[1] || ccif.dWEN[0] || ccif.dWEN[1])
+            nstate = ARBITER;
+        else if(ccif.iREN[0])
+            next_active_core = 0;
+        else if(ccif.iREN[1])
+            next_active_core = 1;
+    end else if(cstate == ARBITER) begin
+        active = 0;
+        if(ccif.dWEN[0] || ccif.dREN[0])
+            next_active_core = 0;
+        else if (ccif.dWEN[1] || ccif.dREN[1])
+            next_active_core = 1;
+
+        nstate = SNOOP; //This needs to be changed for eviction
+    end else if(cstate == EVICTION) begin
+    end else if(cstate == SNOOP) begin
+        active = 0;
+        if(!active_core) begin
+            //stuff for core 0 goes here
+            nstate = MISS_0; //!ccif.ccwrite[1] ? MISS_0 :
+                     //ccif.cctrans[1] ? WRITE_BACK_0 : FETCH_CACHE_0;
+        end else begin
+            //stuff for core 1 goes here
+            nstate = MISS_0; //!ccif.ccwrite[0] ? MISS_0 :
+                     // ccif.cctrans[0] ? WRITE_BACK_0 : FETCH_CACHE_0;
+        end
+
+    end else if(cstate == WRITE_BACK_0) begin
+    end else if(cstate == WRITE_BACK_1) begin
+    end else if(cstate == FETCH_CACHE_0) begin
+    end else if(cstate == FETCH_CACHE_1) begin
+    end else if(cstate == MISS_0) begin
+        active = 1;
+        if(!active_core) begin
+            if(ccif.dwait[0] == 0)
+                nstate = MISS_1;
+        end else begin
+            if(ccif.dwait[1] == 0)
+                nstate = MISS_1;
+        end
+    end else if(cstate == MISS_1) begin
+        active = 1;
+        if(!active_core) begin
+            if(ccif.dwait[0] == 0)
+                nstate = IDLE;
+        end else begin
+            if(ccif.dwait[1] == 0)
+                nstate = IDLE;
+        end
     end
   end
 
@@ -77,38 +117,35 @@ module memory_control (
   begin
     ccif.ccinv[0] = 0;
     ccif.ccinv[1] = 0;
-    ccif.ccwait[0] = 0;
-    ccif.ccwait[1] = 0;
+    ccif.ccwait[0] = 1;
+    ccif.ccwait[1] = 1;
     ccif.ccsnoopaddr[0] = 0;
     ccif.ccsnoopaddr[1] = 0;
+
     casez(cstate)
       IDLE: begin
       end
-      WRITE_ONE: begin
-        ccif.ccinv[0] = 1;
-        ccif.ccsnoopaddr[0] = ccif.daddr[1];
-        ccif.ccwait[0] = 1;
+      ARBITER: begin
       end
-      WRITE_ZERO: begin
-        ccif.ccinv[1] = 1;
-        ccif.ccsnoopaddr = ccif.daddr[0];
-        ccif.ccwait[1] = 1;
+      EVICTION: begin
       end
-      READ_ONE: begin
-        ccif.ccsnoopaddr[0] = ccif.daddr[1];
-        ccif.ccwait[0] = 1;
+      SNOOP: begin
+        if(active_core)
+            ccif.ccsnoopaddr[1] = ccif.daddr[0];
+        else
+            ccif.ccsnoopaddr[0] = ccif.daddr[1];
       end
-      READ_ZERO: begin
-        ccif.ccsnoopaddr[1] = ccif.daddr[0];
-        ccif.ccwait[0] = 1;
+      WRITE_BACK_0: begin
       end
-      WAIT_ONE: begin
-        ccif.ccwait[0] = 1;
+      WRITE_BACK_1: begin
       end
-      WAIT_ZERO: begin
-        ccif.ccwait[1] = 1;
+      FETCH_CACHE_0: begin
       end
-      MEM_ACCESS: begin
+      FETCH_CACHE_1: begin
+      end
+      MISS_0: begin
+      end
+      MISS_1: begin
       end
     endcase
   end
@@ -121,8 +158,10 @@ module memory_control (
   always_comb
   begin
     //initialize
-    ccif.iwait = 1;
-    ccif.dwait = 1;
+    ccif.iwait[0] = 1;
+    ccif.iwait[1] = 1;
+    ccif.dwait[0] = 1;
+    ccif.dwait[1] = 1;
     ccif.iload[0] = ccif.ramload;
     ccif.iload[1] = ccif.ramload;
     ccif.dload[0] = ccif.ramload;
@@ -136,38 +175,42 @@ module memory_control (
     //defaulting everything
     //if ram is in access then the data is correct
     //if data read signal is sent
-    if (ccif.dREN[0] == 1) begin
-      ccif.ramREN = 1;
-      ccif.ramWEN = 0;
-      ccif.ramaddr = ccif.daddr[0];
-      ccif.iwait[0] = 1;
-      ccif.dwait[0] = 1;
-      if (ccif.ramstate == ACCESS) begin
-        ccif.dwait[0] = 0;
-      end
-    //if data write signal is set
-    end else if (ccif.dWEN[0] == 1) begin
-      ccif.ramREN = 0;
-      ccif.ramWEN = 1;
-      ccif.iwait[0] = 1;
-      ccif.dwait[0] = 1;
-      ccif.ramaddr = ccif.daddr[0];
-      ccif.ramstore = ccif.dstore[0];
-      if (ccif.ramstate == ACCESS) begin
-        ccif.dwait[0] = 0;
-      end
-
-        end else if (ccif.dREN[1] == 1  && !ccif.dwait[0]) begin
+    if(!active_core && active) begin
+        $display ("POOP1");
+        if (ccif.dREN[0] == 1) begin
+          ccif.ramREN = 1;
+          ccif.ramWEN = 0;
+          ccif.ramaddr = ccif.daddr[0];
+          ccif.iwait[0] = 1;
+          ccif.dwait[0] = 1;
+          if (ccif.ramstate == ACCESS) begin
+            ccif.dwait[0] = 0;
+          end
+        //if data write signal is set
+        end else if (ccif.dWEN[0] == 1) begin
+          ccif.ramREN = 0;
+          ccif.ramWEN = 1;
+          ccif.iwait[0] = 1;
+          ccif.dwait[0] = 1;
+          ccif.ramaddr = ccif.daddr[0];
+          ccif.ramstore = ccif.dstore[0];
+          if (ccif.ramstate == ACCESS) begin
+            ccif.dwait[0] = 0;
+          end
+        end
+    end else if(active_core && active) begin
+        $display ("POOP2");
+        if (ccif.dREN[1] == 1) begin // && !ccif.dwait[0]
             ccif.ramREN = 1;
             ccif.ramWEN = 0;
-            ccif.ramaddr = ccif.daddr[0];
+            ccif.ramaddr = ccif.daddr[1];
             ccif.iwait[1] = 1;
             ccif.dwait[1] = 1;
             if (ccif.ramstate == ACCESS) begin
                 ccif.dwait[1] = 0;
             end
         //if data write signal is set
-        end else if (ccif.dWEN[1] == 1  && !ccif.dwait[0]) begin
+        end else if (ccif.dWEN[1] == 1) begin // && !ccif.dwait[0]
             ccif.ramREN = 0;
             ccif.ramWEN = 1;
             ccif.iwait[1] = 1;
@@ -177,54 +220,54 @@ module memory_control (
             if (ccif.ramstate == ACCESS) begin
                 ccif.dwait[1] = 0;
             end
-
-        end else if (ccif.iREN != 0) begin
+        end
+    end else if (!active_core) begin
+        $display ("POOP3");
+        if (ccif.iREN[0] == 1) begin
             ccif.ramREN = 1;
             ccif.ramWEN = 0;
 
-            if(ccif.iREN[0] == 1) begin
-                ccif.iwait[0] = 1;
-                ccif.dwait[0] = 1;
-            end
-
-            if(ccif.iREN[1] == 1) begin
-                ccif.iwait[1] = 1;
-                ccif.dwait[1] = 1;
-            end
-
-            if(ccif.iREN[0] == 1) begin
-                ccif.ramaddr = ccif.iaddr[0];
-                if (ccif.ramstate == ACCESS)
-                    ccif.iwait[0] = 0;
-            end else begin
-                ccif.ramaddr = ccif.iaddr[1];
-                if (ccif.ramstate == ACCESS)
-                    ccif.iwait[1] = 0;
-            end
-
+            ccif.iwait[0] = 1;
+            ccif.dwait[0] = 1;
+            ccif.ramaddr = ccif.iaddr[0];
+            if (ccif.ramstate == ACCESS)
+                ccif.iwait[0] = 0;
         end
+    end else begin
+        $display ("POOP4");
+        if (ccif.iREN[1] == 1) begin
+            ccif.ramREN = 1;
+            ccif.ramWEN = 0;
+            ccif.iwait[1] = 1;
+            ccif.dwait[1] = 1;
+            ccif.ramaddr = ccif.iaddr[1];
+            if (ccif.ramstate == ACCESS)
+                ccif.iwait[1] = 0;
+        end
+    end
+    // else if (ccif.iREN != 0) begin
+    //     ccif.ramREN = 1;
+    //     ccif.ramWEN = 0;
 
+    //     if(ccif.iREN[0] == 1) begin
+    //         ccif.iwait[0] = 1;
+    //         ccif.dwait[0] = 1;
+    //     end
 
-    // end else if (ccif.iREN[0] == 1) begin
-    //  ccif.ramREN = 1;
-    //  ccif.ramWEN = 0;
-    //  ccif.iwait[0] = 1;
-    //  ccif.dwait[0] = 1;
-    //  ccif.ramaddr = ccif.iaddr[0];
-    //  if (ccif.ramstate == ACCESS) begin
-    //    ccif.iwait[0] = 0;
-    //  end
-    // end else if (ccif.iREN[1] == 1  && !ccif.iwait[0]) begin
-  //           ccif.ramREN = 1;
-  //           ccif.ramWEN = 0;
-  //           ccif.iwait[1] = 1;
-  //           ccif.dwait[1] = 1;
-  //           ccif.ramaddr = ccif.iaddr[1];
-  //           if (ccif.ramstate == ACCESS) begin
-  //               ccif.iwait[1] = 0;
-  //           end
-  //       end
+    //     if(ccif.iREN[1] == 1) begin
+    //         ccif.iwait[1] = 1;
+    //         ccif.dwait[1] = 1;
+    //     end
 
+    //     if(ccif.iREN[0] == 1) begin
+    //         ccif.ramaddr = ccif.iaddr[0];
+    //         if (ccif.ramstate == ACCESS)
+    //             ccif.iwait[0] = 0;
+    //     end else begin
+    //         ccif.ramaddr = ccif.iaddr[1];
+    //         if (ccif.ramstate == ACCESS)
+    //             ccif.iwait[1] = 0;
+    //     end
+    // end
   end
-
 endmodule

@@ -95,7 +95,7 @@ module dcache(
     //next state logic
     always_comb
     begin
-        // dcif.flushed = 0;
+        dcif.flushed = 0;
         dcif.dhit = 0;
         dcif.dmemload = 0;
         nstate = cstate;
@@ -108,8 +108,8 @@ module dcache(
 
         if (cstate == IDLE && i == 0) begin
             if (dcif.halt)
-                // dcif.flushed = 1;
-                nstate = HALT;
+                dcif.flushed = 1;
+                // nstate = HALT;
             else if (dcif.dmemREN || dcif.dmemWEN) begin
                 if(temp_fetch_store != 0 || (match_one || match_two)) begin
                     if(temp_fetch_store != 0) begin
@@ -223,7 +223,7 @@ module dcache(
     //output logic
     always_comb
     begin
-        dcif.flushed = 0;
+        // dcif.flushed = 0;
         ccif.dREN[CPUID] = 0;
         ccif.dWEN[CPUID] = 0;
         ccif.daddr[CPUID] = 0;
@@ -275,9 +275,10 @@ module dcache(
                 // end else if(i == 6'b100000) begin
                 //     ccif.dstore[CPUID] = hit_count;
                 //     ccif.daddr[CPUID] = 32'b000000000000000011000100000000;
-                end else
-                       dcif.flushed = 1;
+                // end else
+                //        dcif.flushed = 1;
                 end
+            end
         endcase
     end
 
