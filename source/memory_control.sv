@@ -27,6 +27,8 @@ module memory_control (
   logic next_active;
   logic ccdataready;
   logic ccdataready_next;
+  logic ccmemtransfer;
+  logic ccmemtransfer_next;
 
   typedef enum {IDLE, ARBITER, SNOOP, WRITE_BACK_0, WRITE_BACK_1, FETCH_CACHE_0, FETCH_CACHE_1, MISS_0, MISS_1, EVICTION} states;
   states cstate, nstate;
@@ -45,11 +47,13 @@ module memory_control (
           active_core <= 0;
           active <= 0;
           ccdataready <= 0;
+          ccmemtransfer <= 0;
       end else begin
           cstate <= nstate;
           active_core <= next_active_core;
           active <= next_active;
           ccdataready <= ccdataready_next;
+          ccmemtransfer <= ccmemtransfer_next;
       end
   end
 
@@ -59,6 +63,7 @@ module memory_control (
     next_active_core = active_core;
     next_active = active;
     ccdataready_next = ccdataready;
+    ccmemtransfer_next = ccmemtransfer;
 
     if (cstate == IDLE) begin
         // $display ("POOP5");
@@ -92,6 +97,8 @@ module memory_control (
 
         if (nstate == FETCH_CACHE_0)
             ccdataready_next = 1;
+        else if (nstate == WRITE_BACK_0)
+            ccmemtransfer_next = 1;
 
     end else if (cstate == WRITE_BACK_0) begin
         next_active = 1;
@@ -105,11 +112,15 @@ module memory_control (
     end else if (cstate == WRITE_BACK_1) begin
         next_active = 1;
         if (!active_core) begin
-            if (ccif.dwait[0] == 0)
+            if (ccif.dwait[0] == 0) begin
+                ccmemtransfer_next = 1;
                 nstate = IDLE;
+            end
         end else begin
-            if (ccif.dwait[1] == 0)
+            if (ccif.dwait[1] == 0) begin
+                ccmemtransfer_next = 1;
                 nstate = IDLE;
+            end
         end
     end else if (cstate == FETCH_CACHE_0) begin
         next_active = 1;
@@ -249,6 +260,8 @@ module memory_control (
           ccif.dwait[0] = 1;
           if (ccif.ramstate == ACCESS) begin
             ccif.dwait[0] = 0;
+            if (ccmemtransfer)
+                ccif.dload[0] = ccif.dstore[1];
           end else if (ccdataready) begin
             ccif.dwait[0] = 0;
             ccif.dload[0] = ccif.dstore[1];
@@ -263,6 +276,8 @@ module memory_control (
           ccif.ramstore = ccif.dstore[0];
           if (ccif.ramstate == ACCESS) begin
             ccif.dwait[0] = 0;
+            if (ccmemtransfer)
+                ccif.dload[0] = ccif.dstore[1];
           end else if (ccdataready) begin
             ccif.dwait[0] = 0;
             ccif.dload[0] = ccif.dstore[1];
@@ -276,11 +291,13 @@ module memory_control (
             ccif.ramaddr = ccif.daddr[1];
             ccif.iwait[1] = 1;
             ccif.dwait[1] = 1;
-            if (ccif.ramstate == ACCESS || ccdataready) begin
+            if (ccif.ramstate == ACCESS) begin
                 ccif.dwait[1] = 0;
+                if (ccmemtransfer)
+                    ccif.dload[1] = ccif.dstore[0];
             end else if (ccdataready) begin
-            ccif.dwait[1] = 0;
-            ccif.dload[1] = ccif.dstore[0];
+                ccif.dwait[1] = 0;
+                ccif.dload[1] = ccif.dstore[0];
           end
         //if data write signal is set
         end else if (ccif.dWEN[1] == 1) begin // && !ccif.dwait[0]
@@ -290,11 +307,13 @@ module memory_control (
             ccif.dwait[1] = 1;
             ccif.ramaddr = ccif.daddr[1];
             ccif.ramstore = ccif.dstore[1];
-            if (ccif.ramstate == ACCESS || ccdataready) begin
+            if (ccif.ramstate == ACCESS) begin
                 ccif.dwait[1] = 0;
+                if (ccmemtransfer)
+                    ccif.dload[1] = ccif.dstore[0];
             end else if (ccdataready) begin
-            ccif.dwait[1] = 0;
-            ccif.dload[1] = ccif.dstore[0];
+                ccif.dwait[1] = 0;
+                ccif.dload[1] = ccif.dstore[0];
           end
         end
     end else if (!active_core) begin
