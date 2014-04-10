@@ -90,6 +90,9 @@ module dcache(
                     && dcif.dmemWEN) begin //S -> M
             ccif.cctrans[CPUID] = 1;
             ccif.ccwrite[CPUID] = 1;
+        end else begin
+            ccif.cctrans[CPUID] = 0;
+            ccif.ccwrite[CPUID] = 0;
         end
     end
 
@@ -184,6 +187,12 @@ module dcache(
         end else if (cstate == WRITECC_ONE) begin
             nstate = WRITECC_TWO;
         end else if (cstate == WRITECC_TWO) begin
+            if (ccif.ccinv[CPUID]) begin
+                if (snoop_hit_1)
+                    cacheblock_one_next[snoop_addr.idx].valid = 0;
+                else if (snoop_hit_2)
+                     cacheblock_two_next[snoop_addr.idx].valid = 0;
+            end
             nstate = IDLE;
         end else if(cstate == WRITEBACK_ONE && !ccif.dwait[CPUID])
             nstate = WRITEBACK_TWO;
