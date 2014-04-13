@@ -63,10 +63,10 @@ module dcache(
     assign snoop_addr = dcachef_t'(ccif.ccsnoopaddr[CPUID]);
 
     assign snoop_hit_1 = cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag
-                        && cacheblock_one[snoop_addr.idx].valid;
+                        && cacheblock_one_next[snoop_addr.idx].valid;
 
     assign snoop_hit_2 = cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag
-                        && cacheblock_two[snoop_addr.idx].valid;
+                        && cacheblock_two_next[snoop_addr.idx].valid;
 
     typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
     states cstate, nstate;
@@ -195,9 +195,9 @@ module dcache(
             nstate = IDLE;
 
             if (ccif.ccinv[CPUID]) begin
-                if (snoop_hit_1)
+                if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
                     cacheblock_one_next[snoop_addr.idx].valid = 0;
-                else if (snoop_hit_2)
+                else if (cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
                      cacheblock_two_next[snoop_addr.idx].valid = 0;
             end
         end else if(cstate == WRITEBACK_ONE && !ccif.dwait[CPUID])
