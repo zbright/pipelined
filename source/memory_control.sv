@@ -84,7 +84,7 @@ module memory_control (
         nstate = SNOOP; //This needs to be changed for eviction
     end else if (cstate == EVICTION) begin
     end else if (cstate == SNOOP) begin
-        next_active = 0;
+        next_active = 1;
         if (!active_core) begin
             //stuff for core 0 goes here
             nstate = ccif.dstore[1] == 0 ? MISS_0 :
@@ -110,7 +110,7 @@ module memory_control (
                 nstate = WRITE_BACK_1;
         end
     end else if (cstate == WRITE_BACK_1) begin
-        next_active = 1;
+        next_active = 0;
         if (!active_core) begin
             if (ccif.dwait[0] == 0) begin
                 ccmemtransfer_next = 1;
@@ -132,7 +132,7 @@ module memory_control (
             nstate = FETCH_CACHE_1;
         end
     end else if (cstate == FETCH_CACHE_1) begin
-        next_active = 1;
+        next_active = 0;
         if (!active_core) begin
             nstate = IDLE;
         end else begin
@@ -148,7 +148,7 @@ module memory_control (
                 nstate = MISS_1;
         end
     end else if(cstate == MISS_1) begin
-        next_active = 1;
+        next_active = 0;
         if (!active_core) begin
             if(ccif.dwait[0] == 0)
                 nstate = IDLE;
@@ -258,13 +258,14 @@ module memory_control (
           ccif.ramaddr = ccif.daddr[0];
           ccif.iwait[0] = 1;
           ccif.dwait[0] = 1;
-          if (ccif.ramstate == ACCESS) begin
-            ccif.dwait[0] = 0;
+
+          if (ccdataready) begin
+              ccif.dload[0] = ccif.dstore[1];
+              ccif.dwait[0] = 0;
+          end else if (ccif.ramstate == ACCESS) begin
             if (ccmemtransfer)
                 ccif.dload[0] = ccif.dstore[1];
-          end else if (ccdataready) begin
             ccif.dwait[0] = 0;
-            ccif.dload[0] = ccif.dstore[1];
           end
         //if data write signal is set
         end else if (ccif.dWEN[0] == 1) begin
@@ -274,13 +275,14 @@ module memory_control (
           ccif.dwait[0] = 1;
           ccif.ramaddr = ccif.daddr[0];
           ccif.ramstore = ccif.dstore[0];
-          if (ccif.ramstate == ACCESS) begin
+
+          if (ccdataready) begin
+            ccif.dload[0] = ccif.dstore[1];
             ccif.dwait[0] = 0;
+          end else if (ccif.ramstate == ACCESS) begin
             if (ccmemtransfer)
                 ccif.dload[0] = ccif.dstore[1];
-          end else if (ccdataready) begin
             ccif.dwait[0] = 0;
-            ccif.dload[0] = ccif.dstore[1];
           end
         end
     end else if(active_core && active) begin
@@ -291,14 +293,15 @@ module memory_control (
             ccif.ramaddr = ccif.daddr[1];
             ccif.iwait[1] = 1;
             ccif.dwait[1] = 1;
-            if (ccif.ramstate == ACCESS) begin
+
+            if (ccdataready) begin
+                ccif.dload[1] = ccif.dstore[0];
                 ccif.dwait[1] = 0;
+            end else if (ccif.ramstate == ACCESS) begin
                 if (ccmemtransfer)
                     ccif.dload[1] = ccif.dstore[0];
-            end else if (ccdataready) begin
                 ccif.dwait[1] = 0;
-                ccif.dload[1] = ccif.dstore[0];
-          end
+            end
         //if data write signal is set
         end else if (ccif.dWEN[1] == 1) begin // && !ccif.dwait[0]
             ccif.ramREN = 0;
@@ -307,14 +310,15 @@ module memory_control (
             ccif.dwait[1] = 1;
             ccif.ramaddr = ccif.daddr[1];
             ccif.ramstore = ccif.dstore[1];
-            if (ccif.ramstate == ACCESS) begin
+
+            if (ccdataready) begin
+                ccif.dload[1] = ccif.dstore[0];
                 ccif.dwait[1] = 0;
+            end else if (ccif.ramstate == ACCESS) begin
                 if (ccmemtransfer)
                     ccif.dload[1] = ccif.dstore[0];
-            end else if (ccdataready) begin
                 ccif.dwait[1] = 0;
-                ccif.dload[1] = ccif.dstore[0];
-          end
+            end
         end
     end else if (!active_core) begin
         // $display ("POOP3");

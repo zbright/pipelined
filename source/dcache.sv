@@ -184,7 +184,7 @@ module dcache(
                 else
                     nstate = FETCH_ONE;
             end
-        end else if (cstate == WRITECC_ONE) begin
+        end else if (cstate == WRITECC_ONE && !ccif.dwait[CPUID]) begin
             nstate = WRITECC_TWO;
         end else if (cstate == WRITECC_TWO) begin
             if (ccif.ccinv[CPUID]) begin
@@ -194,7 +194,7 @@ module dcache(
                      cacheblock_two_next[snoop_addr.idx].valid = 0;
             end
             nstate = IDLE;
-        end else if(cstate == WRITEBACK_ONE && !ccif.dwait[CPUID])
+        end else if(cstate == WRITEBACK_ONE && !ccif.dwait[!CPUID])
             nstate = WRITEBACK_TWO;
         else if(cstate == WRITEBACK_TWO && !ccif.dwait[CPUID])
             nstate = FETCH_ONE;

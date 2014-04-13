@@ -120,15 +120,21 @@ add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cstat
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nstate
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/active_core
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/next_active_core
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccdataready
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccdataready_next
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer_next
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/active
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/next_active
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/cstate
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/nstate
 TreeUpdate [SetDefaultTree]
 quietly WaveActivateNextPane
 add wave -noupdate /system_tb/DUT/CPU/CLK
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {600000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {443251 ps} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 150
+configure wave -namecolwidth 179
 configure wave -valuecolwidth 106
 configure wave -justifyvalue left
 configure wave -signalnamewidth 1
@@ -142,4 +148,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {571207 ps} {612983 ps}
+WaveRestoreZoom {433436 ps} {593242 ps}
