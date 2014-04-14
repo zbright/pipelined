@@ -194,11 +194,16 @@ module dcache(
         end else if (cstate == WRITECC_TWO && !ccif.dwait[!CPUID]) begin
             nstate = IDLE;
 
-            if (ccif.ccinv[CPUID]) begin
-                if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+            if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag) begin
+                cacheblock_one_next[snoop_addr.idx].dirty = 0;
+
+                if(ccif.ccinv[CPUID])
                     cacheblock_one_next[snoop_addr.idx].valid = 0;
-                else if (cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
-                     cacheblock_two_next[snoop_addr.idx].valid = 0;
+            end else if (cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag) begin
+                cacheblock_two_next[snoop_addr.idx].dirty = 0;
+
+                if(ccif.ccinv[CPUID])
+                    cacheblock_two_next[snoop_addr.idx].valid = 0;
             end
         end else if(cstate == WRITEBACK_ONE && !ccif.dwait[CPUID])
             nstate = WRITEBACK_TWO;
