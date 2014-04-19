@@ -14,6 +14,7 @@
 
 module memory_control (
   input CLK, nRST,
+  input logic halted0, halted1, flushed0, flushed1, evict0, evict1,
   cache_control_if.cc ccif
 );
   // type import
@@ -30,7 +31,7 @@ module memory_control (
   logic ccmemtransfer;
   logic ccmemtransfer_next;
 
-  typedef enum {IDLE, ARBITER, SNOOP, WRITE_BACK_0, WRITE_BACK_1, FETCH_CACHE_0, FETCH_CACHE_1, MISS_0, MISS_1, EVICTION} states;
+  typedef enum {IDLE, ARBITER, SNOOP, WRITE_BACK_0, WRITE_BACK_1, FETCH_CACHE_0, FETCH_CACHE_1, MISS_0, MISS_1, EVICTION, HALT} states;
   states cstate, nstate;
 
   always_comb
@@ -67,13 +68,24 @@ module memory_control (
 
     if (cstate == IDLE) begin
         // $display ("POOP5");
-        next_active = 0;
-        if (ccif.dREN[0] || ccif.dREN[1] || ccif.dWEN[0] || ccif.dWEN[1])
-            nstate = ARBITER;
-        else if (ccif.iREN[0])
+        if(halted0 && !flushed0) begin
+            nstate = HALT;
+            next_active = 1;
             next_active_core = 0;
-        else if (ccif.iREN[1])
+        end else if(halted1 && !flushed1) begin
+            next_active = 1;
+            nstate = HALT;
             next_active_core = 1;
+        end
+        else begin
+            next_active = 0;
+            if (ccif.dREN[0] || ccif.dREN[1] || ccif.dWEN[0] || ccif.dWEN[1])
+                nstate = ARBITER;
+            else if (ccif.iREN[0])
+                next_active_core = 0;
+            else if (ccif.iREN[1])
+                next_active_core = 1;
+        end
     end else if (cstate == ARBITER) begin
         next_active = 0;
         if (ccif.dWEN[0] || ccif.dREN[0])
@@ -82,16 +94,17 @@ module memory_control (
             next_active_core = 1;
 
         nstate = SNOOP; //This needs to be changed for eviction
-    end else if (cstate == EVICTION) begin
     end else if (cstate == SNOOP) begin
         next_active = 1;
         if (!active_core) begin
             //stuff for core 0 goes here
-            nstate = ccif.dstore[1] == 0 ? MISS_0 :
+            nstate = evict0 ? EVICTION :
+                     ccif.dstore[1] == 0 || halted1 ? MISS_0 :
                      ccif.cctrans[1] && ccif.ccwrite[1] ? WRITE_BACK_0 : FETCH_CACHE_0;
         end else begin
             //stuff for core 1 goes here
-            nstate = ccif.dstore[0] == 0 ? MISS_0 :
+            nstate = evict1 ? EVICTION :
+                     ccif.dstore[0] == 0 || halted0 ? MISS_0 :
                      ccif.cctrans[0] && ccif.ccwrite[0] ? WRITE_BACK_0 : FETCH_CACHE_0;
         end
 
@@ -100,6 +113,13 @@ module memory_control (
         else if (nstate == WRITE_BACK_0)
             ccmemtransfer_next = 1;
 
+    end else if (cstate == EVICTION) begin
+        if(active_core && !evict1)
+            nstate = ccif.dstore[0] == 0 || halted0 ? MISS_0 :
+                     ccif.cctrans[0] && ccif.ccwrite[0] ? WRITE_BACK_0 : FETCH_CACHE_0;
+        else if(!active_core && !evict0)
+            nstate = ccif.dstore[1] == 0 || halted1 ? MISS_0 :
+                     ccif.cctrans[1] && ccif.ccwrite[1] ? WRITE_BACK_0 : FETCH_CACHE_0;
     end else if (cstate == WRITE_BACK_0) begin
         next_active = 1;
         if (!active_core) begin
@@ -156,6 +176,18 @@ module memory_control (
             if (ccif.dwait[1] == 0)
                 nstate = IDLE;
         end
+    end else if(cstate == HALT) begin
+        if (!active_core) begin
+            if(flushed0) begin
+                nstate = IDLE;
+                next_active = 0;
+            end
+        end else begin
+            if(flushed1) begin
+                nstate = IDLE;
+                next_active = 0;
+            end
+        end
     end
   end
 
@@ -171,16 +203,16 @@ module memory_control (
       end
       ARBITER: begin
       end
-      EVICTION: begin
-      end
       SNOOP: begin
-        if (!active_core) begin
+        if (!active_core && !halted1) begin
             ccif.ccsnoopaddr[1] = ccif.daddr[0];
             ccif.ccwait[1] = 1;
-        end else begin
+        end else if(!halted0) begin
             ccif.ccsnoopaddr[0] = ccif.daddr[1];
             ccif.ccwait[0] = 1;
         end
+      end
+      EVICTION: begin
       end
       WRITE_BACK_0: begin
         if (!active_core) begin

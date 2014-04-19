@@ -15,6 +15,7 @@
 
 module caches (
   input logic CLK, nRST,
+  output logic halted, flushed, evict,
   datapath_cache_if dcif,
   cache_control_if ccif
 );
@@ -28,7 +29,7 @@ module caches (
   // icache
   icache #(.CPUID(CPUID))  ICACHE(CLK, nRST, dcif.icache, ccif.icache);
   // dcache
-  dcache #(.CPUID(CPUID))  DCACHE(CLK, nRST, dcif.dcache, ccif.dcache);
+  dcache #(.CPUID(CPUID))  DCACHE(CLK, nRST, halted, flushed, evict, dcif.dcache, ccif.dcache);
 
   // single cycle instr saver (for memory ops)
   always_ff @(posedge CLK)

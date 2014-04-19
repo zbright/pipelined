@@ -4,7 +4,7 @@
   halt  # that's all
 
   org 0x200
-  ori $2, $zero, 1280 
+  ori $2, $zero, 0x500 
   ori $4, $zero, 0x200
   sw  $2, 0($4)
 

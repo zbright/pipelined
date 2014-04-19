@@ -9,6 +9,7 @@
 module dcache(
             input logic CLK,
             input logic nRST,
+            output logic halted, flushed, evict,
             datapath_cache_if.dcache dcif,
             cache_control_if.dcache ccif
             );
@@ -85,6 +86,9 @@ module dcache(
             end else if (dcif.dmemWEN) begin //I -> M
                 ccif.cctrans[CPUID] = 1;
                 ccif.ccwrite[CPUID] = 1;
+            end else begin
+                ccif.cctrans[CPUID] = 0;
+                ccif.ccwrite[CPUID] = 0;
             end
         end else if (((match_one && !cacheblock_one_next[cacheaddress.idx].dirty)
                     || (match_two && !cacheblock_two_next[cacheaddress.idx].dirty))
@@ -102,10 +106,10 @@ module dcache(
     begin
         if (!nRST) begin
             cstate <= IDLE;
-            dcif.flushed = 0;
+            // dcif.flushed = 0;
         end else begin
             cstate <= nstate;
-            dcif.flushed = next_flush;
+            // dcif.flushed = next_flush;
         end
 
         if(!nRST)
@@ -137,26 +141,28 @@ module dcache(
     //next state logic
     always_comb
     begin
-        next_flush = dcif.flushed;
+        // next_flush = dcif.flushed;
         //dcif.flushed = 0;
         dcif.dhit = 0;
         dcif.dmemload = 0;
         nstate = cstate;
         next_hit_count = hit_count;
         flag_next = flag;
+        evict = 0;
 
         cacheblock_two_next = cacheblock_two;
         cacheblock_one_next = cacheblock_one;
         temp_fetch_store_next = temp_fetch_store;
 
-        if (cstate == IDLE && i == 0) begin
-            if (ccif.ccwait[CPUID]) begin
-                if (snoop_hit_1 || snoop_hit_2) begin
-                    nstate = WRITECC_ONE;
-                end
-            end else if (dcif.halt)
-                next_flush = 1;
-                // nstate = HALT;
+
+        if (ccif.ccwait[CPUID]) begin
+            if (snoop_hit_1 || snoop_hit_2) begin
+                nstate = WRITECC_ONE;
+            end
+        end if (cstate == IDLE && i == 0) begin
+            if (dcif.halt)
+                // next_flush = 1;
+                nstate = HALT;
             else if (dcif.dmemREN || dcif.dmemWEN) begin
                 if(temp_fetch_store != 0 || match_one || match_two) begin
                     if(temp_fetch_store != 0) begin
@@ -184,13 +190,15 @@ module dcache(
 
                         dcif.dhit = 1;
                     end
-                end else if((cacheblock_one[cacheaddress.idx].valid && cacheblock_one[cacheaddress.idx].dirty) || (cacheblock_two[cacheaddress.idx].valid && cacheblock_two[cacheaddress.idx].dirty))
+                end else if((cacheblock_one[cacheaddress.idx].valid && cacheblock_one[cacheaddress.idx].dirty) || (cacheblock_two[cacheaddress.idx].valid && cacheblock_two[cacheaddress.idx].dirty)) begin
                     nstate = WRITEBACK_ONE;
-                else
+                    evict = 1;
+                end else
                     nstate = FETCH_ONE;
             end
         end else if (cstate == WRITECC_ONE && !ccif.dwait[!CPUID]) begin
             nstate = WRITECC_TWO;
+            evict = 1;
         end else if (cstate == WRITECC_TWO && !ccif.dwait[!CPUID]) begin
             nstate = IDLE;
 
@@ -286,12 +294,13 @@ module dcache(
     //output logic
     always_comb
     begin
-        // dcif.flushed = 0;
+        dcif.flushed = 0;
         ccif.dREN[CPUID] = 0;
         ccif.dWEN[CPUID] = 0;
         ccif.daddr[CPUID] = 0;
         ccif.dstore[CPUID] = 0;
-
+        halted = 0;
+        flushed = 0;
 
         casez(cstate)
             IDLE: begin
@@ -330,6 +339,7 @@ module dcache(
             end
             HALT: begin
                 ccif.dWEN[CPUID] = 1;
+                halted = 1;
                 if(i < 6'b001000) begin //cacheblock 1 word 1
                     if(cacheblock_one[i].valid && cacheblock_one[i].dirty) begin
                         ccif.dstore[CPUID] = cacheblock_one[i].data_one;
@@ -357,9 +367,12 @@ module dcache(
                 // end else if(i == 6'b100000) begin
                 //     ccif.dstore[CPUID] = hit_count;
                 //     ccif.daddr[CPUID] = 32'b000000000000000011000100000000;
-                // end else
-                //        dcif.flushed = 1;
+                end else begin
+                       dcif.flushed = 1;
+                       flushed = 1;
+                       ccif.dWEN[CPUID] = 0;
                 end
+                // end
             end
         endcase
     end

@@ -57,11 +57,11 @@ add wave -noupdate -group {iCache 0} -expand /system_tb/DUT/CPU/CM0/ICACHE/cache
 add wave -noupdate -group {iCache 0} /system_tb/DUT/CPU/CM0/ICACHE/match
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/CLK
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/nRST
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/halted
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/flushed
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheaddress
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_two
-add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one_next
-add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_two_next
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/temp_fetch_store
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/temp_fetch_store_next
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/match_one
@@ -76,6 +76,8 @@ add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/snoop
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/snoop_addr
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cstate
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/nstate
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one_next
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_two_next
 add wave -noupdate -group {DCIF 1} /system_tb/DUT/CPU/dcif1/halt
 add wave -noupdate -group {DCIF 1} /system_tb/DUT/CPU/dcif1/ihit
 add wave -noupdate -group {DCIF 1} /system_tb/DUT/CPU/dcif1/imemREN
@@ -99,6 +101,8 @@ add wave -noupdate -group {iCache 1} -expand /system_tb/DUT/CPU/CM1/ICACHE/cache
 add wave -noupdate -group {iCache 1} /system_tb/DUT/CPU/CM1/ICACHE/match
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/CLK
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nRST
+add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/halted
+add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/flushed
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheaddress
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_one
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_two
@@ -120,6 +124,10 @@ add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cstat
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nstate
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/active_core
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/next_active_core
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/halted1
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/halted0
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/flushed1
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/flushed0
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccdataready
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccdataready_next
 add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer
@@ -132,7 +140,7 @@ TreeUpdate [SetDefaultTree]
 quietly WaveActivateNextPane
 add wave -noupdate /system_tb/DUT/CPU/CLK
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {443251 ps} 0}
+WaveRestoreCursors {{Cursor 1} {1919976 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 179
 configure wave -valuecolwidth 106
@@ -148,4 +156,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {433436 ps} {593242 ps}
+WaveRestoreZoom {1857843 ps} {1916592 ps}
