@@ -47,6 +47,7 @@ module datapath (
 	logic 			branch;
 	logic 			dmemren;
 	logic 			dmemwen;
+	logic			datomic;
 	//signals for ALU
 	logic [31:0]	alu_input_two;
 	logic [3:0] 	alu_opcode;
@@ -87,6 +88,7 @@ module datapath (
 	logic [31:0] 	imemload_id_ex_output;
 	logic [31:0] 	uppersixteen_id_ex_output;
 	logic [31:0] 	signzerovalue_id_ex_output;
+	logic			datomic_id_ex_output;
 	//exmem signals
 	logic [1:0]  	memtoreg_ex_mem_output;
 	logic 	 		regwrite_ex_mem_output;
@@ -104,6 +106,7 @@ module datapath (
 	logic [31:0] 	upper16_ex_mem_output;
 	logic [31:0] 	signzero_ex_mem_output;
 	logic [31:0] 	imemload_ex_mem_output;
+	logic 			datomic_ex_mem_output;
 	//memwb signals
 	logic [1:0]  	memtoreg_mem_wb_output;
 	logic 	 		regwrite_mem_wb_output;
@@ -160,6 +163,7 @@ module datapath (
 	assign dpif.dmemWEN = dmemwen_ex_mem_output;
 	assign dpif.dmemREN = dmemren_ex_mem_output;
 	assign dpif.imemaddr = current_pc_count;
+	assign dpif.datomic = datomic_ex_mem_output;
 
 	always_ff @(posedge CLK, negedge nRST)
 	begin
@@ -202,6 +206,7 @@ module datapath (
 		.request_dmemREN(dmemren),
 		.request_dmemWEN(dmemwen),
 		.imemload(imemload_if_id_output),
+		.datomic(datomic),
 		.halt_out(halt_id_ex_input)
 		);
 
@@ -228,6 +233,7 @@ module datapath (
 		.zero_flag(zeroflag_ex_mem_output),
 		.imemload(imemload_ex_mem_output),
 		.id_ex_dmemren(dmemren_id_ex_output),
+		.id_ex_imemload(imemload_id_ex_output),
 		.id_ex_rt(imemload_id_ex_output[20:16]),
 		.if_id_rs(imemload_if_id_output[25:21]),
 		.if_id_rt(imemload_if_id_output[20:16]),
@@ -244,14 +250,14 @@ module datapath (
 	//instantiation of forwarding unit
 
 	forward FORWADUNIT(
-		.branchdest_ex_mem_output(branchdest_ex_mem_output),
-		.branchdest_mem_wb_output(branchdest_mem_wb_output),
-		.imemload_id_ex_output(imemload_id_ex_output),
-		.imemload_ex_mem_output(imemload_ex_mem_output),
+		.branchdest_ex_mem(branchdest_ex_mem_output),
+		.branchdest_mem_wb(branchdest_mem_wb_output),
+		.imemload_id_ex(imemload_id_ex_output),
+		.imemload_ex_mem(imemload_ex_mem_output),
 		.dmemWEN(dmemwen_ex_mem_output),
-		.regwrite_ex_mem_output(regwrite_ex_mem_output),
-		.regwrite_mem_wb_output(regwrite_mem_wb_output),
-		.memtoreg_ex_mem_output(memtoreg_ex_mem_output),
+		.regwrite_ex_mem(regwrite_ex_mem_output),
+		.regwrite_mem_wb(regwrite_mem_wb_output),
+		.memtoreg_ex_mem(memtoreg_ex_mem_output),
 		.forwarda(forwarda),
 		.forwardb(forwardb)
 		);
@@ -294,6 +300,7 @@ module datapath (
 		.wen(id_ex_wen),
 		.flush(id_ex_flush),
 		.dhit(dpif.dhit),
+		.datomic(datomic),
 		.ALUsrc_id_ex_output(alusource_id_ex_output),
 		.memtoreg_id_ex_output(memtoreg_id_ex_output),
 		.ALUop_id_ex_output(aluop_id_ex_output),
@@ -309,6 +316,7 @@ module datapath (
 		.rdat_two_id_ex_output(rdat_two_id_ex_output),
 		.imemload_id_ex_output(imemload_id_ex_output),
 		.uppersixteen_id_ex_output(uppersixteen_id_ex_output),
+		.datomic_id_ex_output(datomic_id_ex_output),
 		.signzerovalue_id_ex_output(signzerovalue_id_ex_output)
 		);
 
@@ -332,6 +340,7 @@ module datapath (
 		.upper16_in(uppersixteen_id_ex_output),
 		.signZero_in(signzerovalue_id_ex_output),
 		.iMemLoad_in(imemload_id_ex_output),
+		.datomic_in(datomic_id_ex_output),
 		.dhit(dpif.dhit),
 		.flush(ex_mem_flush),
 		.wen(ex_mem_wen),
@@ -350,6 +359,7 @@ module datapath (
 		.branchDest(branchdest_ex_mem_output),
 		.upper16(upper16_ex_mem_output),
 		.signZero(signzero_ex_mem_output),
+		.datomic(datomic_ex_mem_output),
 		.iMemLoad(imemload_ex_mem_output)
 		);
 

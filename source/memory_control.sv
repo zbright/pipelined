@@ -81,16 +81,16 @@ module memory_control (
             next_active = 0;
             if (ccif.dREN[0] || ccif.dREN[1] || ccif.dWEN[0] || ccif.dWEN[1])
                 nstate = ARBITER;
-            else if (ccif.iREN[0])
+            else if (ccif.iREN[0] && !halted0)
                 next_active_core = 0;
-            else if (ccif.iREN[1])
+            else if (ccif.iREN[1] && !halted1)
                 next_active_core = 1;
         end
     end else if (cstate == ARBITER) begin
         next_active = 0;
-        if (ccif.dWEN[0] || ccif.dREN[0])
+        if ((ccif.dWEN[0] || ccif.dREN[0]) && !halted0)
             next_active_core = 0;
-        else if (ccif.dWEN[1] || ccif.dREN[1])
+        else if ((ccif.dWEN[1] || ccif.dREN[1]) && !halted1)
             next_active_core = 1;
 
         nstate = SNOOP; //This needs to be changed for eviction
@@ -133,12 +133,12 @@ module memory_control (
         next_active = 0;
         if (!active_core) begin
             if (ccif.dwait[0] == 0) begin
-                ccmemtransfer_next = 1;
+                ccmemtransfer_next = 0;
                 nstate = IDLE;
             end
         end else begin
             if (ccif.dwait[1] == 0) begin
-                ccmemtransfer_next = 1;
+                ccmemtransfer_next = 0;
                 nstate = IDLE;
             end
         end
@@ -154,8 +154,10 @@ module memory_control (
     end else if (cstate == FETCH_CACHE_1) begin
         next_active = 0;
         if (!active_core) begin
+            ccdataready_next = 0;
             nstate = IDLE;
         end else begin
+            ccdataready_next = 0;
             nstate = IDLE;
         end
     end else if(cstate == MISS_0) begin
@@ -200,6 +202,10 @@ module memory_control (
 
     casez(cstate)
       IDLE: begin
+        if(ccif.daddr[0])
+          ccif.ccsnoopaddr[1] = ccif.daddr[0];
+        else if(ccif.daddr[1])
+          ccif.ccsnoopaddr[0] = ccif.daddr[1];
       end
       ARBITER: begin
       end
@@ -207,7 +213,7 @@ module memory_control (
         if (!active_core && !halted1) begin
             ccif.ccsnoopaddr[1] = ccif.daddr[0];
             ccif.ccwait[1] = 1;
-        end else if(!halted0) begin
+        end else if(active_core && !halted0) begin
             ccif.ccsnoopaddr[0] = ccif.daddr[1];
             ccif.ccwait[0] = 1;
         end

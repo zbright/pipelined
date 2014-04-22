@@ -52,6 +52,13 @@ module dcache(
     logic snoop_hit_2;
     dcachef_t snoop_addr;
 
+    //ll and sc signals
+    logic [31:0] linkregister;
+    logic [31:0] next_linkregister;
+    logic link_valid;
+    logic next_link_valid;
+    logic snoop_link_hit;
+
     //assign statements
     assign cacheaddress = dcachef_t'(dcif.dmemaddr);
 
@@ -69,8 +76,30 @@ module dcache(
     assign snoop_hit_2 = cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag
                         && cacheblock_two_next[snoop_addr.idx].valid;
 
+
+    assign snoop_link_hit = (snoop_addr != 0 && {snoop_addr.tag, snoop_addr.idx, 1'b1, snoop_addr.bytoff} == linkregister)
+                            || (snoop_addr != 0 && {snoop_addr.tag, snoop_addr.idx, 1'b0, snoop_addr.bytoff} == linkregister)
+                            || (cacheaddress != 0 && dcif.dmemWEN && {cacheaddress.tag, cacheaddress.idx, 1'b1, cacheaddress.bytoff} == linkregister)
+                            || (cacheaddress != 0 && dcif.dmemWEN && {cacheaddress.tag, cacheaddress.idx, 1'b0, cacheaddress.bytoff} == linkregister);
+
     typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
     states cstate, nstate;
+
+    //ll and sc
+    always_comb
+    begin
+        next_linkregister = linkregister;
+        next_link_valid = link_valid;
+
+        if (dcif.datomic == 1 && dcif.dmemREN == 1) begin
+            next_linkregister = dcif.dmemaddr;
+            next_link_valid = 1;
+        end
+
+        if(snoop_link_hit)
+            next_link_valid = 0;
+    end
+
 
     //Coherency shit
     always_comb
@@ -90,8 +119,8 @@ module dcache(
                 ccif.cctrans[CPUID] = 0;
                 ccif.ccwrite[CPUID] = 0;
             end
-        end else if (((match_one && !cacheblock_one_next[cacheaddress.idx].dirty)
-                    || (match_two && !cacheblock_two_next[cacheaddress.idx].dirty))
+        end else if (((match_one && cacheblock_one_next[cacheaddress.idx].dirty)
+                    || (match_two && cacheblock_two_next[cacheaddress.idx].dirty))
                     && dcif.dmemWEN) begin //S -> M
             ccif.cctrans[CPUID] = 1;
             ccif.ccwrite[CPUID] = 1;
@@ -106,15 +135,19 @@ module dcache(
     begin
         if (!nRST) begin
             cstate <= IDLE;
+            linkregister <= 0;
+            link_valid <= 0;
             // dcif.flushed = 0;
         end else begin
             cstate <= nstate;
+            linkregister <= next_linkregister;
+            link_valid <= next_link_valid;
             // dcif.flushed = next_flush;
         end
 
         if(!nRST)
             i <= 0;
-        else if(cstate == HALT && (ccif.dwait[CPUID] != ccif.dWEN[CPUID]))
+        else if(cstate == HALT && (ccif.dwait[CPUID] != ccif.dWEN[CPUID]) && i < 32)
             i <= i + 1'b1;
 
     end
@@ -160,6 +193,14 @@ module dcache(
                 nstate = WRITECC_ONE;
             end
         end if (cstate == IDLE && i == 0) begin
+            if(ccif.ccsnoopaddr[CPUID] != 0 && ccif.ccinv[CPUID]) begin
+                if(cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+                    cacheblock_one_next[snoop_addr.idx].valid = 0;
+                else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
+                    cacheblock_two_next[snoop_addr.idx].valid = 0;
+            end
+
+
             if (dcif.halt)
                 // next_flush = 1;
                 nstate = HALT;
@@ -176,9 +217,16 @@ module dcache(
                     end else
                         next_hit_count = hit_count + 1'b1;
 
-                    if(dcif.dmemWEN)
-                        nstate = OVERWRITE;
-                    else begin
+                    if(dcif.dmemWEN) begin
+                        if (!dcif.datomic || (dcif.datomic && (dcif.dmemaddr == linkregister && link_valid))) begin
+                            nstate = OVERWRITE;
+                            dcif.dmemload = 1;
+                        end else begin
+                            if(dcif.datomic)
+                                dcif.dhit = 1;
+                            nstate = IDLE;
+                        end
+                    end else begin
                         flag_next = 1;
                         temp_fetch_store_next = 0;
 
@@ -232,6 +280,7 @@ module dcache(
         end else if(cstate == OVERWRITE) begin
             temp_fetch_store_next = 0;
             flag_next = 1;
+            dcif.dmemload = 1;
 
             if(match_one) begin
                 if (cacheaddress.blkoff) begin
@@ -330,6 +379,7 @@ module dcache(
                 writeBack(3'b100, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
             end
             OVERWRITE: begin
+                ccif.daddr[CPUID] = cacheaddress;
             end
             FETCH_ONE: begin
                 fetch(1'b0, ccif.dREN[CPUID], ccif.daddr[CPUID]);

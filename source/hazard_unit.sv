@@ -9,6 +9,7 @@ module hazard_unit (
     input logic         branch_flag,
     input logic         zero_flag,
     input logic [31:0]  imemload,
+    input logic [31:0]  id_ex_imemload,
     input logic         id_ex_dmemren,
     input logic [4:0]   id_ex_rt,
     input logic [4:0]   if_id_rs,
@@ -38,7 +39,7 @@ assign jump_flush = (imemload[31:26] == 6'b000010 || imemload[31:26] == 6'b00001
 
 assign flush = branch_flush || jump_flush;
 
-assign use_after_load = id_ex_dmemren && ((id_ex_rt == if_id_rt) || (id_ex_rt == if_id_rs));
+assign use_after_load = (id_ex_dmemren || id_ex_imemload[31:26] == 6'b111000) && ((id_ex_rt == if_id_rt) || (id_ex_rt == if_id_rs));
 
 assign pc_wen = (ihit || flush) && ~halt && ~data_stall && ~use_after_load;
 

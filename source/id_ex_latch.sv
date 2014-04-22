@@ -23,6 +23,8 @@ module id_ex_latch (
 	input logic 	    wen,
 	input logic 		flush,
 	input logic 		dhit,
+	input logic			datomic,
+	output logic		datomic_id_ex_output,
 	output logic [1:0]  ALUsrc_id_ex_output,
 	output logic [1:0]  memtoreg_id_ex_output,
 	output logic [3:0]  ALUop_id_ex_output,
@@ -58,6 +60,7 @@ module id_ex_latch (
 	logic [31:0] temp_imemload_output;
 	logic [31:0] temp_uppersixteen_output;
 	logic [31:0] temp_signzerovalue_output;
+	logic		 temp_datomic_output;
 
 
 	assign ALUsrc_id_ex_output = temp_ALUsrc_output;
@@ -76,6 +79,7 @@ module id_ex_latch (
 	assign imemload_id_ex_output = temp_imemload_output;
 	assign uppersixteen_id_ex_output = temp_uppersixteen_output;
 	assign signzerovalue_id_ex_output = temp_signzerovalue_output;
+	assign datomic_id_ex_output = temp_datomic_output;
 
 	always_ff @(posedge CLK, negedge nRST)
 		begin
@@ -96,6 +100,7 @@ module id_ex_latch (
 				temp_imemload_output <= 0;
 				temp_uppersixteen_output <= 0;
 				temp_signzerovalue_output <= 0;
+				temp_datomic_output <= 0;
 			end else if(wen)
 			begin
 				if(flush) begin
@@ -115,7 +120,9 @@ module id_ex_latch (
 					temp_imemload_output <= 0;
 					temp_uppersixteen_output <= 0;
 					temp_signzerovalue_output <= 0;
+					temp_datomic_output <= 0;
 				end else begin
+					temp_datomic_output <= datomic;
 					temp_ALUsrc_output <= ALUsrc;
 					temp_memtoreg_output <= memtoreg;
 					temp_ALUop_output <= ALUop;

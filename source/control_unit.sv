@@ -5,7 +5,7 @@ module control_unit(
 	output logic [1:0] ALUsrc,
 	output logic [1:0] memtoreg,
 	output logic signzero,
-	output logic [3:0] ALUop,	
+	output logic [3:0] ALUop,
 	output logic regwrite,
 	output logic [1:0] pcselect,
 	output logic [1:0] regdst,
@@ -13,25 +13,26 @@ module control_unit(
 	output logic request_dmemREN,
 	output logic request_dmemWEN,
 	output logic halt_out,
+	output logic datomic,
 	input logic [31:0] imemload
 	//datapath_cache_if.dp dpif
 	);
 
 
 	import cpu_types_pkg::*;
-	
+
 	logic [5:0] opcode;
 	logic [4:0] shiftcode;
 	logic [5:0] functioncode;
 	logic flag;
-	
+
 	assign opcode = imemload[31:26];
 	assign shiftcode = imemload[25:21];
 	assign functioncode = imemload[5:0];
 
 	always_comb
 	begin
-		halt_out = 0;		
+		halt_out = 0;
 		if ((opcode == 6'b111111)&&(functioncode == 6'b111111)) begin
 			halt_out = 1;
 		end
@@ -51,6 +52,7 @@ module control_unit(
 		branch = 0;
 		request_dmemWEN = 0;
 		request_dmemREN = 0;
+		datomic = 0;
 
 		if ((opcode == 6'b000000) && (imemload != 0)) begin
 
@@ -131,7 +133,7 @@ module control_unit(
 					pcselect = 0;
 					regdst = 1;
 				end
-			endcase	
+			endcase
 
 		end else if (imemload != 0) begin
 		//I instruction and J instruction format
@@ -161,11 +163,11 @@ module control_unit(
 				end
 				6'b000101 :begin
 					//BNE
-					ALUop = 4'b0111;	
-					branch = 0;	
+					ALUop = 4'b0111;
+					branch = 0;
 					//not entirely sure
 					signzero = 1;
-					pcselect = 2;			
+					pcselect = 2;
 				end
 				6'b001111 :begin
 					//LUI
@@ -233,11 +235,34 @@ module control_unit(
 					pcselect = 3;
 					regdst = 2;
 				end
-			endcase	
+				6'b110000 :begin
+					//LL
+					request_dmemREN = 1;
+					ALUsrc = 1;
+					memtoreg = 1;
+					signzero = 1;
+					ALUop = 4'b0110;
+					regwrite = 1;
+					pcselect = 0;
+					datomic = 1;
+				end
+				6'b111000 :begin
+					//SC
+					request_dmemWEN = 1;
+					ALUsrc = 1;
+					signzero = 1;
+					ALUop = 4'b0110;
+					pcselect = 0;
+					datomic = 1;
+					memtoreg = 1;
+					regwrite = 1;
+
+				end
+			endcase
 		end
 	end
-		
 
 
-endmodule 
-	
+
+endmodule
+

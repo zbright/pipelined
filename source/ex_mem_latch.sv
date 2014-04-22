@@ -21,6 +21,7 @@ module ex_mem_latch (
 		     input logic [31:0]       signZero_in,
 		     input logic [31:0]       iMemLoad_in,
 		     input logic 	          dhit,
+         input logic            datomic_in,
              input logic              flush,
              input logic              wen,
 		     output logic [1:0]       memtoreg,
@@ -38,6 +39,7 @@ module ex_mem_latch (
 		     output logic [4:0]       branchDest,
 		     output logic [31:0]      upper16,
 		     output logic [31:0]      signZero,
+         output logic             datomic,
 		     output logic [31:0]      iMemLoad
 );
 
@@ -56,7 +58,8 @@ module ex_mem_latch (
     logic [4:0] 			temp_branchDest;
     logic [31:0] 			temp_upper16;
     logic [31:0] 			temp_signZero;
-    logic [31:0]            temp_iMemLoad;
+    logic [31:0]      temp_iMemLoad;
+    logic             temp_datomic;
 
 	always_ff @(posedge CLK, negedge nRST)
 	  begin: WRITE
@@ -75,6 +78,7 @@ module ex_mem_latch (
 			   temp_upper16 <= '0;
 			   temp_signZero <= '0;
 			   temp_iMemLoad <= '0;
+         temp_datomic <= '0;
                temp_dmemREN <= '0;
                temp_dmemWEN <= '0;
             end else if(wen) begin
@@ -95,6 +99,7 @@ module ex_mem_latch (
                    temp_iMemLoad <= '0;
                    temp_dmemREN <= '0;
                    temp_dmemWEN <= '0;
+                   temp_datomic <= '0;
     			end else begin
     			   temp_dmemREN <= dmemREN_in;
     			   temp_dmemWEN <= dmemWEN_in;
@@ -112,6 +117,7 @@ module ex_mem_latch (
     			   temp_upper16 <= upper16_in;
     			   temp_signZero <= signZero_in;
     			   temp_iMemLoad <= iMemLoad_in;
+             temp_datomic <= datomic_in;
     			end
             end
 
@@ -133,6 +139,7 @@ module ex_mem_latch (
    assign upper16 = temp_upper16;
    assign signZero = temp_signZero;
    assign iMemLoad = temp_iMemLoad;
+   assign datomic = temp_datomic;
 
 endmodule
 
