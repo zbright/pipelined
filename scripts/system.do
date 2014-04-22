@@ -59,13 +59,15 @@ add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/CLK
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/nRST
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/halted
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/flushed
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/next_evict
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/evict
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/linkregister
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/next_linkregister
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/link_valid
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/next_link_valid
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/snoop_link_hit
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheaddress
-add wave -noupdate -expand -group {dcache 0} -subitemconfig {{/system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one[4]} -expand} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_two
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/temp_fetch_store
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/temp_fetch_store_next
@@ -81,7 +83,7 @@ add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/snoop
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/snoop_addr
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cstate
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/nstate
-add wave -noupdate -expand -group {dcache 0} -expand /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one_next
+add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_one_next
 add wave -noupdate -expand -group {dcache 0} /system_tb/DUT/CPU/CM0/DCACHE/cacheblock_two_next
 add wave -noupdate -group {DCIF 1} /system_tb/DUT/CPU/dcif1/halt
 add wave -noupdate -group {DCIF 1} /system_tb/DUT/CPU/dcif1/ihit
@@ -108,13 +110,15 @@ add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/CLK
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nRST
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/halted
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/flushed
+add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/next_evict
+add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/evict
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/linkregister
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/next_linkregister
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/link_valid
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/next_link_valid
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/snoop_link_hit
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheaddress
-add wave -noupdate -expand -group {dcache 1} -expand -subitemconfig {{/system_tb/DUT/CPU/CM1/DCACHE/cacheblock_one[4]} -expand} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_one
+add wave -noupdate -expand -group {dcache 1} -subitemconfig {{/system_tb/DUT/CPU/CM1/DCACHE/cacheblock_one[4]} -expand} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_one
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_two
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_one_next
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cacheblock_two_next
@@ -129,23 +133,25 @@ add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/flag
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/flag_next
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/snoop_hit_2
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/snoop_hit_1
-add wave -noupdate -expand -group {dcache 1} -expand /system_tb/DUT/CPU/CM1/DCACHE/snoop_addr
+add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/snoop_addr
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/cstate
 add wave -noupdate -expand -group {dcache 1} /system_tb/DUT/CPU/CM1/DCACHE/nstate
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/active_core
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/next_active_core
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/halted1
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/halted0
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/flushed1
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/flushed0
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/ccdataready
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/ccdataready_next
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer_next
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/active
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/next_active
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/cstate
-add wave -noupdate -group MemController /system_tb/DUT/CPU/CC/nstate
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/active_core
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/next_active_core
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/evict1
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/evict0
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/halted1
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/halted0
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/flushed1
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/flushed0
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccdataready
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccdataready_next
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/ccmemtransfer_next
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/active
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/next_active
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/cstate
+add wave -noupdate -expand -group MemController /system_tb/DUT/CPU/CC/nstate
 add wave -noupdate -group IDEX /system_tb/DUT/CPU/DP1/IDEX/ALUsrc
 add wave -noupdate -group IDEX /system_tb/DUT/CPU/DP1/IDEX/memtoreg
 add wave -noupdate -group IDEX /system_tb/DUT/CPU/DP1/IDEX/ALUop
@@ -298,4 +304,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {2491638 ps} {2667427 ps}
+WaveRestoreZoom {833001 ps} {998136 ps}

@@ -11,14 +11,17 @@ module alu (
 	output logic ZERO
 
 );
-	
+
 	logic [32:0] tempa;
 	logic [32:0] tempb;
 	logic [32:0] tempo;
+	logic [32:0] sub;
+	logic neg, overflow;
 
 
 	assign tempa = {1'b0, A};
 	assign tempb = {1'b0, B};
+	assign sub = A - B;
 
 	always_comb
 		begin
@@ -60,11 +63,21 @@ module alu (
 						tempo = tempa - tempb;
 					end
 				4'b1000:begin
-						if ($signed(A) < $signed(B)) begin
-							OUTPUT = 1;
-						end else begin
-							OUTPUT = 0;
-						end
+					neg = sub[31];
+					overflow = (A[31] ^ B[31]) && (A[31] ^ sub[31]);
+					casez({A[31], B[31]})
+						2'b11: OUTPUT = (neg ^ overflow) ? 1 : 0;
+						2'b10: OUTPUT = 1;
+						2'b01: OUTPUT = 0;
+						2'b00: OUTPUT = (neg ^ overflow) ? 1 : 0;
+						default: OUTPUT = 0;
+					endcase
+
+						// if ((A) < (B)) begin
+						// 	OUTPUT = 1;
+						// end else begin
+						// 	OUTPUT = 0;
+						// end
 					end
 				4'b1001:begin
 						if ((A) < (B)) begin
@@ -72,9 +85,9 @@ module alu (
 						end else begin
 							OUTPUT = 0;
 						end
-					end 		
+					end
 				default: begin
-					OUTPUT = OUTPUT;					
+					OUTPUT = OUTPUT;
 					tempo = tempo;
 					end
 			endcase
@@ -89,15 +102,15 @@ module alu (
 
 			if (OUTPUT[31] == 1) begin
 				NEGATIVE = 1;
-			end 
+			end
 
 			if (OUTPUT == '0) begin
 				ZERO = 1;
-			end 
+			end
 
 			if (tempo[32]) begin
-				OVERFLOW = 1;						
+				OVERFLOW = 1;
 			end
-		end 
+		end
 
 endmodule

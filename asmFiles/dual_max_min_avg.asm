@@ -9,8 +9,9 @@
   org   0x0000              # first processor p0
   ori   $sp, $zero, 0x3ffc  # stack
   ori   $a0, $zero, 0x5     # seed value
-  ori   $s6, $zero, 0x100     # total values
-  ori   $s5, $zero, 0x28      # buffer size
+ # ori   $s6, $zero, 0x100     # total values
+  ori   $s6, $zero, 0x3     # total values
+  ori   $s5, $zero, 0xa      # buffer size
   ori   $t8, $zero, 0x0       # counter for buffer
   jal   crc32
   ori   $t9, $zero, res
@@ -20,8 +21,9 @@
   or    $s0, $zero, $v0
   addiu $t8, $t8, 0x4
 
-  ori   $a0, $zero, locks
-  jal   unlock
+  ori   $a0, $zero, 0xb4
+  #jal   unlock
+  sw    $0, 0($a0)
   jal   mainp0              # go to program
   halt
 
@@ -95,8 +97,10 @@ locks:
   ori   $s3, $zero, 0x0     # max values
   ori   $s4, $zero, 0xFFFFFFFF     # min values  
   ori   $s5, $zero, 0x0     # sum
-  ori   $s6, $zero, 0x100     # total values
-  ori   $s7, $zero, 0x28      # buffer size
+  ori   $s6, $zero, 0x3     # total values
+#  ori   $s6, $zero, 0x100     # total values
+
+  ori   $s7, $zero, 0xa      # buffer size
   ori   $t8, $zero, 0x0       # counter for buffer
   ori   $t7, $zero, 0x0       # counter for total
   jal   mainp1              # go to program
