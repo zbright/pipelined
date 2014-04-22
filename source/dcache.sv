@@ -10,8 +10,8 @@ module dcache(
             input logic CLK,
             input logic nRST,
             output logic halted, flushed, evict,
-            datapath_cache_if.dcache dcif,
-            cache_control_if.dcache ccif
+            datapath_cache_if dcif,
+            cache_control_if ccif
             );
 
     // import types

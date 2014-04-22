@@ -13,7 +13,7 @@
 `include "cpu_types_pkg.vh"
 
 module memory_control (
-  input CLK, nRST,
+  input logic CLK, nRST,
   input logic halted0, halted1, flushed0, flushed1, evict0, evict1,
   cache_control_if.cc ccif
 );
