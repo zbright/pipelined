@@ -79,7 +79,7 @@ module memory_control (
         end
         else begin
             next_active = 0;
-            if (ccif.dREN[0] || ccif.dWEN[0]) || ccif.dREN[1]  || ccif.dWEN[1])
+            if (ccif.dREN[0] || ccif.dWEN[0] || ccif.dREN[1]  || ccif.dWEN[1])
                 nstate = ARBITER;
             else if (ccif.iREN[0] && !halted0)
                 next_active_core = 0;
