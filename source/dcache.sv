@@ -84,7 +84,7 @@ module dcache(
                             || (cacheaddress != 0 && dcif.dmemWEN && {cacheaddress.tag, cacheaddress.idx, 1'b1, cacheaddress.bytoff} == linkregister)
                             || (cacheaddress != 0 && dcif.dmemWEN && {cacheaddress.tag, cacheaddress.idx, 1'b0, cacheaddress.bytoff} == linkregister);
 
-    typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
+    typedef enum {IDLE, OUTPUT, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
     states cstate, nstate;
 
     //ll and sc
@@ -222,8 +222,40 @@ module dcache(
 
                     if(dcif.dmemWEN) begin
                         if (!dcif.datomic || (dcif.datomic && (dcif.dmemaddr == linkregister && link_valid))) begin
-                            nstate = OVERWRITE;
+                            // nstate = OVERWRITE;
+                            // dcif.dmemload = 1;
+
+                            temp_fetch_store_next = 0;
+                            flag_next = 1;
                             dcif.dmemload = 1;
+
+                            if(match_one) begin
+                                if (cacheaddress.blkoff) begin
+                                    cacheblock_one_next[cacheaddress.idx].data_two = dcif.dmemstore;
+                                    cacheblock_one_next[cacheaddress.idx].data_one = cacheblock_one[cacheaddress.idx].data_one;
+                                end else begin
+                                    cacheblock_one_next[cacheaddress.idx].data_one = dcif.dmemstore;
+                                    cacheblock_one_next[cacheaddress.idx].data_two = cacheblock_one[cacheaddress.idx].data_two;
+                                end
+
+                                cacheblock_one_next[cacheaddress.idx].dirty = 1;
+                                cacheblock_one_next[cacheaddress.idx].recent = 0;
+                                cacheblock_two_next[cacheaddress.idx].recent = 1;
+                            end else if (match_two) begin
+                                if (cacheaddress.blkoff) begin
+                                    cacheblock_two_next[cacheaddress.idx].data_two = dcif.dmemstore;
+                                    cacheblock_two_next[cacheaddress.idx].data_one = cacheblock_two[cacheaddress.idx].data_one;
+                                end else begin
+                                    cacheblock_two_next[cacheaddress.idx].data_one = dcif.dmemstore;
+                                    cacheblock_two_next[cacheaddress.idx].data_two = cacheblock_two[cacheaddress.idx].data_two;
+                                end
+
+                                cacheblock_two_next[cacheaddress.idx].dirty = 1;
+                                cacheblock_two_next[cacheaddress.idx].recent = 0;
+                                cacheblock_one_next[cacheaddress.idx].recent = 1;
+                            end
+                            // nstate = IDLE;
+                            dcif.dhit = 1;
                         end else begin
                             if(dcif.datomic)
                                 dcif.dhit = 1;
