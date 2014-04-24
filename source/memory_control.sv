@@ -145,20 +145,28 @@ module memory_control (
     end else if (cstate == FETCH_CACHE_0) begin
         next_active = 1;
         if (!active_core) begin
-            ccdataready_next = 1;
-            nstate = FETCH_CACHE_1;
+            if (ccif.dwait[0] == 0) begin
+                ccdataready_next = 1;
+                nstate = FETCH_CACHE_1;
+            end
         end else begin
-            ccdataready_next = 1;
-            nstate = FETCH_CACHE_1;
+            if (ccif.dwait[1] == 0) begin
+                ccdataready_next = 1;
+                nstate = FETCH_CACHE_1;
+            end
         end
     end else if (cstate == FETCH_CACHE_1) begin
         next_active = 0;
         if (!active_core) begin
-            ccdataready_next = 0;
-            nstate = IDLE;
+            if (ccif.dwait[0] == 0) begin
+                ccdataready_next = 0;
+                nstate = IDLE;
+            end
         end else begin
-            ccdataready_next = 0;
-            nstate = IDLE;
+            if (ccif.dwait[1] == 0) begin
+                ccdataready_next = 0;
+                nstate = IDLE;
+            end
         end
     end else if(cstate == MISS_0) begin
         next_active = 1;
