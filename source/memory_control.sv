@@ -219,6 +219,13 @@ module memory_control (
         end
       end
       EVICTION: begin
+        if (!active_core) begin
+            ccif.ccsnoopaddr[1] = ccif.daddr[0];
+            ccif.ccwait[1] = 1;
+        end else begin
+            ccif.ccsnoopaddr[0] = ccif.daddr[1];
+            ccif.ccwait[0] = 1;
+        end
       end
       WRITE_BACK_0: begin
         if (!active_core) begin

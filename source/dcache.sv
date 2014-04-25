@@ -295,10 +295,8 @@ module dcache(
             if(match_one) begin
                 if (cacheaddress.blkoff) begin
                     cacheblock_one_next[cacheaddress.idx].data_two = dcif.dmemstore;
-                    cacheblock_one_next[cacheaddress.idx].data_one = cacheblock_one[cacheaddress.idx].data_one;
                 end else begin
                     cacheblock_one_next[cacheaddress.idx].data_one = dcif.dmemstore;
-                    cacheblock_one_next[cacheaddress.idx].data_two = cacheblock_one[cacheaddress.idx].data_two;
                 end
 
                 cacheblock_one_next[cacheaddress.idx].dirty = 1;
@@ -307,10 +305,8 @@ module dcache(
             end else if (match_two) begin
                 if (cacheaddress.blkoff) begin
                     cacheblock_two_next[cacheaddress.idx].data_two = dcif.dmemstore;
-                    cacheblock_two_next[cacheaddress.idx].data_one = cacheblock_two[cacheaddress.idx].data_one;
                 end else begin
                     cacheblock_two_next[cacheaddress.idx].data_one = dcif.dmemstore;
-                    cacheblock_two_next[cacheaddress.idx].data_two = cacheblock_two[cacheaddress.idx].data_two;
                 end
 
                 cacheblock_two_next[cacheaddress.idx].dirty = 1;
@@ -363,31 +359,12 @@ module dcache(
 
         if(!ccif.ccwait[CPUID]) begin
             casez(cstate)
-                IDLE: begin
-                    if (ccif.ccwait[CPUID]) begin
-                        if (snoop_hit_1)
-                            ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
-                        else if(snoop_hit_2)
-                            ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
-                    end
-                end
-                WRITECC_ONE: begin
-                    if (snoop_hit_1)
-                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
-                    else if(snoop_hit_2)
-                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
-                end
-                WRITECC_TWO: begin
-                    if (snoop_hit_1)
-                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_two;
-                    else if(snoop_hit_2)
-                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_two;
-                end
                 WRITEBACK_ONE: begin
                     writeBack(3'b000, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
                 end
                 WRITEBACK_TWO: begin
                     writeBack(3'b100, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
+                    ccif.daddr[CPUID] = cacheaddress;
                 end
                 OVERWRITE: begin
                     ccif.daddr[CPUID] = cacheaddress;
@@ -434,6 +411,29 @@ module dcache(
                            ccif.dWEN[CPUID] = 0;
                     end
                     // end
+                end
+            endcase
+        end else begin
+            casez(cstate)
+                IDLE: begin
+                    if (ccif.ccwait[CPUID]) begin
+                        if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+                            ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                        else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
+                            ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+                    end
+                end
+                WRITECC_ONE: begin
+                    if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                    else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
+                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+                end
+                WRITECC_TWO: begin
+                    if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_two;
+                    else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
+                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_two;
                 end
             endcase
         end
