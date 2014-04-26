@@ -28,6 +28,8 @@ module alu (
 
 			OUTPUT = '0;
 			tempo = '0;
+			neg = '0;
+			overflow = '0;
 
 			casez(OPCODE)
 				4'b0000 :begin
