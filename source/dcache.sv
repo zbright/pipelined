@@ -195,7 +195,7 @@ module dcache(
             if (snoop_hit_1 || snoop_hit_2) begin
                 nstate = WRITECC_ONE;
             end
-        end else if (cstate == IDLE && i == 0) begin
+        end else if (!ccif.ccwait[CPUID] && cstate == IDLE && i == 0) begin
             if(ccif.ccsnoopaddr[CPUID] != 0 && ccif.ccinv[CPUID]) begin
                 if(cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
                     cacheblock_one_next[snoop_addr.idx].valid = 0;
@@ -247,9 +247,9 @@ module dcache(
                 end else
                     nstate = FETCH_ONE;
             end
-        end else if (cstate == WRITECC_ONE && !ccif.dwait[!CPUID]) begin
+        end else if (!ccif.ccwait[CPUID] && cstate == WRITECC_ONE && !ccif.dwait[!CPUID]) begin
             nstate = WRITECC_TWO;
-        end else if (cstate == WRITECC_TWO && !ccif.dwait[!CPUID]) begin
+        end else if (!ccif.ccwait[CPUID] && cstate == WRITECC_TWO && !ccif.dwait[!CPUID]) begin
             nstate = IDLE;
 
             if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag) begin
@@ -263,23 +263,23 @@ module dcache(
                 if(ccif.ccinv[CPUID])
                     cacheblock_two_next[snoop_addr.idx].valid = 0;
             end
-        end else if(cstate == WRITEBACK_ONE) begin
+        end else if(!ccif.ccwait[CPUID] && cstate == WRITEBACK_ONE) begin
             evict = 1;
 
             if(!ccif.dwait[CPUID])
                 nstate = WRITEBACK_TWO;
-        end else if(cstate == WRITEBACK_TWO) begin
+        end else if(!ccif.ccwait[CPUID] && cstate == WRITEBACK_TWO) begin
             evict = 1;
 
             if(!ccif.dwait[CPUID]) begin
                 evict = 0;
                 nstate = FETCH_ONE;
             end
-        end else if(cstate == FETCH_ONE && !ccif.dwait[CPUID]) begin
+        end else if(!ccif.ccwait[CPUID] && cstate == FETCH_ONE && !ccif.dwait[CPUID]) begin
             flag_next = 0;
             nstate = FETCH_TWO;
             temp_fetch_store_next.data_one = ccif.dload[CPUID];
-        end else if(cstate == FETCH_TWO && !ccif.dwait[CPUID]) begin
+        end else if(!ccif.ccwait[CPUID] && cstate == FETCH_TWO && !ccif.dwait[CPUID]) begin
             nstate = IDLE;
             flag_next = 0;
             temp_fetch_store_next.data_two = ccif.dload[CPUID];
@@ -287,7 +287,7 @@ module dcache(
             temp_fetch_store_next.recent = 1;
             temp_fetch_store_next.valid = 1;
             temp_fetch_store_next.tag = cacheaddress.tag;
-        end else if(cstate == OVERWRITE) begin
+        end else if(!ccif.ccwait[CPUID] && cstate == OVERWRITE) begin
             temp_fetch_store_next = 0;
             flag_next = 1;
             dcif.dmemload = 1;

@@ -31,23 +31,7 @@ halt      # that's all
 
 
 org   0x0200
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
 
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
 ori   $1, $zero, val
 lw    $2, 0($1)
 ori   $2, $2, 0x1

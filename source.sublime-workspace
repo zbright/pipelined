@@ -4,348 +4,144 @@
 		"selected_items":
 		[
 			[
-				"ev",
-				"evict1"
-			],
-			[
-				"evict",
-				"evict0"
-			],
-			[
-				"evi",
-				"evict0"
-			],
-			[
-				"ha",
-				"halted0"
-			],
-			[
-				"hal",
-				"HALT"
-			],
-			[
-				"h",
-				"halted1"
-			],
-			[
-				"flush",
-				"flushed0"
-			],
-			[
-				"flu",
-				"flushed1"
-			],
-			[
-				"fl",
-				"flushed1"
-			],
-			[
-				"flushed",
-				"flushed0"
-			],
-			[
-				"halt",
-				"halted0"
-			],
-			[
-				"ne",
-				"next_active_core"
-			],
-			[
-				"nex",
-				"next_active_core"
-			],
-			[
-				"nexc",
-				"next_active"
-			],
-			[
-				"bg",
-				"begin"
-			],
-			[
-				"ac",
-				"active_core"
-			],
-			[
-				"active",
-				"active_core"
-			],
-			[
-				"d",
-				"dirty"
-			],
-			[
-				"0x",
-				"0x500"
-			],
-			[
-				"ccda",
-				"ccdataready"
-			],
-			[
-				"snoop",
-				"snoop_hit_1"
-			],
-			[
-				"acti",
-				"active_core"
-			],
-			[
-				"ccmem",
-				"ccmemtransfer"
-			],
-			[
-				"dw",
-				"dwait"
-			],
-			[
-				"write",
-				"WRITECC_TWO"
-			],
-			[
-				"WITE",
-				"WRITECC_ONE"
-			],
-			[
-				"sno",
-				"snoop_addr"
+				"over",
+				"overwriting1"
 			],
 			[
 				"snoo",
-				"snoop_hit_2"
+				"snoop_addr"
 			],
 			[
-				"cac",
-				"cacheblock_one_next"
-			],
-			[
-				"wte",
-				"WRITECC_TWO"
-			],
-			[
-				"W",
-				"WRITECC_TWO"
-			],
-			[
-				"WI",
-				"WRITECC_ONE"
-			],
-			[
-				"WR",
-				"WRITECC_ONE"
-			],
-			[
-				"cc",
-				"ccif"
-			],
-			[
-				"id",
-				"idx"
-			],
-			[
-				"cach",
+				"ca",
 				"cacheblock_two_next"
 			],
 			[
-				"match_",
-				"match_two"
-			],
-			[
-				"mat",
-				"match_one"
-			],
-			[
-				"dmem",
-				"dmemREN"
-			],
-			[
-				"math",
-				"match_two"
-			],
-			[
-				"ma",
-				"match_one"
-			],
-			[
-				"snop",
-				"snoop_hit_2"
-			],
-			[
-				"dcach",
-				"dcachef_t"
-			],
-			[
-				"aci",
-				"active_core"
-			],
-			[
-				"beg",
-				"begin"
-			],
-			[
-				"Miss",
-				"MISS_0"
-			],
-			[
-				"w",
-				"WRITE_BACK_0"
-			],
-			[
-				"Wr",
-				"WRITE_BACK_0"
-			],
-			[
-				"miss",
-				"MISS_1"
-			],
-			[
-				"FETCH_CA",
-				"FETCH_CACHE_0"
-			],
-			[
-				"ar",
-				"ARBITER"
-			],
-			[
-				"fet",
-				"FETCH_CACHE"
-			],
-			[
-				"fe",
-				"FETCH_MEM"
-			],
-			[
-				"ramst",
-				"ramstate"
-			],
-			[
-				"cpu",
-				"CPUID"
+				"cach",
+				"cacheblock_one_next"
 			],
 			[
 				"cp",
 				"CPUID"
 			],
 			[
-				"pc",
-				"pc_init"
+				"acti",
+				"active_core"
 			],
 			[
-				"PC",
-				"PC_INIT"
+				"hal",
+				"halted1"
 			],
 			[
-				"mainp",
-				"mainp0"
+				"ha",
+				"halted1"
 			],
 			[
-				"add",
-				"addiu"
+				"sno",
+				"snoop_addr"
 			],
 			[
-				"end",
-				"end"
+				"imemload_id",
+				"imemload_id_ex_output"
 			],
 			[
-				"e",
-				"end"
+				"lin",
+				"linkregister"
 			],
 			[
-				"blk",
-				"blk_offset"
+				"link",
+				"linkregister"
 			],
 			[
-				"word",
-				"word_t"
+				"alwa",
+				"always_comb"
+			],
+			[
+				"ne",
+				"next_link_valid"
+			],
+			[
+				"nex",
+				"next_link_valid"
+			],
+			[
+				"dat",
+				"datomic_ex_mem_output"
+			],
+			[
+				"datomic",
+				"datomic_id_ex_output"
+			],
+			[
+				"datom",
+				"datomic_ex_mem_output"
+			],
+			[
+				"datomi",
+				"datomic_id_ex_output"
+			],
+			[
+				"alu_a_mux",
+				"alu_a_mux_output"
+			],
+			[
+				"dmemWEN_",
+				"dmemwen_ex_mem_output"
 			],
 			[
 				"cache",
 				"cacheblock_two"
 			],
 			[
-				"cachbl",
-				"cacheblock_one"
-			],
-			[
-				"mis",
-				"miss_count"
-			],
-			[
-				"fla",
-				"flag"
-			],
-			[
-				"flag",
-				"flag_next"
-			],
-			[
-				"temp",
-				"temp_fetch_store"
-			],
-			[
-				"dmm",
-				"dmemREN"
-			],
-			[
-				"dm",
-				"dmemREN"
-			],
-			[
-				"tmep",
-				"temp_fetch_store_next"
-			],
-			[
-				"ca",
-				"cacheaddress"
-			],
-			[
-				"data",
-				"data_one"
-			],
-			[
 				"da",
 				"data_two"
 			],
 			[
-				"canc",
-				"cacheblock_one_next"
+				"id",
+				"idx"
 			],
 			[
-				"be",
+				"cac",
+				"cacheaddress"
+			],
+			[
+				"b",
 				"begin"
 			],
 			[
-				"p",
-				"pc_stall_branchjump"
+				"match_",
+				"match_one"
 			],
 			[
-				"ex_",
-				"ex_mem_stall"
+				"match",
+				"match_two"
 			],
 			[
-				"f",
-				"flush"
+				"FET",
+				"FETCH_ONE"
+			],
+			[
+				"WRITE",
+				"WRITEBACK_TWO"
+			],
+			[
+				"dmem",
+				"dmemWEN"
+			],
+			[
+				"WRI",
+				"WRITECACHE"
+			],
+			[
+				"im",
+				"imemload"
 			],
 			[
 				"bran",
-				"branch_flush"
+				"branchdest_ex_mem_output"
 			],
 			[
-				"if",
-				"if_id_rs"
-			],
-			[
-				"id_",
-				"id_ex_rt"
-			],
-			[
-				"if_id_",
-				"if_id_rs"
-			],
-			[
-				"i",
-				"if_id_stall"
+				"d",
+				"dpif"
 			],
 			[
 				"temp_reg",
@@ -360,6 +156,10 @@
 				"temp_stall"
 			],
 			[
+				"temp",
+				"temp_rdat1"
+			],
+			[
 				"always_",
 				"always_ff"
 			]
@@ -368,10 +168,58 @@
 	"buffers":
 	[
 		{
+			"file": "source/datapath.sv",
+			"settings":
+			{
+				"buffer_size": 13055,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "asmFiles/example.asm",
+			"settings":
+			{
+				"buffer_size": 2417,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/caches.sv",
+			"settings":
+			{
+				"buffer_size": 1473,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "include/cache_control_if.vh",
+			"settings":
+			{
+				"buffer_size": 2362,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "source/icache.sv",
+			"settings":
+			{
+				"buffer_size": 1585,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "source/dcache.sv",
 			"settings":
 			{
-				"buffer_size": 14995,
+				"buffer_size": 17612,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "include/cpu_types_pkg.vh",
+			"settings":
+			{
+				"buffer_size": 3392,
 				"line_ending": "Unix"
 			}
 		},
@@ -384,50 +232,18 @@
 			}
 		},
 		{
+			"file": "asmFiles/dual_max_min_avg.asm",
+			"settings":
+			{
+				"buffer_size": 5060,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "source/memory_control.sv",
 			"settings":
 			{
-				"buffer_size": 10924,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "source/caches.sv",
-			"settings":
-			{
-				"buffer_size": 1501,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "include/cache_control_if.vh",
-			"settings":
-			{
-				"buffer_size": 2380,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "asmFiles/dual.llsc.asm",
-			"settings":
-			{
-				"buffer_size": 932,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "asmFiles/dual_simple.asm",
-			"settings":
-			{
-				"buffer_size": 302,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "asmFiles/multi_rtype.asm",
-			"settings":
-			{
-				"buffer_size": 483,
+				"buffer_size": 11446,
 				"line_ending": "Unix"
 			}
 		}
@@ -435,11 +251,11 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 231.0,
+		"height": 385.0,
 		"selected_items":
 		[
 			[
-				"insta",
+				"package",
 				"Package Control: Install Package"
 			],
 			[
@@ -447,18 +263,29 @@
 				"Package Control: Install Package"
 			],
 			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: case",
+				"Snippet: Case"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
 				"package con",
 				"Package Control: Install Package"
 			]
 		],
-		"width": 528.0
+		"width": 400.0
 	},
 	"console":
 	{
 		"height": 566.0,
 		"history":
 		[
-			"git status",
 			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
@@ -473,63 +300,65 @@
 	},
 	"file_history":
 	[
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/caches.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/multi_2.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/multi_1.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/system.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/multicore.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/multi_rtype.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/icache.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/program_count.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/dual_max_min_avg.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/subroutine_crc.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/subroutine_mm.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/subroutine_div.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/example.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/aaaaa.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/ram.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/dcache.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_2.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/Hanye_count_days.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/system_tb.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/mult.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/quicksort.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/y.test.ldst3.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/pipeline.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/forwarding_test.asm~",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/mem_wb_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/ex_mem_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/if_id_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm~",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/hanye_test1.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system500.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system200.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system100.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system50.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/system.log",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/branchforward.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/source/forward.sv",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/fib.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.branchjump1.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.simplebranch.asm",
-		"/home/ecegrid/a/mg201/ece437/pipelined/asmFiles/test.ldst1.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/cpu_types_pkg.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/alu_b_mux.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/alu_a_mux.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/hazard_unit.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/forward.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/control_unit.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/ex_mem_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/id_ex_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/dual.llsc.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/datapath_cache_if.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/mem_wb_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/if_id_latch.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/datapath.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/dual_simple.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/caches.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/test.rtype.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/memory_control.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/cache_control_if.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/multi_2.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/multi_3.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/dual_max_min_avg.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/multi_rtype.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/icache.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/memory_control_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/multicore.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/forward23.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/forwarding_2.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/icache_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/dcache.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/include/system_if.vh",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/system_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/system.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/testbench/dcache_tb.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/lui.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/simple_loadstore.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/pipeline.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/test.branchjump1.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/program_count.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/fib.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/alu_source_mux.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/source/system_fpga.sv",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/kevinforward.asm",
+		"/home/ecegrid/a/mg200/ece437/pipelined/asmFiles/test.ldst1.asm",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu.sv~",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/memory_control.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/hazard_unit.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/control_unit.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/datapath.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/register_file.sv~",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/ram.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/alu_source_mux.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/source/singlecycle.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/include/cache_control_if.vh",
 		"/home/ecegrid/a/mg201/ece437/pipelined/include/datapath_cache_if.vh",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/id_ex_latch.sv",
 		"/home/ecegrid/a/mg201/ece437/pipelined/testbench/control_unit_tb.sv",
+		"/home/ecegrid/a/mg201/ece437/pipelined/source/program_count.sv",
 		"/home/ecegrid/a/mg201/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap"
 	],
 	"find":
@@ -545,49 +374,55 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
-			"0",
-			"dload",
-			".dirty",
-			"ccif.ccinv",
-			")\n",
+			"dirty",
+			"flag_next",
+			"flushed",
+			"OVERWRITE",
+			"overwrite",
+			"ccif.+cc(wait|trans|inv|snoopaddr|write)",
+			"ccif.+cc(wait|trans|inv)",
+			"ccif.+cc[(wait)]",
+			"dmemstore",
+			"linkregister",
+			"memtoreg_ex_mem_output",
+			"regwrite_mem_wb_output",
+			"regwrite_ex_mem_output",
+			"imemload_ex_mem_output",
+			"imemload_id_ex_output",
+			"branchdest_mem_wb_output",
+			"branchdest_ex_mem_output",
+			"datomic",
+			"dmemload",
+			"dmemWEN",
+			"ccwrite",
 			"ccif",
-			"memory",
-			"begin",
-			"else",
-			"begin",
-			"WEN",
-			"hit_count",
-			"3100",
-			"temp_fetch_store",
-			"WRITECACHE",
-			"compare",
-			"waiting",
-			";\n",
-			")\n",
+			"dmemwen_ex_mem_output",
+			"dmemstore",
+			"ccif",
+			"i",
 			"halt",
 			"i",
-			"endmodule",
-			"viola",
-			"fmax",
-			"Fmax Summary",
-			"propagation delay",
-			"latency",
-			"critical",
-			"Fmax Summary",
-			"slow",
-			"fast",
-			"fmax",
-			"slow",
-			"fast",
-			"FMAX",
-			"halt_out_id_ex_output",
-			"halt",
-			"25",
-			"imemload_ex_mem_output",
-			"stall",
+			"ccif.daddr",
+			"ccif.dstore",
+			"ccif",
+			"valid",
+			"cacheblock",
+			"match",
+			"cacheblock",
+			"\"cacheblock\"",
+			"cacheblock",
+			"tag",
+			"hit",
+			"match",
+			"dpif",
+			"iload",
+			"rst",
+			"imemload",
+			"halt_out_ex_mem_output",
+			"imemload_id_ex_output",
 			"aluresult_ex_mem_output",
 			"halt_out_id_ex_output",
 			"halt_out_ex_mem_output",
@@ -639,10 +474,17 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
-			"next_count",
+			"memtoreg_ex_mem",
+			"regwrite_mem_wb",
+			"regwrite_ex_mem",
+			"imemload_ex_mem",
+			"imemload_id_ex",
+			"branchdest_mem_wb",
+			"branchdest_ex_mem",
+			"ccinterface",
 			"jump_pc",
 			"branchdest_input",
 			"dmemload_mem_wb_output",
@@ -673,24 +515,143 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "source/dcache.sv",
+					"file": "source/datapath.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14995,
+						"buffer_size": 13055,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6891,
-								6891
+								6291,
+								6291
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3555.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "asmFiles/example.asm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1777,
+								1777
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 443.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/caches.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1473,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "include/cache_control_if.vh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2362,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1208,
+								1208
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 648.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "source/icache.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1585,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								711,
+								711
 							]
 						],
 						"settings":
@@ -699,15 +660,75 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 135.0,
-						"translation.y": 2916.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 5,
+					"file": "source/dcache.sv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17612,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6635,
+								6635
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 251.0,
+						"translation.y": 3735.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "include/cpu_types_pkg.vh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3392,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 378.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "source/multicore.sv",
 					"semi_transient": false,
 					"settings":
@@ -719,13 +740,49 @@
 						"selection":
 						[
 							[
-								779,
-								779
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 8,
+					"file": "asmFiles/dual_max_min_avg.asm",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5060,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1129,
+								1129
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -735,56 +792,22 @@
 					},
 					"stack_index": 2,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 4,
-			"sheets":
-			[
+				},
 				{
-					"buffer": 2,
+					"buffer": 9,
 					"file": "source/memory_control.sv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10924,
+						"buffer_size": 11446,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3536,
-								3536
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1728.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "source/caches.sv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1501,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								284,
-								284
+								0,
+								0
 							]
 						],
 						"settings":
@@ -794,134 +817,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 702.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "include/cache_control_if.vh",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2380,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							],
-							[
-								1887,
-								1887
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SystemVerilog/SystemVerilog.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 540.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "asmFiles/dual.llsc.asm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 932,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								279,
-								279
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/MIPS Syntax/mips.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "asmFiles/dual_simple.asm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 302,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								166,
-								166
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/MIPS Syntax/mips.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "asmFiles/multi_rtype.asm",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 483,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/MIPS Syntax/mips.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -929,11 +828,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 382.0
+		"height": 26.0
 	},
 	"input":
 	{
-		"height": 33.0
+		"height": 0.0
 	},
 	"layout":
 	{
@@ -955,7 +854,7 @@
 		"cols":
 		[
 			0.0,
-			0.502028985506,
+			0.602876105036,
 			1.0
 		],
 		"rows":
@@ -972,7 +871,7 @@
 	"project": "source.sublime-project",
 	"replace":
 	{
-		"height": 94.0
+		"height": 48.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1018,7 +917,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 195.0,
+	"side_bar_width": 203.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
