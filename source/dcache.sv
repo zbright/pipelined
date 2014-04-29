@@ -84,7 +84,7 @@ module dcache(
                             || (cacheaddress != 0 && dcif.dmemWEN && {cacheaddress.tag, cacheaddress.idx, 1'b1, cacheaddress.bytoff} == linkregister)
                             || (cacheaddress != 0 && dcif.dmemWEN && {cacheaddress.tag, cacheaddress.idx, 1'b0, cacheaddress.bytoff} == linkregister);
 
-    typedef enum {IDLE, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
+    typedef enum {IDLE, OUTPUT, WRITEBACK_ONE, WRITEBACK_TWO, WRITECC_ONE, WRITECC_TWO, OVERWRITE, FETCH_ONE, FETCH_TWO, HALT} states;
     states cstate, nstate;
 
     //ll and sc
@@ -191,11 +191,9 @@ module dcache(
         temp_fetch_store_next = temp_fetch_store;
         evict = 0;
 
-        if (ccif.ccwait[CPUID] && cstate != WRITECC_ONE && cstate != WRITECC_TWO) begin
-            if (snoop_hit_1 || snoop_hit_2) begin
-                nstate = WRITECC_ONE;
-            end
-        end else if (!ccif.ccwait[CPUID] && cstate == IDLE && i == 0) begin
+        if (ccif.ccwait[CPUID] && cstate != WRITECC_ONE && cstate != WRITECC_TWO && (snoop_hit_1 || snoop_hit_2)) begin
+            nstate = WRITECC_ONE;
+        end else if (cstate == IDLE && i == 0) begin
             if(ccif.ccsnoopaddr[CPUID] != 0 && ccif.ccinv[CPUID]) begin
                 if(cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
                     cacheblock_one_next[snoop_addr.idx].valid = 0;
@@ -221,9 +219,43 @@ module dcache(
                         next_hit_count = hit_count + 1'b1;
 
                     if(dcif.dmemWEN) begin
-                        if (!dcif.datomic || (dcif.datomic && (dcif.dmemaddr == linkregister && link_valid))) begin
-                            nstate = OVERWRITE;
-                            dcif.dmemload = 1;
+                        if ((!dcif.datomic) || (dcif.datomic && (dcif.dmemaddr == linkregister && link_valid))) begin
+                            // nstate = OVERWRITE;
+                            // dcif.dmemload = 1;
+
+                            temp_fetch_store_next = 0;
+                            flag_next = 1;
+
+                            if(!dcif.datomic)
+                                $display ("POOP1");
+                            else if(dcif.datomic && (dcif.dmemaddr == linkregister && link_valid)) begin
+                                $display ("POOP2");
+                                dcif.dmemload = 1;
+                            end
+
+                            if(match_one) begin
+                                if (cacheaddress.blkoff) begin
+                                    cacheblock_one_next[cacheaddress.idx].data_two = dcif.dmemstore;
+                                end else begin
+                                    cacheblock_one_next[cacheaddress.idx].data_one = dcif.dmemstore;
+                                end
+
+                                cacheblock_one_next[cacheaddress.idx].dirty = 1;
+                                cacheblock_one_next[cacheaddress.idx].recent = 0;
+                                cacheblock_two_next[cacheaddress.idx].recent = 1;
+                            end else if (match_two) begin
+                                if (cacheaddress.blkoff) begin
+                                    cacheblock_two_next[cacheaddress.idx].data_two = dcif.dmemstore;
+                                end else begin
+                                    cacheblock_two_next[cacheaddress.idx].data_one = dcif.dmemstore;
+                                end
+
+                                cacheblock_two_next[cacheaddress.idx].dirty = 1;
+                                cacheblock_two_next[cacheaddress.idx].recent = 0;
+                                cacheblock_one_next[cacheaddress.idx].recent = 1;
+                            end
+                            // nstate = IDLE;
+                            dcif.dhit = 1;
                         end else begin
                             if(dcif.datomic)
                                 dcif.dhit = 1;
@@ -247,9 +279,9 @@ module dcache(
                 end else
                     nstate = FETCH_ONE;
             end
-        end else if (!ccif.ccwait[CPUID] && cstate == WRITECC_ONE && !ccif.dwait[!CPUID]) begin
+        end else if (cstate == WRITECC_ONE && !ccif.dwait[!CPUID]) begin
             nstate = WRITECC_TWO;
-        end else if (!ccif.ccwait[CPUID] && cstate == WRITECC_TWO && !ccif.dwait[!CPUID]) begin
+        end else if (cstate == WRITECC_TWO && !ccif.dwait[!CPUID]) begin
             nstate = IDLE;
 
             if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag) begin
@@ -263,23 +295,23 @@ module dcache(
                 if(ccif.ccinv[CPUID])
                     cacheblock_two_next[snoop_addr.idx].valid = 0;
             end
-        end else if(!ccif.ccwait[CPUID] && cstate == WRITEBACK_ONE) begin
+        end else if(cstate == WRITEBACK_ONE) begin
             evict = 1;
 
             if(!ccif.dwait[CPUID])
                 nstate = WRITEBACK_TWO;
-        end else if(!ccif.ccwait[CPUID] && cstate == WRITEBACK_TWO) begin
+        end else if(cstate == WRITEBACK_TWO) begin
             evict = 1;
 
             if(!ccif.dwait[CPUID]) begin
                 evict = 0;
                 nstate = FETCH_ONE;
             end
-        end else if(!ccif.ccwait[CPUID] && cstate == FETCH_ONE && !ccif.dwait[CPUID]) begin
+        end else if(cstate == FETCH_ONE && !ccif.dwait[CPUID]) begin
             flag_next = 0;
             nstate = FETCH_TWO;
             temp_fetch_store_next.data_one = ccif.dload[CPUID];
-        end else if(!ccif.ccwait[CPUID] && cstate == FETCH_TWO && !ccif.dwait[CPUID]) begin
+        end else if(cstate == FETCH_TWO && !ccif.dwait[CPUID]) begin
             nstate = IDLE;
             flag_next = 0;
             temp_fetch_store_next.data_two = ccif.dload[CPUID];
@@ -287,34 +319,38 @@ module dcache(
             temp_fetch_store_next.recent = 1;
             temp_fetch_store_next.valid = 1;
             temp_fetch_store_next.tag = cacheaddress.tag;
-        end else if(!ccif.ccwait[CPUID] && cstate == OVERWRITE) begin
-            temp_fetch_store_next = 0;
-            flag_next = 1;
-            dcif.dmemload = 1;
+        // end else if(cstate == OVERWRITE) begin
+        //     temp_fetch_store_next = 0;
+        //     flag_next = 1;
+        //     dcif.dmemload = 1;
 
-            if(match_one) begin
-                if (cacheaddress.blkoff) begin
-                    cacheblock_one_next[cacheaddress.idx].data_two = dcif.dmemstore;
-                end else begin
-                    cacheblock_one_next[cacheaddress.idx].data_one = dcif.dmemstore;
-                end
+        //     if(match_one) begin
+        //         if (cacheaddress.blkoff) begin
+        //             cacheblock_one_next[cacheaddress.idx].data_two = dcif.dmemstore;
+        //             cacheblock_one_next[cacheaddress.idx].data_one = cacheblock_one[cacheaddress.idx].data_one;
+        //         end else begin
+        //             cacheblock_one_next[cacheaddress.idx].data_one = dcif.dmemstore;
+        //             cacheblock_one_next[cacheaddress.idx].data_two = cacheblock_one[cacheaddress.idx].data_two;
+        //         end
 
-                cacheblock_one_next[cacheaddress.idx].dirty = 1;
-                cacheblock_one_next[cacheaddress.idx].recent = 0;
-                cacheblock_two_next[cacheaddress.idx].recent = 1;
-            end else if (match_two) begin
-                if (cacheaddress.blkoff) begin
-                    cacheblock_two_next[cacheaddress.idx].data_two = dcif.dmemstore;
-                end else begin
-                    cacheblock_two_next[cacheaddress.idx].data_one = dcif.dmemstore;
-                end
+        //         cacheblock_one_next[cacheaddress.idx].dirty = 1;
+        //         cacheblock_one_next[cacheaddress.idx].recent = 0;
+        //         cacheblock_two_next[cacheaddress.idx].recent = 1;
+        //     end else if (match_two) begin
+        //         if (cacheaddress.blkoff) begin
+        //             cacheblock_two_next[cacheaddress.idx].data_two = dcif.dmemstore;
+        //             cacheblock_two_next[cacheaddress.idx].data_one = cacheblock_two[cacheaddress.idx].data_one;
+        //         end else begin
+        //             cacheblock_two_next[cacheaddress.idx].data_one = dcif.dmemstore;
+        //             cacheblock_two_next[cacheaddress.idx].data_two = cacheblock_two[cacheaddress.idx].data_two;
+        //         end
 
-                cacheblock_two_next[cacheaddress.idx].dirty = 1;
-                cacheblock_two_next[cacheaddress.idx].recent = 0;
-                cacheblock_one_next[cacheaddress.idx].recent = 1;
-            end
-            nstate = IDLE;
-            dcif.dhit = 1;
+        //         cacheblock_two_next[cacheaddress.idx].dirty = 1;
+        //         cacheblock_two_next[cacheaddress.idx].recent = 0;
+        //         cacheblock_one_next[cacheaddress.idx].recent = 1;
+        //     end
+        //     nstate = IDLE;
+        //     dcif.dhit = 1;
 
         end
     end
@@ -359,16 +395,42 @@ module dcache(
 
         if(!ccif.ccwait[CPUID]) begin
             casez(cstate)
+                IDLE: begin
+                    if (ccif.ccwait[CPUID]) begin
+                        if (snoop_hit_1)
+                            ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                        else if(snoop_hit_2)
+                            ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+                    end
+                    if (cstate == IDLE && i == 0)
+                        if (dcif.dmemREN || dcif.dmemWEN)
+                                if(match_one || match_two)
+                                        if(dcif.dmemWEN)
+                                            if ((!dcif.datomic) || (dcif.datomic && (dcif.dmemaddr == linkregister && link_valid)))
+                                                    ccif.daddr[CPUID] = cacheaddress;
+
+                end
+                WRITECC_ONE: begin
+                    if (snoop_hit_1)
+                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                    else if(snoop_hit_2)
+                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+                end
+                WRITECC_TWO: begin
+                    if (snoop_hit_1)
+                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_two;
+                    else if(snoop_hit_2)
+                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_two;
+                end
                 WRITEBACK_ONE: begin
                     writeBack(3'b000, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
                 end
                 WRITEBACK_TWO: begin
                     writeBack(3'b100, ccif.dstore[CPUID], ccif.daddr[CPUID], ccif.dWEN[CPUID]);
-                    ccif.daddr[CPUID] = cacheaddress;
                 end
-                OVERWRITE: begin
-                    ccif.daddr[CPUID] = cacheaddress;
-                end
+                // OVERWRITE: begin
+                //     ccif.daddr[CPUID] = cacheaddress;
+                // end
                 FETCH_ONE: begin
                     fetch(1'b0, ccif.dREN[CPUID], ccif.daddr[CPUID]);
                 end
@@ -414,28 +476,22 @@ module dcache(
                 end
             endcase
         end else begin
-            casez(cstate)
-                IDLE: begin
-                    if (ccif.ccwait[CPUID]) begin
-                        if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
-                            ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
-                        else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
-                            ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
-                    end
-                end
-                WRITECC_ONE: begin
-                    if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
-                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
-                    else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
-                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
-                end
-                WRITECC_TWO: begin
-                    if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
-                        ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_two;
-                    else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
-                        ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_two;
-                end
-            endcase
+            if (cstate == IDLE) begin
+                if (snoop_hit_1)
+                    ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                else if(snoop_hit_2)
+                    ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+            end else if(cstate == WRITECC_ONE) begin
+                if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+                    ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_one;
+                else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
+                    ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_one;
+            end else if(cstate == WRITECC_TWO) begin
+                if (cacheblock_one_next[snoop_addr.idx].tag == snoop_addr.tag)
+                    ccif.dstore[CPUID] = cacheblock_one_next[snoop_addr.idx].data_two;
+                else if(cacheblock_two_next[snoop_addr.idx].tag == snoop_addr.tag)
+                    ccif.dstore[CPUID] = cacheblock_two_next[snoop_addr.idx].data_two;
+            end
         end
     end
 

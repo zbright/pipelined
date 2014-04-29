@@ -2,18 +2,7 @@ org   0x0000
 
 ori   $1, $zero, val
 #lw    $2, 0($1)
-nop
 ori   $3, $zero, 0xaaaa
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-nop
-
 sw    $3, 0($1)
 
 ori   $5, $0, 0
