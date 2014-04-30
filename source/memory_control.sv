@@ -121,74 +121,66 @@ module memory_control (
             nstate = ccif.dstore[1] == 0 || halted1 ? MISS_0 :
                      ccif.cctrans[1] && ccif.ccwrite[1] ? WRITE_BACK_0 : FETCH_CACHE_0;
     end else if (cstate == WRITE_BACK_0) begin
-        next_active = 1;
-        if (!active_core) begin
-            if (ccif.dwait[0] == 0)
-                nstate = WRITE_BACK_1;
-        end else begin
-            if (ccif.dwait[1] == 0)
-                nstate = WRITE_BACK_1;
+        if (!active_core && !ccif.dwait[0]) begin
+            nstate = WRITE_BACK_1;
+            next_active = 1;
+        end else if(!ccif.dwait[1]) begin
+            nstate = WRITE_BACK_1;
+            next_active = 1;
         end
     end else if (cstate == WRITE_BACK_1) begin
-        next_active = 0;
-        if (!active_core) begin
-            if (ccif.dwait[0] == 0) begin
-                ccmemtransfer_next = 0;
-                nstate = IDLE;
-            end
-        end else begin
-            if (ccif.dwait[1] == 0) begin
-                ccmemtransfer_next = 0;
-                nstate = IDLE;
-            end
+        if (!active_core && !ccif.dwait[0]) begin
+            ccmemtransfer_next = 0;
+            next_active = 0;
+            nstate = IDLE;
+        end else if(!ccif.dwait[1]) begin
+            ccmemtransfer_next = 0;
+            next_active = 0;
+            nstate = IDLE;
         end
     end else if (cstate == FETCH_CACHE_0) begin
-        next_active = 1;
-        if (!active_core) begin
+        if (!active_core && !ccif.dwait[0]) begin
             ccdataready_next = 1;
             nstate = FETCH_CACHE_1;
-        end else begin
+            next_active = 1;
+        end else if(!ccif.dwait[1]) begin
             ccdataready_next = 1;
             nstate = FETCH_CACHE_1;
+            next_active = 1;
         end
     end else if (cstate == FETCH_CACHE_1) begin
-        next_active = 0;
-        if (!active_core) begin
+        if (!active_core && !ccif.dwait[0]) begin
             ccdataready_next = 0;
             nstate = IDLE;
-        end else begin
+            next_active = 0;
+        end else if (!ccif.dwait[1])begin
             ccdataready_next = 0;
             nstate = IDLE;
+            next_active = 0;
         end
     end else if(cstate == MISS_0) begin
-        next_active = 1;
-        if (!active_core) begin
-            if (ccif.dwait[0] == 0)
-                nstate = MISS_1;
-        end else begin
-            if (ccif.dwait[1] == 0)
-                nstate = MISS_1;
+        if (!active_core && !ccif.dwait[0]) begin
+            nstate = MISS_1;
+            next_active = 1;
+        end else if(!ccif.dwait[1]) begin
+            nstate = MISS_1;
+            next_active = 1;
         end
     end else if(cstate == MISS_1) begin
-        next_active = 0;
-        if (!active_core) begin
-            if(ccif.dwait[0] == 0)
-                nstate = IDLE;
-        end else begin
-            if (ccif.dwait[1] == 0)
-                nstate = IDLE;
+        if (!active_core && !ccif.dwait[0]) begin
+            nstate = IDLE;
+            next_active = 0;
+        end else if(!ccif.dwait[1]) begin
+            nstate = IDLE;
+            next_active = 0;
         end
     end else if(cstate == HALT) begin
-        if (!active_core) begin
-            if(flushed0) begin
-                nstate = IDLE;
-                next_active = 0;
-            end
-        end else begin
-            if(flushed1) begin
-                nstate = IDLE;
-                next_active = 0;
-            end
+        if (!active_core && flushed0) begin
+            nstate = IDLE;
+            next_active = 0;
+        end else if(flushed1) begin
+            nstate = IDLE;
+            next_active = 0;
         end
     end
   end
